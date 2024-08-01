@@ -9,8 +9,9 @@ import os
 
 app = Flask(__name__)
 
-# Configure CORS
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+
+# Instantiate CORS
+CORS(app) #  
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'artvista.db')}")

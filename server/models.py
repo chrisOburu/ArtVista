@@ -17,6 +17,10 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String(64), unique=True, nullable=False)
     user_role = db.Column(db.String(32), default="user", nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    active = db.Column(db.Boolean, default=True, nullable=False)
+
+    default_usernames = ['admin', 'user', 'root']
+
 
     serialize_rules = ('-password', )
 
@@ -28,6 +32,6 @@ class User(db.Model, SerializerMixin):
     
     @staticmethod
     def validate_username(username):
-        if len(username) < 3 or len(username) > 32 or not username.isalnum() or username.lower() in ['admin', 'user']:
+        if len(username) < 3 or len(username) > 32 or not username.isalnum() or username.lower() in User.default_usernames:
             return False
         return True

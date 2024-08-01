@@ -34,6 +34,9 @@ class Users(Resource):
             if not User.validate_email(data['email']) or not data['password']:
                 return {'info': 'Invalid email or password'}, 400
             
+            if not User.validate_username(data['username']):
+                return {'info': 'Invalid username'}, 400
+            
             if User.query.filter_by(email=data['email']).first() or User.query.filter_by(username=data['username']).first():
                 return {'info': 'Email or username already exists'}, 409
             
@@ -76,6 +79,8 @@ class UsersByID(Resource):
                 user.email = data['email']
             if 'user_role' in data:
                 user.user_role = data['user_role']
+            if 'active' in data:
+                user.active = data['active']
             if 'password' in data:
                 hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
                 user.password = hashed_password

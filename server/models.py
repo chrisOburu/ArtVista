@@ -35,3 +35,4 @@ class User(db.Model, SerializerMixin):
         if len(username) < 3 or len(username) > 32 or not username.isalnum() or username.lower() in User.default_usernames:
             return False
         return True
+

@@ -3,7 +3,8 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
-import re
+#import re
+db = SQLAlchemy()
 
 metadata = MetaData(
     naming_convention={
@@ -11,4 +12,15 @@ metadata = MetaData(
     }
 )
 
+class Reviews(db.Model):
+    id =db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    Rating = db.Column(db.Integer, nullable=False)
+    Comment =db.Column(db.String(120), nullable=False)
+    
+
+
+
+
+	
 db = SQLAlchemy(metadata=metadata)

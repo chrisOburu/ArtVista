@@ -1,4 +1,4 @@
-from models import db, User
+from models import db, Reviews
 from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
@@ -28,35 +28,51 @@ api = Api(app)
 def index():
     return "<h1>Art Vista App</h1>"
 
-
-@app.route('/register', methods=['POST'])
-def register():
+#create a review
+@app.route('/addreview', methods=['POST'])
+def add_review():
     data = request.get_json()
-    username = data.get('username')
-    email = data.get('email')
-    password = data.get('password')
-    
-    if User.query.filter_by(email=email).first():
-        return jsonify({"message": "User already exists"}), 400
-    
-    user = User(username=username, email=email)
-    user.set_password(password)
-    
-    db.session.add(user)
+    new_review = Reviews(date=data['date'], rating=data['rating'], comment = data['comment']) 
+    db.session.add(new_review)
     db.session.commit()
-    
-    return jsonify({"message": "User registered successfully"}), 201
+    return jsonify({'success': 'review created successfully'}), 201
 
-@app.route('/login', methods=['POST'])
-def login():
+# fetch all reviews
+@app.route('/reviews', methods = ['GET'])
+def reviews():
+    reviews = Reviews.query.all()
+    all_reviews = []
+    for review in reviews:
+        all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
+    return jsonify(all_reviews)
+
+# fetch a review by its id
+@app.route('/reviews/<int:review_id>', methods=['GET'])
+def get_review(review_id):
+    review = Reviews.query.get_or_404(review_id)
+    return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
+ 
+# update a review
+@app.route('/reviews/<int:review_id>', methods=['PUT'])
+def update_task(review_id):
+    review = Reviews.query.get_or_404(review_id)
     data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
-    
-    user = User.query.filter_by(email=email).first()
-    
-    if user is None or not user.check_password(password):
-        return jsonify({"message": "Invalid credentials"}), 401
-    
-    access_token = create_access_token(identity=user.id)
-    return jsonify({"access_token": access_token}), 200
+
+    review.date = data['date']
+    review.rating = data.get('rating')
+    review.comment = data.get('comment', review.comment)
+
+    db.session.commit()
+    return jsonify({'message': 'Review has been updated successfully'})
+
+# delete a review
+@app.route('/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    review = Reviews.query.get_or_404(review_id)
+    db.session.delete(review)
+    db.session.commit()
+    return jsonify({'message': 'Review deleted successfully'})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

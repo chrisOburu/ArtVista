@@ -48,6 +48,7 @@ class User(db.Model, SerializerMixin):
 
 
 class Reviews(db.Model):
+    __tablename__ = 'Reviews'
     id =db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     Rating = db.Column(db.Integer, nullable=False)

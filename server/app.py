@@ -131,50 +131,40 @@ def index():
     return "<h1>Art Vista App</h1>"
 
 
-#create a review
-@app.route('/addreview', methods=['POST'])
-def add_review():
-    data = request.get_json()
-    new_review = Reviews(date=data['date'], rating=data['rating'], comment = data['comment']) 
-    db.session.add(new_review)
-    db.session.commit()
-    return jsonify({'success': 'review created successfully'}), 201
-
-# fetch all reviews
-@app.route('/reviews', methods = ['GET'])
-def reviews():
-    reviews = Reviews.query.all()
-    all_reviews = []
-    for review in reviews:
-        all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
-    return jsonify(all_reviews)
-
+# routes for reviews
+class Review(Resource):
+#get all reviews
+    def reviews(self):
+        reviews = Reviews.query.all()
+        all_reviews = []
+        for review in reviews:
+            all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
+        return jsonify(all_reviews)
+class ReviewsById(Resource):    
 # fetch a review by its id
-@app.route('/reviews/<int:review_id>', methods=['GET'])
-def get_review(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
- 
-# update a review
-@app.route('/reviews/<int:review_id>', methods=['PUT'])
-def update_task(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    data = request.get_json()
+    def get_review(self,id):
+        review = Reviews.query.get_or_404(id)
+        return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
 
-    review.date = data['date']
-    review.rating = data.get('rating')
-    review.comment = data.get('comment', review.comment)
+#update a review  
+    def update_review(self,id):
+        review = Reviews.query.get_or_404(id)
+        data = request.get_json()
 
-    db.session.commit()
-    return jsonify({'message': 'Review has been updated successfully'})
+        review.date = data['date']
+        review.rating = data.get('rating')
+        review.comment = data.get('comment', review.comment)
+
+        db.session.commit()
+        return jsonify({'message': 'Review has been updated successfully'})
 
 # delete a review
-@app.route('/reviews/<int:review_id>', methods=['DELETE'])
-def delete_review(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    db.session.delete(review)
-    db.session.commit()
-    return jsonify({'message': 'Review deleted successfully'})
+    def delete_review(self,id):
+        review = Reviews.query.get_or_404(id)
+        db.session.delete(review)
+        
+api.add_resource(Review, "/addreview")
+api.add_resource(ReviewsById,"/reviews/<int:id>")
 
 
 class Register(Resource):

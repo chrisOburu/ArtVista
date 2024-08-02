@@ -1,16 +1,41 @@
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
-from sqlalchemy.orm import validates
-from sqlalchemy.ext.associationproxy import association_proxy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-#import re
-db = SQLAlchemy()
 
-metadata = MetaData(
-    naming_convention={
-        "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    }
-)
+
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
+db = SQLAlchemy(metadata=metadata)
+
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), nullable=False)
+    username = db.Column(db.String(64), unique=True, nullable=False)
+    email = db.Column(db.String(64), unique=True, nullable=False)
+    user_role = db.Column(db.String(32), default="user", nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    active = db.Column(db.Boolean, default=True, nullable=False)
+
+    default_usernames = ['admin', 'user', 'root']
+
+
+    serialize_rules = ('-password', )
+
+    @staticmethod
+    def validate_email(email):
+        if '@' not in email or '.' not in email:
+            return False
+        return True
+    
+    @staticmethod
+    def validate_username(username):
+        if len(username) < 3 or len(username) > 32 or not username.isalnum() or username.lower() in User.default_usernames:
+            return False
+        return True
+
 
 class Reviews(db.Model):
     id =db.Column(db.Integer, primary_key=True)
@@ -21,6 +46,3 @@ class Reviews(db.Model):
 
 
 
-
-	
-db = SQLAlchemy(metadata=metadata)

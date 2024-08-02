@@ -1,9 +1,14 @@
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+from models import db, User,Reviews
+from flask_migrate import Migrate
+from flask_cors import CORS
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, create_access_token
+from datetime import timedelta
+from flask import Flask, request, make_response, jsonify
+import os
+from flask_restful import Api, Resource
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
 
 @app.route('/projects', methods=['POST'])
 def create_project():
@@ -22,18 +27,8 @@ def create_project():
     db.session.commit()
     return jsonify({'message': 'New project created!'})
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5555)
-=======
-from models import db, User,Reviews
-from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token
-from datetime import timedelta
-from flask import Flask, request, make_response, jsonify
 
-import os
+
 
 app = Flask(__name__)
 

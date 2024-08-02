@@ -36,3 +36,13 @@ class User(db.Model, SerializerMixin):
             return False
         return True
 
+
+class Reviews(db.Model):
+    id =db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    Rating = db.Column(db.Integer, nullable=False)
+    Comment =db.Column(db.String(120), nullable=False)
+    
+
+
+

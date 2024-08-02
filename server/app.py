@@ -1,5 +1,4 @@
-from models import db, User
-from flask_restful import Resource, Api
+from models import db, User,Reviews
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -110,6 +109,52 @@ api.add_resource(UsersByID, '/users/<int:id>')
 @app.route("/")
 def index():
     return "<h1>Art Vista App</h1>"
+
+
+#create a review
+@app.route('/addreview', methods=['POST'])
+def add_review():
+    data = request.get_json()
+    new_review = Reviews(date=data['date'], rating=data['rating'], comment = data['comment']) 
+    db.session.add(new_review)
+    db.session.commit()
+    return jsonify({'success': 'review created successfully'}), 201
+
+# fetch all reviews
+@app.route('/reviews', methods = ['GET'])
+def reviews():
+    reviews = Reviews.query.all()
+    all_reviews = []
+    for review in reviews:
+        all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
+    return jsonify(all_reviews)
+
+# fetch a review by its id
+@app.route('/reviews/<int:review_id>', methods=['GET'])
+def get_review(review_id):
+    review = Reviews.query.get_or_404(review_id)
+    return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
+ 
+# update a review
+@app.route('/reviews/<int:review_id>', methods=['PUT'])
+def update_task(review_id):
+    review = Reviews.query.get_or_404(review_id)
+    data = request.get_json()
+
+    review.date = data['date']
+    review.rating = data.get('rating')
+    review.comment = data.get('comment', review.comment)
+
+    db.session.commit()
+    return jsonify({'message': 'Review has been updated successfully'})
+
+# delete a review
+@app.route('/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    review = Reviews.query.get_or_404(review_id)
+    db.session.delete(review)
+    db.session.commit()
+    return jsonify({'message': 'Review deleted successfully'})
 
 
 class Register(Resource):

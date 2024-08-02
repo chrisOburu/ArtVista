@@ -7,6 +7,16 @@ metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 db = SQLAlchemy(metadata=metadata)
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    published_date = db.Column(db.DateTime, nullable=False)
+    image_url = db.Column(db.String(500), nullable=True)
+    link = db.Column(db.String(500), nullable=True)
+    ratings = db.Column(db.Integer, nullable=True)
+    tags = db.Column(db.String(200), nullable=True)
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -43,6 +53,3 @@ class Reviews(db.Model):
     Rating = db.Column(db.Integer, nullable=False)
     Comment =db.Column(db.String(120), nullable=False)
     
-
-
-

@@ -29,6 +29,9 @@ class User(db.Model, SerializerMixin):
     password = db.Column(db.String(128), nullable=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
 
+    # relationship - map user to a reviews
+    reviews = db.relationship('reviews')
+
     default_usernames = ['admin', 'user', 'root']
 
 
@@ -47,10 +50,16 @@ class User(db.Model, SerializerMixin):
         return True
 
 
-class Reviews(db.Model):
-    __tablename__ = 'Reviews'
+class Review(db.Model):
+    __tablename__ = 'reviews'
     id =db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     Rating = db.Column(db.Integer, nullable=False)
     Comment =db.Column(db.String(120), nullable=False)
+    
+    # Foreign key-store the employee id
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    # Relationship- map review to related employee
+    user = db.relationship('User', back_populates="reviews")
     

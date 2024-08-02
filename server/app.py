@@ -1,4 +1,4 @@
-from models import db, User,Reviews
+from models import db, User,Review
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -135,7 +135,7 @@ def index():
 class Review(Resource):
 #get all reviews
     def reviews(self):
-        reviews = Reviews.query.all()
+        reviews = Review.query.all()
         all_reviews = []
         for review in reviews:
             all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
@@ -143,12 +143,12 @@ class Review(Resource):
 class ReviewsById(Resource):    
 # fetch a review by its id
     def get_review(self,id):
-        review = Reviews.query.get_or_404(id)
+        review = Review.query.get_or_404(id)
         return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
 
 #update a review  
     def update_review(self,id):
-        review = Reviews.query.get_or_404(id)
+        review = Review.query.get_or_404(id)
         data = request.get_json()
 
         review.date = data['date']
@@ -160,9 +160,9 @@ class ReviewsById(Resource):
 
 # delete a review
     def delete_review(self,id):
-        review = Reviews.query.get_or_404(id)
+        review = Review.query.get_or_404(id)
         db.session.delete(review)
-        
+
 api.add_resource(Review, "/addreview")
 api.add_resource(ReviewsById,"/reviews/<int:id>")
 

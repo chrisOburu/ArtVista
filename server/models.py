@@ -47,9 +47,16 @@ class User(db.Model, SerializerMixin):
         return True
 
 
-class Reviews(db.Model):
+class Review(db.Model):
+    _tablename_ = 'reviews'
     id =db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     Rating = db.Column(db.Integer, nullable=False)
     Comment =db.Column(db.String(120), nullable=False)
+    
+    # Foreign key-store the employee id
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    # Relationship- map review to related employee
+    user = db.relationship('User', back_populates="reviews")
     

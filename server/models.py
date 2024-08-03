@@ -53,7 +53,11 @@ class User(db.Model, SerializerMixin):
 
 
 class Review(db.Model):
+
     _tablename_ = 'reviews'
+
+
+
     id =db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     Rating = db.Column(db.Integer, nullable=False)
@@ -65,4 +69,7 @@ class Review(db.Model):
     # Relationship- map review to related employee
     user = db.relationship('User', back_populates="reviews")
     project = db.relationship('Projet', back_populates = " projects")
+
+
+
     

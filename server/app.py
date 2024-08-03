@@ -1,4 +1,6 @@
-from models import db, User,Reviews,Project
+
+from models import db, User,Review,Project
+
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -7,8 +9,6 @@ from datetime import timedelta
 from flask import Flask, request, make_response, jsonify
 import os
 from flask_restful import Api, Resource
-
-
 
 
 app = Flask(__name__)
@@ -28,12 +28,31 @@ jwt = JWTManager()
 db.init_app(app)
 
 
-db.init_app(app)
+
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 api = Api(app)
 cors = CORS(app)
 jwt = JWTManager(app)
+
+
+@app.route('/projects', methods=['POST'])
+def create_project():
+    from models import Project  # Import here to avoid circular import
+    data = request.get_json()
+    new_project = Project(
+        title=data['title'], 
+        description=data['description'], 
+        published_date=data['published_date'], 
+        image_url=data['image_url'], 
+        link=data['link'], 
+        ratings=data['ratings'], 
+        tags=data['tags']
+    )
+    db.session.add(new_project)
+    db.session.commit()
+    return jsonify({'message': 'New project created!'})
+
 
 class Users(Resource):
     def get(self):
@@ -113,7 +132,7 @@ def index():
     return "<h1>Art Vista App</h1>"
 
 
-#create a review
+
 # routes for reviews
 class Review(Resource):
 #get all reviews
@@ -145,6 +164,7 @@ class ReviewsById(Resource):
     def delete_review(self,id):
         review = Review.query.get_or_404(id)
         db.session.delete(review)
+
 
 api.add_resource(Review, "/addreview")
 api.add_resource(ReviewsById,"/reviews/<int:id>")
@@ -278,3 +298,4 @@ api.add_resource(UsersByID, '/user/<int:id>')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
+

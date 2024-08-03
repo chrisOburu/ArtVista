@@ -1,78 +1,59 @@
-
-from app import app, db, User
-from models import Project
-from datetime import datetime
+from app import app, db
+from models import User, Project, Review
 from faker import Faker
 import random
-from flask_bcrypt import Bcrypt
 
-fake = Faker()
-bcrypt = Bcrypt(app)
+# Initialize Faker
+faker = Faker()
 
-
-
-
-# Create the database and the database tables within the app context
+# Drop and recreate the database
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
-    # Insert sample projects
-    for _ in range(30):
-        project = Project(
-            title=fake.sentence(nb_words=4),
-            description=fake.paragraph(nb_sentences=5),
-            published_date=fake.date_time_this_year(),
-            image_url=fake.image_url(),
-            link=fake.url(),
-            ratings=fake.random_int(min=1, max=5),
-            tags=", ".join(fake.words(nb=3, unique=True))
+    # Create fake users
+    users = []
+    for _ in range(10):
+        user = User(
+            name=faker.name(),
+            username=faker.user_name(),
+            email=faker.email()
         )
-        db.session.add(project)
+        user.set_password(faker.password())
+        users.append(user)
 
+    db.session.add_all(users)
     db.session.commit()
 
-print("Database seeded with sample data.")
+    # Create fake projects
+    projects = []
+    for _ in range(10):
+        project = Project(
+            title=faker.sentence(nb_words=4),
+            description=faker.paragraph(nb_sentences=3),
+            image_url=faker.image_url(),
+            link=faker.url(),
+            ratings=random.randint(1, 5),
+            tags=", ".join(faker.words(nb=3))
+        )
+        projects.append(project)
 
+    db.session.add_all(projects)
+    db.session.commit()
 
-def delete_existing_data():
-    try:
-        User.query.delete()
-        db.session.commit()
-        print("Existing data deleted.")
-    except Exception as e:
-        db.session.rollback()
-        print(f"An error occurred while deleting existing data: {e}")
+    # Create fake reviews with dates
+    reviews = []
+    for _ in range(20):
+        review = Review(
+            date=faker.date_this_year(),
+            comment=faker.sentence(),
+            rating=random.randint(1, 5),
+            user_id=random.choice(users).id,
+            project_id=random.choice(projects).id
+        )
+        reviews.append(review)
 
-        import traceback
-        traceback.print_exc()
+    db.session.add_all(reviews)
+    db.session.commit()
 
-def seed_users():
-    try:
-        users = []
-        for _ in range(5):
-            hashed_password = bcrypt.generate_password_hash(fake.password()).decode('utf-8')
-            user = User(
-                name=fake.name(),
-                user_role=random.choice(['user', 'admin','root']),
-                username=fake.unique.user_name(),
-                email=fake.unique.email(),
-                password=hashed_password, 
-                active=True
-            )
-            users.append(user)
-        db.session.add_all(users)
-        db.session.commit()
-        print("Users seeded.")
-        return users
-    except Exception as e:
-        db.session.rollback()
-        print(f"An error occurred while seeding users: {e}")
-        
-        import traceback
-        traceback.print_exc()
-        return []
-
-if __name__ == "__main__":
-    with app.app_context():
-        delete_existing_data()
-        seed_users()
+    print("Database seeded successfully with Faker!")

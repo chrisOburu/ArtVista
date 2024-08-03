@@ -8,6 +8,7 @@ metadata = MetaData(naming_convention={
 })
 db = SQLAlchemy(metadata=metadata)
 class Project(db.Model):
+    __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
@@ -16,7 +17,8 @@ class Project(db.Model):
     link = db.Column(db.String(500), nullable=True)
     ratings = db.Column(db.Integer, nullable=True)
     tags = db.Column(db.String(200), nullable=True)
-
+    # Relationship- map review to related employee    
+    review = db.relationship('reviews')
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -28,6 +30,9 @@ class User(db.Model, SerializerMixin):
     user_role = db.Column(db.String(32), default="user", nullable=False)
     password = db.Column(db.String(128), nullable=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
+    # Relationship- map review to related employee    
+    review = db.relationship('reviews')
+
 
     default_usernames = ['admin', 'user', 'root']
 
@@ -56,7 +61,8 @@ class Review(db.Model):
     
     # Foreign key-store the employee id
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
+    project_id = db.Column(db.Integer,db.Foreignkey('projects.id'))
     # Relationship- map review to related employee
     user = db.relationship('User', back_populates="reviews")
+    project = db.relationship('Projet', back_populates = " projects")
     

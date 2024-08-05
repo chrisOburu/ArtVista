@@ -65,16 +65,24 @@ class Project(db.Model, SerializerMixin):
     published_date = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
     image_url = db.Column(db.String(500), nullable=True)
     link = db.Column(db.String(500), nullable=True)
-    ratings = db.Column(db.Integer, nullable=True)
     tags = db.Column(db.String(200), nullable=True)
 
     reviews = db.relationship('Review', back_populates='project', cascade='all, delete-orphan')
     users = association_proxy('reviews', 'user')
 
-    serialize_rules = ('-reviews.project', '-users.projects')
+    
+
+    @property
+    def ratings(self):
+        if self.reviews:
+            return sum([review.rating for review in self.reviews]) / len(self.reviews)
+        return None
+    
+    serialize_rules = ('-reviews.project', '-users.projects','ratings')
 
     def __repr__(self):
         return f"<Project {self.title}>"
+
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = "reviews"
@@ -82,7 +90,7 @@ class Review(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False, server_default=db.func.now())
     rating = db.Column(db.Integer, nullable=False)
-    comment = db.Column(db.String(120), nullable=False)
+    comment = db.Column(db.String(120), nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)

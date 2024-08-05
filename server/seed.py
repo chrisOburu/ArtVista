@@ -33,7 +33,7 @@ with app.app_context():
             description=faker.paragraph(nb_sentences=3),
             image_url=faker.image_url(),
             link=faker.url(),
-            #ratings=random.randint(1, 5),
+            owner_id=random.choice(users).id,
             tags=", ".join(faker.words(nb=3))
         )
         projects.append(project)

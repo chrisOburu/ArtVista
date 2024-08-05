@@ -27,8 +27,17 @@ class User(db.Model, SerializerMixin):
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
     projects = association_proxy('reviews', 'project')
+    owned_projects = db.relationship('Project', back_populates='owner')
 
-    serialize_rules = ('-password', '-reviews.user', '-projects.users')
+    serialize_rules = (
+        '-password', 
+        '-reviews.user', 
+        '-projects.users', 
+        '-owned_projects.owner',
+        '-owned_projects.reviews',
+    )
+
+
 
     @validates('email')
     def validate_email(self, key, email):
@@ -66,11 +75,11 @@ class Project(db.Model, SerializerMixin):
     image_url = db.Column(db.String(500), nullable=True)
     link = db.Column(db.String(500), nullable=True)
     tags = db.Column(db.String(200), nullable=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     reviews = db.relationship('Review', back_populates='project', cascade='all, delete-orphan')
     users = association_proxy('reviews', 'user')
-
-    
+    owner = db.relationship('User', back_populates='owned_projects')
 
     @property
     def ratings(self):
@@ -78,7 +87,21 @@ class Project(db.Model, SerializerMixin):
             return sum([review.rating for review in self.reviews]) / len(self.reviews)
         return None
     
-    serialize_rules = ('-reviews.project', '-users.projects','ratings')
+    serialize_rules = (
+        '-reviews.project', 
+        '-users.projects', 
+        '-owner.owned_projects',
+        '-owner.reviews',
+        '-users.reviews',
+        'ratings',
+    )
+
+    @validates('owner_id')
+    def validate_owner_id(self, key, owner_id):
+        owner = db.session.query(User).get(owner_id)
+        if owner is None:
+            raise ValueError("Owner ID does not exist")
+        return owner_id
 
     def __repr__(self):
         return f"<Project {self.title}>"

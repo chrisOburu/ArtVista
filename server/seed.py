@@ -45,7 +45,7 @@ with app.app_context():
     reviews = []
     for _ in range(20):
         review = Review(
-            date=faker.date_this_year(),
+            #date=faker.date_this_year(),
             comment=faker.sentence(),
             rating=random.randint(1, 5),
             user_id=random.choice(users).id,

@@ -111,7 +111,7 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = "reviews"
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False, server_default=db.func.now())
+    date = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(120), nullable=True)
 

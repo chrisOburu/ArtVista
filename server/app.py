@@ -195,31 +195,16 @@ class Projects(Resource):
 
 
 class ProjectByID(Resource):
-    def get(self, id):
-        project = Project.query.filter_by(id=id).first()
-        if project:
-            logging.info(f"Fetched project with ID: {id}")
-            return make_response(jsonify(project.to_dict()), 200)
-        else:
-            logging.warning(f"Project with ID {id} not found.")
-            return make_response(jsonify({"error": "Project not found"}), 404)
-
-    @jwt_required()
-    def delete(self, id):
-        project = Project.query.filter_by(id=id).first()
-        if project:
-            db.session.delete(project)
-            db.session.commit()
-            logging.info(f"Deleted project with ID: {id}")
-            return make_response(jsonify({"message": "Project successfully deleted"}), 200)
-        else:
-            logging.warning(f"Project with ID {id} not found.")
-            return make_response(jsonify({"error": "Project not found"}), 404)
-
     @jwt_required()
     def put(self, id):
+        current_user_id = get_jwt_identity()
         project = Project.query.filter_by(id=id).first()
+
         if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+
             try:
                 project.title = request.json.get("title", project.title)
                 project.description = request.json.get("description", project.description)
@@ -230,7 +215,7 @@ class ProjectByID(Resource):
                 project.tags = request.json.get("tags", project.tags)
                 
                 db.session.commit()
-                logging.info(f"Updated project with ID: {id}")
+                logging.info(f"User {current_user_id} updated project with ID: {id}")
                 return make_response(jsonify(project.to_dict()), 200)
             except Exception as e:
                 logging.error(f"Error updating project with ID {id}: {str(e)}")
@@ -240,15 +225,39 @@ class ProjectByID(Resource):
             return make_response(jsonify({"error": "Project not found"}), 404)
 
     @jwt_required()
-    def patch(self, id):
+    def delete(self, id):
+        current_user_id = get_jwt_identity()
         project = Project.query.filter_by(id=id).first()
+
         if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to delete project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to delete this project"}), 403)
+
+            db.session.delete(project)
+            db.session.commit()
+            logging.info(f"User {current_user_id} deleted project with ID: {id}")
+            return make_response(jsonify({"message": "Project successfully deleted"}), 200)
+        else:
+            logging.warning(f"Project with ID {id} not found.")
+            return make_response(jsonify({"error": "Project not found"}), 404)
+
+    @jwt_required()
+    def patch(self, id):
+        current_user_id = get_jwt_identity()
+        project = Project.query.filter_by(id=id).first()
+
+        if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+
             try:
                 for key, value in request.json.items():
                     if hasattr(project, key):
                         setattr(project, key, value)
                 db.session.commit()
-                logging.info(f"Partially updated project with ID: {id}")
+                logging.info(f"User {current_user_id} partially updated project with ID: {id}")
                 return make_response(jsonify(project.to_dict()), 200)
             except Exception as e:
                 logging.error(f"Error partially updating project with ID {id}: {str(e)}")
@@ -256,6 +265,7 @@ class ProjectByID(Resource):
         else:
             logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
+
 
 class Reviews(Resource):
     def get(self):
@@ -266,11 +276,12 @@ class Reviews(Resource):
     @jwt_required()
     def post(self):
         try:
+            current_user_id = get_jwt_identity()
             new_record = Review(
                 date=request.json.get("date", None),
                 comment=request.json["comment"],
                 rating=request.json["rating"],
-                user_id=request.json["user_id"],
+                user_id=current_user_id,
                 project_id=request.json["project_id"]
             )
             db.session.add(new_record)
@@ -285,38 +296,23 @@ class Reviews(Resource):
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class ReviewByID(Resource):
-    def get(self, id):
-        review = Review.query.filter_by(id=id).first()
-        if review:
-            logging.info(f"Fetched review with ID: {id}")
-            return make_response(jsonify(review.to_dict()), 200)
-        else:
-            logging.warning(f"Review with ID {id} not found.")
-            return make_response(jsonify({"error": "Review not found"}), 404)
-
-    @jwt_required()
-    def delete(self, id):
-        review = Review.query.filter_by(id=id).first()
-        if review:
-            db.session.delete(review)
-            db.session.commit()
-            logging.info(f"Deleted review with ID: {id}")
-            return make_response(jsonify({"message": "Review successfully deleted"}), 200)
-        else:
-            logging.warning(f"Review with ID {id} not found.")
-            return make_response(jsonify({"error": "Review not found"}), 404)
-
     @jwt_required()
     def put(self, id):
+        current_user_id = get_jwt_identity()
         review = Review.query.filter_by(id=id).first()
+
         if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this review"}), 403)
+
             try:
                 review.comment = request.json.get("comment", review.comment)
                 review.rating = request.json.get("rating", review.rating)
                 review.user_id = request.json.get("user_id", review.user_id)
                 review.project_id = request.json.get("project_id", review.project_id)
                 db.session.commit()
-                logging.info(f"Updated review with ID: {id}")
+                logging.info(f"User {current_user_id} updated review with ID: {id}")
                 return make_response(jsonify(review.to_dict()), 200)
             except Exception as e:
                 logging.error(f"Error updating review with ID {id}: {str(e)}")
@@ -326,15 +322,39 @@ class ReviewByID(Resource):
             return make_response(jsonify({"error": "Review not found"}), 404)
 
     @jwt_required()
-    def patch(self, id):
+    def delete(self, id):
+        current_user_id = get_jwt_identity()
         review = Review.query.filter_by(id=id).first()
+
         if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to delete review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to delete this review"}), 403)
+
+            db.session.delete(review)
+            db.session.commit()
+            logging.info(f"User {current_user_id} deleted review with ID: {id}")
+            return make_response(jsonify({"message": "Review successfully deleted"}), 200)
+        else:
+            logging.warning(f"Review with ID {id} not found.")
+            return make_response(jsonify({"error": "Review not found"}), 404)
+
+    @jwt_required()
+    def patch(self, id):
+        current_user_id = get_jwt_identity()
+        review = Review.query.filter_by(id=id).first()
+
+        if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this review"}), 403)
+
             try:
                 for key, value in request.json.items():
                     if hasattr(review, key):
                         setattr(review, key, value)
                 db.session.commit()
-                logging.info(f"Partially updated review with ID: {id}")
+                logging.info(f"User {current_user_id} partially updated review with ID: {id}")
                 return make_response(jsonify(review.to_dict()), 200)
             except Exception as e:
                 logging.error(f"Error partially updating review with ID {id}: {str(e)}")
@@ -342,6 +362,7 @@ class ReviewByID(Resource):
         else:
             logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
+
 
 api.add_resource(Users, "/users")
 api.add_resource(UserByID, "/users/<int:id>")

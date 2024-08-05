@@ -17876,3 +17876,11 @@ Traceback (most recent call last):
   File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
     raise NotFound() from None
 werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-05 23:22:53,162 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-05 23:22:53,163 INFO: [33mPress CTRL+C to quit[0m
+2024-08-05 23:22:53,165 INFO:  * Restarting with stat
+2024-08-05 23:22:53,759 WARNING:  * Debugger is active!
+2024-08-05 23:22:53,783 INFO:  * Debugger PIN: 437-527-647
+2024-08-05 23:22:58,950 INFO: Created new user: johndoe
+2024-08-05 23:22:58,951 INFO: 127.0.0.1 - - [05/Aug/2024 23:22:58] "[35m[1mPOST /users HTTP/1.1[0m" 201 -

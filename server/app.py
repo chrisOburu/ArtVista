@@ -3,7 +3,7 @@ from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required,get_jwt_identity
 import os
 import logging
 
@@ -158,29 +158,41 @@ class UserByID(Resource):
 class Projects(Resource):
     def get(self):
         response_dict_list = [n.to_dict() for n in Project.query.all()]
-        logging.info(f"Fetched all projects.")
+        logging.info("Fetched all projects.")
         return make_response(jsonify(response_dict_list), 200)
     
     @jwt_required()
     def post(self):
         try:
+            # Retrieve the user from the JWT token
+            current_user_id = get_jwt_identity()
+            
             new_record = Project(
                 title=request.json["title"],
                 description=request.json["description"],
-                published_date=request.json.get("published_date", None),
                 image_url=request.json.get("image_url", None),
                 link=request.json.get("link", None),
-                ratings=request.json.get("ratings", None),
+                owner_id=current_user_id,
                 tags=request.json.get("tags", None)
             )
             db.session.add(new_record)
             db.session.commit()
             response = new_record.to_dict()
-            logging.info(f"Created new project: {new_record.title}")
+            logging.info(f"User {current_user_id} created new project: {new_record.title}")
             return make_response(jsonify(response), 201)
+        
+        except KeyError as ke:
+            logging.error(f"Missing key: {str(ke)}")
+            return make_response(jsonify({"errors": [f"Missing key: {str(ke)}"]}), 400)
+        
+        except ValueError as ve:
+            logging.error(f"Validation error: {str(ve)}")
+            return make_response(jsonify({"errors": [str(ve)]}), 400)
+        
         except Exception as e:
             logging.error(f"Error creating project: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
+
 
 class ProjectByID(Resource):
     def get(self, id):

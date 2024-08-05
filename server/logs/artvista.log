@@ -17859,3 +17859,20 @@ RecursionError: maximum recursion depth exceeded
 2024-08-05 17:39:56,994 INFO: 127.0.0.1 - - [05/Aug/2024 17:39:56] "POST /login HTTP/1.1" 200 -
 2024-08-05 17:40:26,840 INFO: Fetched all users.
 2024-08-05 17:40:26,842 INFO: 127.0.0.1 - - [05/Aug/2024 17:40:26] "GET /users HTTP/1.1" 200 -
+2024-08-05 18:20:07,507 INFO: Request: home route accessed
+2024-08-05 18:20:08,823 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.

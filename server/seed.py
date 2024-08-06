@@ -33,7 +33,7 @@ with app.app_context():
             description=faker.paragraph(nb_sentences=3),
             image_url=faker.image_url(),
             link=faker.url(),
-            #ratings=random.randint(1, 5),
+            owner_id=random.choice(users).id,
             tags=", ".join(faker.words(nb=3))
         )
         projects.append(project)
@@ -45,7 +45,7 @@ with app.app_context():
     reviews = []
     for _ in range(20):
         review = Review(
-            date=faker.date_this_year(),
+            #date=faker.date_this_year(),
             comment=faker.sentence(),
             rating=random.randint(1, 5),
             user_id=random.choice(users).id,

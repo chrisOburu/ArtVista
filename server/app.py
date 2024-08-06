@@ -67,6 +67,25 @@ def login():
     else:
         logging.warning(f"Failed login attempt for username: {username}")
         return jsonify({"msg": "Bad username or password"}), 401
+    
+#register
+@app.route("/register", methods=["POST"])
+def register():
+    try:
+        new_record = User(
+            name=request.json["name"],
+            username=request.json["username"],
+            email=request.json["email"],
+        )
+        new_record.set_password(request.json["password"])
+        db.session.add(new_record)
+        db.session.commit()
+        response = new_record.to_dict()
+        logging.info(f"Created new user: {new_record.username}")
+        return make_response(jsonify(response), 201)
+    except Exception as e:
+        logging.error(f"Error creating user: {str(e)}")
+        return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class Users(Resource):
     @jwt_required()
@@ -79,22 +98,6 @@ class Users(Resource):
             logging.error(f"Error fetching users: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
-    def post(self):
-        try:
-            new_record = User(
-                name=request.json["name"],
-                username=request.json["username"],
-                email=request.json["email"],
-            )
-            new_record.set_password(request.json["password"])
-            db.session.add(new_record)
-            db.session.commit()
-            response = new_record.to_dict()
-            logging.info(f"Created new user: {new_record.username}")
-            return make_response(jsonify(response), 201)
-        except Exception as e:
-            logging.error(f"Error creating user: {str(e)}")
-            return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class UserByID(Resource):
     @jwt_required()

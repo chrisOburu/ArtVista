@@ -1,0 +1,80 @@
+2024-08-06 20:07:29,614 INFO: Fetched all projects.
+2024-08-06 20:07:29,616 INFO: 127.0.0.1 - - [06/Aug/2024 20:07:29] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:07:29,876 INFO: Fetched all projects.
+2024-08-06 20:07:29,877 INFO: 127.0.0.1 - - [06/Aug/2024 20:07:29] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:13:52,643 INFO: Fetched all projects.
+2024-08-06 20:13:52,647 INFO: 127.0.0.1 - - [06/Aug/2024 20:13:52] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:13:52,907 INFO: Fetched all projects.
+2024-08-06 20:13:52,908 INFO: 127.0.0.1 - - [06/Aug/2024 20:13:52] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:07,637 INFO: Fetched all projects.
+2024-08-06 20:14:07,639 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:07] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:07,898 INFO: Fetched all projects.
+2024-08-06 20:14:07,900 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:07] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:10,335 INFO: Fetched all projects.
+2024-08-06 20:14:10,336 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:10] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:10,670 INFO: Fetched all projects.
+2024-08-06 20:14:10,673 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:10] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:18,651 INFO: Fetched all projects.
+2024-08-06 20:14:18,652 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:18] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:14:18,903 INFO: Fetched all projects.
+2024-08-06 20:14:18,904 INFO: 127.0.0.1 - - [06/Aug/2024 20:14:18] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:15:18,644 INFO: Fetched all projects.
+2024-08-06 20:15:18,646 INFO: 127.0.0.1 - - [06/Aug/2024 20:15:18] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:15:18,890 INFO: Fetched all projects.
+2024-08-06 20:15:18,891 INFO: 127.0.0.1 - - [06/Aug/2024 20:15:18] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:15:24,645 INFO: Fetched all projects.
+2024-08-06 20:15:24,647 INFO: 127.0.0.1 - - [06/Aug/2024 20:15:24] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:15:25,013 INFO: Fetched all projects.
+2024-08-06 20:15:25,014 INFO: 127.0.0.1 - - [06/Aug/2024 20:15:25] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:16:24,648 INFO: Fetched all projects.
+2024-08-06 20:16:24,649 INFO: 127.0.0.1 - - [06/Aug/2024 20:16:24] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:16:38,337 INFO: Fetched all projects.
+2024-08-06 20:16:38,339 INFO: 127.0.0.1 - - [06/Aug/2024 20:16:38] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:16:38,675 INFO: Fetched all projects.
+2024-08-06 20:16:38,676 INFO: 127.0.0.1 - - [06/Aug/2024 20:16:38] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:16:48,649 INFO: Fetched all projects.
+2024-08-06 20:16:48,650 INFO: 127.0.0.1 - - [06/Aug/2024 20:16:48] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:17:05,328 INFO: Fetched all projects.
+2024-08-06 20:17:05,329 INFO: 127.0.0.1 - - [06/Aug/2024 20:17:05] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:17:09,648 INFO: Fetched all projects.
+2024-08-06 20:17:09,649 INFO: 127.0.0.1 - - [06/Aug/2024 20:17:09] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:17:13,328 INFO: Fetched all projects.
+2024-08-06 20:17:13,330 INFO: 127.0.0.1 - - [06/Aug/2024 20:17:13] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:17:18,636 INFO: Fetched all projects.
+2024-08-06 20:17:18,637 INFO: 127.0.0.1 - - [06/Aug/2024 20:17:18] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:17:57,331 INFO: Fetched all projects.
+2024-08-06 20:17:57,333 INFO: 127.0.0.1 - - [06/Aug/2024 20:17:57] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:24:25,646 INFO: Fetched all projects.
+2024-08-06 20:24:25,647 INFO: 127.0.0.1 - - [06/Aug/2024 20:24:25] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:26:32,450 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-06 20:26:32,709 INFO:  * Restarting with stat
+2024-08-06 20:34:46,091 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-06 20:34:46,091 INFO: [33mPress CTRL+C to quit[0m
+2024-08-06 20:34:46,092 INFO:  * Restarting with stat
+2024-08-06 20:34:46,651 WARNING:  * Debugger is active!
+2024-08-06 20:34:46,669 INFO:  * Debugger PIN: 375-142-970
+2024-08-06 20:36:32,757 INFO: 127.0.0.1 - - [06/Aug/2024 20:36:32] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-06 20:36:33,221 INFO: Created new user: Yuyu
+2024-08-06 20:36:33,222 INFO: 127.0.0.1 - - [06/Aug/2024 20:36:33] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2024-08-06 20:36:51,857 INFO: 127.0.0.1 - - [06/Aug/2024 20:36:51] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-06 20:36:52,115 ERROR: Error creating user: Username already exists
+2024-08-06 20:36:52,116 INFO: 127.0.0.1 - - [06/Aug/2024 20:36:52] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-06 20:38:03,821 INFO: 127.0.0.1 - - [06/Aug/2024 20:38:03] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-06 20:38:04,168 INFO: User 12 logged in successfully.
+2024-08-06 20:38:04,169 INFO: 127.0.0.1 - - [06/Aug/2024 20:38:04] "POST /login HTTP/1.1" 200 -
+2024-08-06 20:39:48,953 INFO: 127.0.0.1 - - [06/Aug/2024 20:39:48] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-06 20:39:49,348 INFO: User 12 logged in successfully.
+2024-08-06 20:39:49,348 INFO: 127.0.0.1 - - [06/Aug/2024 20:39:49] "POST /login HTTP/1.1" 200 -
+2024-08-06 20:42:46,057 INFO: Fetched all projects.
+2024-08-06 20:42:46,058 INFO: 127.0.0.1 - - [06/Aug/2024 20:42:46] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:42:46,305 INFO: Fetched all projects.
+2024-08-06 20:42:46,306 INFO: 127.0.0.1 - - [06/Aug/2024 20:42:46] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:42:59,575 INFO: Fetched all projects.
+2024-08-06 20:42:59,576 INFO: 127.0.0.1 - - [06/Aug/2024 20:42:59] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:42:59,841 INFO: Fetched all projects.
+2024-08-06 20:42:59,842 INFO: 127.0.0.1 - - [06/Aug/2024 20:42:59] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:50:59,975 INFO: Fetched all projects.
+2024-08-06 20:50:59,977 INFO: 127.0.0.1 - - [06/Aug/2024 20:50:59] "GET /projects HTTP/1.1" 200 -
+2024-08-06 20:51:00,237 INFO: Fetched all projects.
+2024-08-06 20:51:00,238 INFO: 127.0.0.1 - - [06/Aug/2024 20:51:00] "GET /projects HTTP/1.1" 200 -

@@ -1,0 +1,172 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+header p {
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+header a {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #007bff;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+header a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Form Styles */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+}
+
+form input,
+form textarea,
+form button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Profile Page Styles */
+.profile-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+.profile-container h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.profile-container p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Project List Styles */
+.project-list {
+  list-style: none;
+  padding: 0;
+}
+
+.project-list li {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-list h3 {
+  margin-top: 0;
+}
+
+.project-list p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Image Gallery Styles */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-gallery img {
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  form,
+  .profile-container {
+    padding: 15px;
+  }
+
+  .project-list li {
+    padding: 15px;
+  }
+}
+

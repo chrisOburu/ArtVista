@@ -1,224 +1,378 @@
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-@app.route('/projects', methods=['POST'])
-def create_project():
-    from models import Project  # Import here to avoid circular import
-    data = request.get_json()
-    new_project = Project(
-        title=data['title'], 
-        description=data['description'], 
-        published_date=data['published_date'], 
-        image_url=data['image_url'], 
-        link=data['link'], 
-        ratings=data['ratings'], 
-        tags=data['tags']
-    )
-    db.session.add(new_project)
-    db.session.commit()
-    return jsonify({'message': 'New project created!'})
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5555)
-=======
-from models import db, User,Reviews
+from models import db, User, Review, Project
 from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token
-from datetime import timedelta
 from flask import Flask, request, make_response, jsonify
-
+from flask_restful import Api, Resource
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required,get_jwt_identity
 import os
+import logging
 
 app = Flask(__name__)
 
-
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'secret-key'
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY') or 'jwt-secret-key'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
+# Configure CORS
+CORS(app)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'artvista.db')}")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "your_secret_key")  # Load from env
 
 migrate = Migrate(app, db)
-jwt = JWTManager()
 db.init_app(app)
-
-
-db.init_app(app)
-migrate = Migrate(app, db)
-bcrypt = Bcrypt(app)
 api = Api(app)
-cors = CORS(app)
 jwt = JWTManager(app)
 
-class Users(Resource):
-    def get(self):
-        users = User.query.all()
-        return {'users': [user.to_dict() for user in users]}, 200
-    
-    def post(self):
-        try:
-            data = request.get_json()
-            if not User.validate_email(data['email']) or not data['password']:
-                return {'info': 'Invalid email or password'}, 400
-            
-            if not User.validate_username(data['username']):
-                return {'info': 'Invalid username'}, 400
-            
-            if User.query.filter_by(email=data['email']).first() or User.query.filter_by(username=data['username']).first():
-                return {'info': 'Email or username already exists'}, 409
-            
-            hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-            user = User(name=data['name'], username=data['username'], email=data['email'], password=hashed_password)
-            db.session.add(user)
-            db.session.commit()
-            access_token = create_access_token(identity=user.id)
-            return {
-                'success': 'User created successfully',
-                'access_token': access_token
-                }, 201
-        
-        except Exception as e:
-            return {'error': str(e)}, 500
-    
-api.add_resource(Users, '/users')
+# Setup logging
+logging.basicConfig(filename=os.path.join(BASE_DIR, 'logs/artvista.log'),
+                    level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s')
 
-class UsersByID(Resource):
-    def get(self, id):
-        user = User.query.get_or_404(id)
-        return {'user': user.to_dict()}, 200
-    
-    def delete(self, id):
-        user = User.query.get_or_404(id)
-        db.session.delete(user)
-        db.session.commit()
-        return {'message': 'User deleted successfully!'}, 201
-    
-    def patch(self, id):
-        user = User.query.get_or_404(id)
-        if user:
-            data = request.get_json()
-            
-            if 'name' in data:
-                user.name = data['name']
-            if 'username' in data:
-                user.username = data['username']
-            if 'email' in data:
-                user.email = data['email']
-            if 'user_role' in data:
-                user.user_role = data['user_role']
-            if 'active' in data:
-                user.active = data['active']
-            if 'password' in data:
-                hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-                user.password = hashed_password
-        
-            db.session.commit()
-            
-            return {'message': 'User updated successfully'}, 202
-        else:
-            return {'error': 'User with id: {id} does not exist. Check the id and try again'}, 404
-    
-api.add_resource(UsersByID, '/users/<int:id>')
- 
+# @app.before_request
+# def log_request_info():
+#     logging.info(f"Request: {request.method} {request.path} | IP: {request.remote_addr} | Payload: {request.json}")
+#     #logging.info(f"Request: {request.method}")
 
+# @app.after_request
+# def log_response_info(response):
+#     logging.info(f"Response: {response.status_code} {response.get_data(as_text=True)}")
+#     #logging.info(f"Response: {response.status_code} ")
+#     return response
 
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"Error: {str(e)}", exc_info=True)
+    return jsonify({"error": "An unexpected error occurred"}), 500
 
 @app.route("/")
 def index():
-    return "<h1>Art Vista App</h1>"
+    try:
+        logging.info(f"Request: home route accessed")
+        return "<h1>Art Vista App</h1>"
+    except Exception as e:
+        logging.error(f"Error: {str(e)}", exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
+    
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(username=username).first()
 
-
-#create a review
-@app.route('/addreview', methods=['POST'])
-def add_review():
-    data = request.get_json()
-    new_review = Reviews(date=data['date'], rating=data['rating'], comment = data['comment']) 
-    db.session.add(new_review)
-    db.session.commit()
-    return jsonify({'success': 'review created successfully'}), 201
-
-# fetch all reviews
-@app.route('/reviews', methods = ['GET'])
-def reviews():
-    reviews = Reviews.query.all()
-    all_reviews = []
-    for review in reviews:
-        all_reviews.append({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
-    return jsonify(all_reviews)
-
-# fetch a review by its id
-@app.route('/reviews/<int:review_id>', methods=['GET'])
-def get_review(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    return jsonify({'id': review.id, 'date': review.date, 'rating': review.rating, 'comment': review.comment})
- 
-# update a review
-@app.route('/reviews/<int:review_id>', methods=['PUT'])
-def update_task(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    data = request.get_json()
-
-    review.date = data['date']
-    review.rating = data.get('rating')
-    review.comment = data.get('comment', review.comment)
-
-    db.session.commit()
-    return jsonify({'message': 'Review has been updated successfully'})
-
-# delete a review
-@app.route('/reviews/<int:review_id>', methods=['DELETE'])
-def delete_review(review_id):
-    review = Reviews.query.get_or_404(review_id)
-    db.session.delete(review)
-    db.session.commit()
-    return jsonify({'message': 'Review deleted successfully'})
-
-
-class Register(Resource):
-    def post(Resource):
-        data = request.get_json()
-        username = data.get('username')
-        email = data.get('email')
-        password = data.get('password')
-        
-        if User.query.filter_by(email=email).first():
-            return jsonify({"message": "User already exists"}), 400
-        
-        user = User(username=username, email=email)
-        user.set_password(password)
-        
-        db.session.add(user)
-        db.session.commit()
-        
-        return jsonify({"message": "User registered successfully"}), 201
-
-
-class Login(Resource):
-    def post(Resource):
-        data = request.get_json()
-        email = data.get('email')
-        password = data.get('password')
-        
-        user = User.query.filter_by(email=email).first()
-        
-        if user is None or not user.check_password(password):
-            return jsonify({"message": "Invalid credentials"}), 401
-        
+    if user and user.check_password(password):
         access_token = create_access_token(identity=user.id)
-        return jsonify({"access_token": access_token}), 200
+        logging.info(f"User {user.id} logged in successfully.")
+        return jsonify(access_token=access_token), 200
+    else:
+        logging.warning(f"Failed login attempt for username: {username}")
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+#register
+@app.route("/register", methods=["POST"])
+def register():
+    try:
+        new_record = User(
+            name=request.json["name"],
+            username=request.json["username"],
+            email=request.json["email"],
+        )
+        new_record.set_password(request.json["password"])
+        db.session.add(new_record)
+        db.session.commit()
+        response = new_record.to_dict()
+        logging.info(f"Created new user: {new_record.username}")
+        return make_response(jsonify(response), 201)
+    except Exception as e:
+        logging.error(f"Error creating user: {str(e)}")
+        return make_response(jsonify({"errors": [str(e)]}), 400)
 
-api.add_resource(Login, "/login")
-api.add_resource(Register, "/register")
+class Users(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            response_dict_list = [n.to_dict() for n in User.query.all()]
+            logging.info(f"Fetched all users.")
+            return make_response(jsonify(response_dict_list), 200)
+        except Exception as e:
+            logging.error(f"Error fetching users: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
+
+
+class UserByID(Resource):
+    @jwt_required()
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            logging.info(f"Fetched user with ID: {id}")
+            return make_response(jsonify(user.to_dict()), 200)
+        else:
+            logging.warning(f"User with ID {id} not found.")
+            return make_response(jsonify({"error": "User not found"}), 404)
+
+    @jwt_required()
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            logging.info(f"Deleted user with ID: {id}")
+            return make_response(jsonify({"message": "User successfully deleted"}), 200)
+        else:
+            logging.warning(f"User with ID {id} not found.")
+            return make_response(jsonify({"error": "User not found"}), 404)
+
+    @jwt_required()
+    def put(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            try:
+                user.name = request.json.get("name", user.name)
+                user.username = request.json.get("username", user.username)
+                user.email = request.json.get("email", user.email)
+                db.session.commit()
+                logging.info(f"Updated user with ID: {id}")
+                return make_response(jsonify(user.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error updating user with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"User with ID {id} not found.")
+            return make_response(jsonify({"error": "User not found"}), 404)
+
+    @jwt_required()
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            try:
+                for key, value in request.json.items():
+                    if hasattr(user, key):
+                        setattr(user, key, value)
+                db.session.commit()
+                logging.info(f"Partially updated user with ID: {id}")
+                return make_response(jsonify(user.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error partially updating user with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"User with ID {id} not found.")
+            return make_response(jsonify({"error": "User not found"}), 404)
+
+class Projects(Resource):
+    def get(self):
+        response_dict_list = [n.to_dict() for n in Project.query.all()]
+        logging.info("Fetched all projects.")
+        return make_response(jsonify(response_dict_list), 200)
+    
+    @jwt_required()
+    def post(self):
+        try:
+            # Retrieve the user from the JWT token
+            current_user_id = get_jwt_identity()
+            
+            new_record = Project(
+                title=request.json["title"],
+                description=request.json["description"],
+                image_url=request.json.get("image_url", None),
+                link=request.json.get("link", None),
+                owner_id=current_user_id,
+                tags=request.json.get("tags", None)
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            response = new_record.to_dict()
+            logging.info(f"User {current_user_id} created new project: {new_record.title}")
+            return make_response(jsonify(response), 201)
+        
+        except KeyError as ke:
+            logging.error(f"Missing key: {str(ke)}")
+            return make_response(jsonify({"errors": [f"Missing key: {str(ke)}"]}), 400)
+        
+        except ValueError as ve:
+            logging.error(f"Validation error: {str(ve)}")
+            return make_response(jsonify({"errors": [str(ve)]}), 400)
+        
+        except Exception as e:
+            logging.error(f"Error creating project: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
+
+
+class ProjectByID(Resource):
+    @jwt_required()
+    def put(self, id):
+        current_user_id = get_jwt_identity()
+        project = Project.query.filter_by(id=id).first()
+
+        if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+
+            try:
+                project.title = request.json.get("title", project.title)
+                project.description = request.json.get("description", project.description)
+                project.link = request.json.get("link", project.link)
+                project.published_date = request.json.get("published_date", project.published_date)
+                project.image_url = request.json.get("image_url", project.image_url)
+                project.ratings = request.json.get("ratings", project.ratings)
+                project.tags = request.json.get("tags", project.tags)
+                
+                db.session.commit()
+                logging.info(f"User {current_user_id} updated project with ID: {id}")
+                return make_response(jsonify(project.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error updating project with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"Project with ID {id} not found.")
+            return make_response(jsonify({"error": "Project not found"}), 404)
+
+    @jwt_required()
+    def delete(self, id):
+        current_user_id = get_jwt_identity()
+        project = Project.query.filter_by(id=id).first()
+
+        if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to delete project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to delete this project"}), 403)
+
+            db.session.delete(project)
+            db.session.commit()
+            logging.info(f"User {current_user_id} deleted project with ID: {id}")
+            return make_response(jsonify({"message": "Project successfully deleted"}), 200)
+        else:
+            logging.warning(f"Project with ID {id} not found.")
+            return make_response(jsonify({"error": "Project not found"}), 404)
+
+    @jwt_required()
+    def patch(self, id):
+        current_user_id = get_jwt_identity()
+        project = Project.query.filter_by(id=id).first()
+
+        if project:
+            if project.owner_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+
+            try:
+                for key, value in request.json.items():
+                    if hasattr(project, key):
+                        setattr(project, key, value)
+                db.session.commit()
+                logging.info(f"User {current_user_id} partially updated project with ID: {id}")
+                return make_response(jsonify(project.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error partially updating project with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"Project with ID {id} not found.")
+            return make_response(jsonify({"error": "Project not found"}), 404)
+
+
+class Reviews(Resource):
+    def get(self):
+        response_dict_list = [p.to_dict() for p in Review.query.all()]
+        logging.info(f"Fetched all reviews.")
+        return make_response(jsonify(response_dict_list), 200)
+
+    @jwt_required()
+    def post(self):
+        try:
+            current_user_id = get_jwt_identity()
+            new_record = Review(
+                date=request.json.get("date", None),
+                comment=request.json["comment"],
+                rating=request.json["rating"],
+                user_id=current_user_id,
+                project_id=request.json["project_id"]
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            response = new_record.to_dict()
+            response['project'] = new_record.project.to_dict(only=('id', 'title'))
+            response['user'] = new_record.user.to_dict(only=('id', 'username'))
+            logging.info(f"Created new review for project ID {new_record.project_id} by user ID {new_record.user_id}")
+            return make_response(jsonify(response), 201)
+        except Exception as e:
+            logging.error(f"Error creating review: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
+
+class ReviewByID(Resource):
+    @jwt_required()
+    def put(self, id):
+        current_user_id = get_jwt_identity()
+        review = Review.query.filter_by(id=id).first()
+
+        if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this review"}), 403)
+
+            try:
+                review.comment = request.json.get("comment", review.comment)
+                review.rating = request.json.get("rating", review.rating)
+                review.user_id = request.json.get("user_id", review.user_id)
+                review.project_id = request.json.get("project_id", review.project_id)
+                db.session.commit()
+                logging.info(f"User {current_user_id} updated review with ID: {id}")
+                return make_response(jsonify(review.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error updating review with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"Review with ID {id} not found.")
+            return make_response(jsonify({"error": "Review not found"}), 404)
+
+    @jwt_required()
+    def delete(self, id):
+        current_user_id = get_jwt_identity()
+        review = Review.query.filter_by(id=id).first()
+
+        if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to delete review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to delete this review"}), 403)
+
+            db.session.delete(review)
+            db.session.commit()
+            logging.info(f"User {current_user_id} deleted review with ID: {id}")
+            return make_response(jsonify({"message": "Review successfully deleted"}), 200)
+        else:
+            logging.warning(f"Review with ID {id} not found.")
+            return make_response(jsonify({"error": "Review not found"}), 404)
+
+    @jwt_required()
+    def patch(self, id):
+        current_user_id = get_jwt_identity()
+        review = Review.query.filter_by(id=id).first()
+
+        if review:
+            if review.user_id != current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify review {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this review"}), 403)
+
+            try:
+                for key, value in request.json.items():
+                    if hasattr(review, key):
+                        setattr(review, key, value)
+                db.session.commit()
+                logging.info(f"User {current_user_id} partially updated review with ID: {id}")
+                return make_response(jsonify(review.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error partially updating review with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"Review with ID {id} not found.")
+            return make_response(jsonify({"error": "Review not found"}), 404)
+
+
+api.add_resource(Users, "/users")
+api.add_resource(UserByID, "/users/<int:id>")
+api.add_resource(Projects, "/projects")
+api.add_resource(ProjectByID, "/projects/<int:id>")
+api.add_resource(Reviews, "/reviews")
+api.add_resource(ReviewByID, "/reviews/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

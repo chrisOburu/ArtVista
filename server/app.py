@@ -3,8 +3,9 @@ from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 import os
+import logging
 
 app = Flask(__name__)
 
@@ -16,17 +17,43 @@ DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'artvist
 
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JWT_SECRET_KEY"] = "your_secret_key"  # Change this to a strong secret key
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "your_secret_key")  # Load from env
 
 migrate = Migrate(app, db)
 db.init_app(app)
 api = Api(app)
 jwt = JWTManager(app)
 
+# Setup logging
+logging.basicConfig(filename=os.path.join(BASE_DIR, 'logs/artvista.log'),
+                    level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s')
+
+# @app.before_request
+# def log_request_info():
+#     logging.info(f"Request: {request.method} {request.path} | IP: {request.remote_addr} | Payload: {request.json}")
+#     #logging.info(f"Request: {request.method}")
+
+# @app.after_request
+# def log_response_info(response):
+#     logging.info(f"Response: {response.status_code} {response.get_data(as_text=True)}")
+#     #logging.info(f"Response: {response.status_code} ")
+#     return response
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"Error: {str(e)}", exc_info=True)
+    return jsonify({"error": "An unexpected error occurred"}), 500
+
 @app.route("/")
 def index():
-    return "<h1>Art Vista App</h1>"
-
+    try:
+        logging.info(f"Request: home route accessed")
+        return "<h1>Art Vista App</h1>"
+    except Exception as e:
+        logging.error(f"Error: {str(e)}", exc_info=True)
+        return jsonify({"error": "An unexpected error occurred"}), 500
+    
 @app.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
@@ -35,8 +62,10 @@ def login():
 
     if user and user.check_password(password):
         access_token = create_access_token(identity=user.id)
+        logging.info(f"User {user.id} logged in successfully.")
         return jsonify(access_token=access_token), 200
     else:
+        logging.warning(f"Failed login attempt for username: {username}")
         return jsonify({"msg": "Bad username or password"}), 401
 
 class Users(Resource):
@@ -44,8 +73,10 @@ class Users(Resource):
     def get(self):
         try:
             response_dict_list = [n.to_dict() for n in User.query.all()]
+            logging.info(f"Fetched all users.")
             return make_response(jsonify(response_dict_list), 200)
         except Exception as e:
+            logging.error(f"Error fetching users: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
     def post(self):
@@ -59,8 +90,10 @@ class Users(Resource):
             db.session.add(new_record)
             db.session.commit()
             response = new_record.to_dict()
+            logging.info(f"Created new user: {new_record.username}")
             return make_response(jsonify(response), 201)
         except Exception as e:
+            logging.error(f"Error creating user: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class UserByID(Resource):
@@ -68,8 +101,10 @@ class UserByID(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
         if user:
+            logging.info(f"Fetched user with ID: {id}")
             return make_response(jsonify(user.to_dict()), 200)
         else:
+            logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
 
     @jwt_required()
@@ -78,8 +113,10 @@ class UserByID(Resource):
         if user:
             db.session.delete(user)
             db.session.commit()
+            logging.info(f"Deleted user with ID: {id}")
             return make_response(jsonify({"message": "User successfully deleted"}), 200)
         else:
+            logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
 
     @jwt_required()
@@ -91,10 +128,13 @@ class UserByID(Resource):
                 user.username = request.json.get("username", user.username)
                 user.email = request.json.get("email", user.email)
                 db.session.commit()
+                logging.info(f"Updated user with ID: {id}")
                 return make_response(jsonify(user.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error updating user with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
 
     @jwt_required()
@@ -106,15 +146,19 @@ class UserByID(Resource):
                     if hasattr(user, key):
                         setattr(user, key, value)
                 db.session.commit()
+                logging.info(f"Partially updated user with ID: {id}")
                 return make_response(jsonify(user.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error partially updating user with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
 
 class Projects(Resource):
     def get(self):
         response_dict_list = [n.to_dict() for n in Project.query.all()]
+        logging.info(f"Fetched all projects.")
         return make_response(jsonify(response_dict_list), 200)
     
     @jwt_required()
@@ -132,16 +176,20 @@ class Projects(Resource):
             db.session.add(new_record)
             db.session.commit()
             response = new_record.to_dict()
+            logging.info(f"Created new project: {new_record.title}")
             return make_response(jsonify(response), 201)
         except Exception as e:
+            logging.error(f"Error creating project: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class ProjectByID(Resource):
     def get(self, id):
         project = Project.query.filter_by(id=id).first()
         if project:
+            logging.info(f"Fetched project with ID: {id}")
             return make_response(jsonify(project.to_dict()), 200)
         else:
+            logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
     @jwt_required()
@@ -150,8 +198,10 @@ class ProjectByID(Resource):
         if project:
             db.session.delete(project)
             db.session.commit()
+            logging.info(f"Deleted project with ID: {id}")
             return make_response(jsonify({"message": "Project successfully deleted"}), 200)
         else:
+            logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
     @jwt_required()
@@ -168,10 +218,13 @@ class ProjectByID(Resource):
                 project.tags = request.json.get("tags", project.tags)
                 
                 db.session.commit()
+                logging.info(f"Updated project with ID: {id}")
                 return make_response(jsonify(project.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error updating project with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
     @jwt_required()
@@ -183,15 +236,19 @@ class ProjectByID(Resource):
                     if hasattr(project, key):
                         setattr(project, key, value)
                 db.session.commit()
+                logging.info(f"Partially updated project with ID: {id}")
                 return make_response(jsonify(project.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error partially updating project with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
 class Reviews(Resource):
     def get(self):
         response_dict_list = [p.to_dict() for p in Review.query.all()]
+        logging.info(f"Fetched all reviews.")
         return make_response(jsonify(response_dict_list), 200)
 
     @jwt_required()
@@ -209,16 +266,20 @@ class Reviews(Resource):
             response = new_record.to_dict()
             response['project'] = new_record.project.to_dict(only=('id', 'title'))
             response['user'] = new_record.user.to_dict(only=('id', 'username'))
+            logging.info(f"Created new review for project ID {new_record.project_id} by user ID {new_record.user_id}")
             return make_response(jsonify(response), 201)
         except Exception as e:
+            logging.error(f"Error creating review: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class ReviewByID(Resource):
     def get(self, id):
         review = Review.query.filter_by(id=id).first()
         if review:
+            logging.info(f"Fetched review with ID: {id}")
             return make_response(jsonify(review.to_dict()), 200)
         else:
+            logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
 
     @jwt_required()
@@ -227,8 +288,10 @@ class ReviewByID(Resource):
         if review:
             db.session.delete(review)
             db.session.commit()
+            logging.info(f"Deleted review with ID: {id}")
             return make_response(jsonify({"message": "Review successfully deleted"}), 200)
         else:
+            logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
 
     @jwt_required()
@@ -241,10 +304,13 @@ class ReviewByID(Resource):
                 review.user_id = request.json.get("user_id", review.user_id)
                 review.project_id = request.json.get("project_id", review.project_id)
                 db.session.commit()
+                logging.info(f"Updated review with ID: {id}")
                 return make_response(jsonify(review.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error updating review with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
 
     @jwt_required()
@@ -256,10 +322,13 @@ class ReviewByID(Resource):
                     if hasattr(review, key):
                         setattr(review, key, value)
                 db.session.commit()
+                logging.info(f"Partially updated review with ID: {id}")
                 return make_response(jsonify(review.to_dict()), 200)
             except Exception as e:
+                logging.error(f"Error partially updating review with ID {id}: {str(e)}")
                 return make_response(jsonify({"errors": [str(e)]}), 400)
         else:
+            logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
 
 api.add_resource(Users, "/users")

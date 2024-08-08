@@ -1,5 +1,4 @@
 # ArtVista
-# ArtVista
 
 ## Introduction
 We're going to work on building an artVista application, that showcases projects! We want our site visitors to be able to view, add, edit, and delete their own projects and profiles.

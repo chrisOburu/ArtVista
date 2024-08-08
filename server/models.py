@@ -14,6 +14,20 @@ metadata = MetaData(
 
 db = SQLAlchemy(metadata=metadata)
 
+class Project(db.Model):
+    __tablename__ = 'projects'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    published_date = db.Column(db.DateTime, nullable=False)
+    image_url = db.Column(db.String(500), nullable=True)
+    link = db.Column(db.String(500), nullable=True)
+    ratings = db.Column(db.Integer, nullable=True)
+    tags = db.Column(db.String(200), nullable=True)
+    # Relationship- map review to related employee    
+    review = db.relationship('reviews')
+
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -24,6 +38,9 @@ class User(db.Model, SerializerMixin):
     user_role = db.Column(db.String(32), default="user", nullable=False)
     password = db.Column(db.String(128), nullable=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
+    # Relationship- map review to related employee    
+    review = db.relationship('reviews')
+
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
     projects = association_proxy('reviews', 'project')
@@ -58,6 +75,25 @@ class User(db.Model, SerializerMixin):
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
+
+
+class Review(db.Model):
+
+    _tablename_ = 'reviews'
+
+
+
+    id =db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    Rating = db.Column(db.Integer, nullable=False)
+    Comment =db.Column(db.String(120), nullable=False)
+    
+    # Foreign key-store the employee id
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    project_id = db.Column(db.Integer,db.Foreignkey('projects.id'))
+    # Relationship- map review to related employee
+    user = db.relationship('User', back_populates="reviews")
+    project = db.relationship('Projet', back_populates = " projects")
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
@@ -145,3 +181,5 @@ class Review(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<Review {self.rating}>"
+
+

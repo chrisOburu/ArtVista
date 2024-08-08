@@ -4,8 +4,10 @@ from flask import Flask, request, make_response, jsonify
 from flask_restful import Api, Resource
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required,get_jwt_identity
+from flask_bcrypt import Bcrypt
 import os
 import logging
+
 
 app = Flask(__name__)
 
@@ -21,8 +23,14 @@ app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "your_secret_key
 
 migrate = Migrate(app, db)
 db.init_app(app)
+
+
+
+migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
 api = Api(app)
 jwt = JWTManager(app)
+
 
 # Setup logging
 logging.basicConfig(filename=os.path.join(BASE_DIR, 'logs/artvista.log'),
@@ -44,6 +52,100 @@ logging.basicConfig(filename=os.path.join(BASE_DIR, 'logs/artvista.log'),
 def handle_exception(e):
     logging.error(f"Error: {str(e)}", exc_info=True)
     return jsonify({"error": "An unexpected error occurred"}), 500
+
+
+
+@app.route('/projects', methods=['POST'])
+def create_project():
+    from models import Project  # Import here to avoid circular import
+    data = request.get_json()
+    new_project = Project(
+        title=data['title'], 
+        description=data['description'], 
+        published_date=data['published_date'], 
+        image_url=data['image_url'], 
+        link=data['link'], 
+        ratings=data['ratings'], 
+        tags=data['tags']
+    )
+    db.session.add(new_project)
+    db.session.commit()
+    return jsonify({'message': 'New project created!'})
+
+
+class Users(Resource):
+    def get(self):
+        users = User.query.all()
+        return {'users': [user.to_dict() for user in users]}, 200
+    
+    def post(self):
+        try:
+            data = request.get_json()
+            if not User.validate_email(data['email']) or not data['password']:
+                return {'info': 'Invalid email or password'}, 400
+            
+            if not User.validate_username(data['username']):
+                return {'info': 'Invalid username'}, 400
+            
+            if User.query.filter_by(email=data['email']).first() or User.query.filter_by(username=data['username']).first():
+                return {'info': 'Email or username already exists'}, 409
+            
+            hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+            user = User(name=data['name'], username=data['username'], email=data['email'], password=hashed_password)
+            db.session.add(user)
+            db.session.commit()
+            access_token = create_access_token(identity=user.id)
+            return {
+                'success': 'User created successfully',
+                'access_token': access_token
+                }, 201
+        
+        except Exception as e:
+            return {'error': str(e)}, 500
+    
+
+
+class UsersByID(Resource):
+    def get(self, id):
+        user = User.query.get_or_404(id)
+        return {'user': user.to_dict()}, 200
+    
+    def delete(self, id):
+        user = User.query.get_or_404(id)
+        db.session.delete(user)
+        db.session.commit()
+        return {'message': 'User deleted successfully!'}, 201
+    
+    def patch(self, id):
+        user = User.query.get_or_404(id)
+        if user:
+            data = request.get_json()
+            
+            if 'name' in data:
+                user.name = data['name']
+            if 'username' in data:
+                user.username = data['username']
+            if 'email' in data:
+                user.email = data['email']
+            if 'user_role' in data:
+                user.user_role = data['user_role']
+            if 'active' in data:
+                user.active = data['active']
+            if 'password' in data:
+                hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+                user.password = hashed_password
+        
+            db.session.commit()
+            
+            return {'message': 'User updated successfully'}, 202
+        else:
+            return {'error': 'User with id: {id} does not exist. Check the id and try again'}, 404
+    
+
+ 
+
+
+
 
 @app.route("/")
 def index():
@@ -376,3 +478,4 @@ api.add_resource(ReviewByID, "/reviews/<int:id>")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
+

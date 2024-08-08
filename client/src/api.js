@@ -16,7 +16,7 @@
 import axios from 'axios';
 
 // API URL base
-const API_BASE_URL = 'http://localhost:5555'; // Replace with your backend URL
+const API_BASE_URL = 'https://artvista-dl5j.onrender.com/'; // Replace with your backend URL
 
 export const getProjects = async () => {
   try {

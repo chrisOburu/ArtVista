@@ -78,3 +78,57 @@
 2024-08-06 20:50:59,977 INFO: 127.0.0.1 - - [06/Aug/2024 20:50:59] "GET /projects HTTP/1.1" 200 -
 2024-08-06 20:51:00,237 INFO: Fetched all projects.
 2024-08-06 20:51:00,238 INFO: 127.0.0.1 - - [06/Aug/2024 20:51:00] "GET /projects HTTP/1.1" 200 -
+2024-08-07 11:15:20,079 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-07 11:15:20,080 INFO: [33mPress CTRL+C to quit[0m
+2024-08-07 11:15:20,082 INFO:  * Restarting with stat
+2024-08-07 11:15:20,526 WARNING:  * Debugger is active!
+2024-08-07 11:15:20,548 INFO:  * Debugger PIN: 112-247-148
+2024-08-07 11:16:18,346 INFO: Fetched all projects.
+2024-08-07 11:16:18,349 INFO: 127.0.0.1 - - [07/Aug/2024 11:16:18] "GET /projects HTTP/1.1" 200 -
+2024-08-07 11:16:18,567 INFO: Fetched all projects.
+2024-08-07 11:16:18,568 INFO: 127.0.0.1 - - [07/Aug/2024 11:16:18] "GET /projects HTTP/1.1" 200 -
+2024-08-07 11:22:21,377 INFO: Fetched all projects.
+2024-08-07 11:22:21,410 INFO: 127.0.0.1 - - [07/Aug/2024 11:22:21] "GET /projects HTTP/1.1" 200 -
+2024-08-07 11:22:21,447 INFO: Fetched all projects.
+2024-08-07 11:22:21,449 INFO: 127.0.0.1 - - [07/Aug/2024 11:22:21] "GET /projects HTTP/1.1" 200 -
+2024-08-07 11:24:41,351 INFO: 127.0.0.1 - - [07/Aug/2024 11:24:41] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-07 11:24:41,784 INFO: User 12 logged in successfully.
+2024-08-07 11:24:41,784 INFO: 127.0.0.1 - - [07/Aug/2024 11:24:41] "POST /login HTTP/1.1" 200 -
+2024-08-07 11:24:57,428 INFO: 127.0.0.1 - - [07/Aug/2024 11:24:57] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-07 11:24:57,779 INFO: User 12 logged in successfully.
+2024-08-07 11:24:57,780 INFO: 127.0.0.1 - - [07/Aug/2024 11:24:57] "POST /login HTTP/1.1" 200 -
+2024-08-07 11:27:28,304 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-07 11:27:28,340 INFO: 127.0.0.1 - - [07/Aug/2024 11:27:28] "[35m[1mGET /users/null HTTP/1.1[0m" 500 -
+2024-08-07 11:27:28,543 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-07 11:27:28,545 INFO: 127.0.0.1 - - [07/Aug/2024 11:27:28] "[35m[1mGET /users/null HTTP/1.1[0m" 500 -

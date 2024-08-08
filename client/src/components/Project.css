@@ -1,0 +1,27 @@
+#project-card {
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: 25% 25% 25% 25%;
+    
+  }
+  
+  .project-item {
+    border: 0.9px solid #ddd;
+    padding: 6px;
+    margin: 0;
+    box-shadow: 2px 2px 5px #E2725B;
+    border-radius: 8px;
+    justify-content: space-around;
+  }
+  
+  .caption {
+    font-size: 14px;
+    color: #8B8D98;
+  }
+  
+  img {
+    border-radius: 4px;
+    width:350px;
+    height: 250px;
+  }
+  

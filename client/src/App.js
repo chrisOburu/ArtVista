@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/LoginForm';
+
 import LandingPage from './components/LandingPage';
 import UserProfile from './components/UserProfile';
 import ProjectList from './components/ProjectList';
@@ -18,9 +18,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
+        <Route path="/" element={<LandingPage onLoginSuccess={handleLoginSuccess}/>} />
+        <Route path="/register" element={<RegisterForm onLoginSuccess={handleLoginSuccess}/>} />
+        {/* <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} /> */}
         <Route path="/profile" element={<UserProfile token={token} />} />
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/submit-project" element={<ProjectForm token={token} />} />

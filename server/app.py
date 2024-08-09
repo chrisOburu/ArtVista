@@ -63,10 +63,10 @@ def login():
     if user and user.check_password(password):
         access_token = create_access_token(identity=user.id)
         logging.info(f"User {user.id} logged in successfully.")
-        return jsonify(access_token=access_token), 200
+        return jsonify(access_token=access_token,user_id = user.id), 200
     else:
         logging.warning(f"Failed login attempt for username: {username}")
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"msg": "Invalid username or password"}), 401
     
 #register
 @app.route("/register", methods=["POST"])

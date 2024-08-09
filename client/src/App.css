@@ -56,42 +56,6 @@ header a:hover {
   background-color: #f1f1f1;
 }
 
-/* Form Styles */
-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 0 auto 20px auto;
-}
-
-form input,
-form textarea,
-form button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-form input:focus,
-form textarea:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-form button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #0056b3;
-}
 
 /* Profile Page Styles */
 .profile-container {

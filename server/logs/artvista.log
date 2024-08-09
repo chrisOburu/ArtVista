@@ -132,3 +132,84 @@ Traceback (most recent call last):
     raise NotFound() from None
 werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
 2024-08-07 11:27:28,545 INFO: 127.0.0.1 - - [07/Aug/2024 11:27:28] "[35m[1mGET /users/null HTTP/1.1[0m" 500 -
+2024-08-08 21:31:54,826 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-08 21:31:54,827 INFO: [33mPress CTRL+C to quit[0m
+2024-08-08 21:31:54,828 INFO:  * Restarting with stat
+2024-08-08 21:31:56,520 WARNING:  * Debugger is active!
+2024-08-08 21:31:56,555 INFO:  * Debugger PIN: 119-259-687
+2024-08-08 21:32:27,393 INFO: Request: home route accessed
+2024-08-08 21:32:27,396 INFO: 127.0.0.1 - - [08/Aug/2024 21:32:27] "GET / HTTP/1.1" 200 -
+2024-08-08 21:32:29,276 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-08 21:32:29,284 INFO: 127.0.0.1 - - [08/Aug/2024 21:32:29] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-08 21:33:23,229 INFO: Fetched all projects.
+2024-08-08 21:33:23,240 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:23] "GET /projects HTTP/1.1" 200 -
+2024-08-08 21:33:23,285 INFO: Fetched all projects.
+2024-08-08 21:33:23,289 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:23] "GET /projects HTTP/1.1" 200 -
+2024-08-08 21:33:27,232 INFO: Fetched all projects.
+2024-08-08 21:33:27,234 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:27] "GET /projects HTTP/1.1" 200 -
+2024-08-08 21:33:27,276 INFO: Fetched all projects.
+2024-08-08 21:33:27,278 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:27] "GET /projects HTTP/1.1" 200 -
+2024-08-08 21:33:36,819 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:36] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-08 21:33:36,830 WARNING: Failed login attempt for username: YoyoJU
+2024-08-08 21:33:36,831 INFO: 127.0.0.1 - - [08/Aug/2024 21:33:36] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-08 21:34:48,025 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-08 21:34:48,286 INFO:  * Restarting with stat
+2024-08-08 21:34:49,530 WARNING:  * Debugger is active!
+2024-08-08 21:34:49,540 INFO:  * Debugger PIN: 119-259-687
+2024-08-08 21:34:52,558 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-08 21:34:52,708 INFO:  * Restarting with stat
+2024-08-08 21:34:53,533 WARNING:  * Debugger is active!
+2024-08-08 21:34:53,536 INFO:  * Debugger PIN: 119-259-687
+2024-08-08 21:35:31,356 INFO: 127.0.0.1 - - [08/Aug/2024 21:35:31] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 21:35:31,430 ERROR: Error creating user: Email already exists
+2024-08-08 21:35:31,431 INFO: 127.0.0.1 - - [08/Aug/2024 21:35:31] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 21:40:17,307 INFO: 127.0.0.1 - - [08/Aug/2024 21:40:17] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 21:40:17,632 INFO: Created new user: YoyoJU
+2024-08-08 21:40:17,632 INFO: 127.0.0.1 - - [08/Aug/2024 21:40:17] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2024-08-08 21:40:40,984 INFO: 127.0.0.1 - - [08/Aug/2024 21:40:40] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-08 21:40:41,140 INFO: User 13 logged in successfully.
+2024-08-08 21:40:41,140 INFO: 127.0.0.1 - - [08/Aug/2024 21:40:41] "POST /login HTTP/1.1" 200 -
+2024-08-08 21:41:35,121 INFO: 127.0.0.1 - - [08/Aug/2024 21:41:35] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-08 21:41:35,261 WARNING: Failed login attempt for username: YoyoJU
+2024-08-08 21:41:35,261 INFO: 127.0.0.1 - - [08/Aug/2024 21:41:35] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-08 21:43:03,705 INFO: 127.0.0.1 - - [08/Aug/2024 21:43:03] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-08 21:43:03,820 WARNING: Failed login attempt for username: YoyoJU
+2024-08-08 21:43:03,821 INFO: 127.0.0.1 - - [08/Aug/2024 21:43:03] "[31m[1mPOST /login HTTP/1.1[0m" 401 -
+2024-08-08 21:44:43,790 INFO: 127.0.0.1 - - [08/Aug/2024 21:44:43] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 21:44:43,805 ERROR: Error creating user: Username already exists
+2024-08-08 21:44:43,807 INFO: 127.0.0.1 - - [08/Aug/2024 21:44:43] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 22:04:59,971 INFO: Fetched all projects.
+2024-08-08 22:04:59,988 INFO: 127.0.0.1 - - [08/Aug/2024 22:04:59] "GET /projects HTTP/1.1" 200 -
+2024-08-08 22:05:00,087 INFO: Fetched all projects.
+2024-08-08 22:05:00,089 INFO: 127.0.0.1 - - [08/Aug/2024 22:05:00] "GET /projects HTTP/1.1" 200 -
+2024-08-08 22:05:51,841 INFO: 127.0.0.1 - - [08/Aug/2024 22:05:51] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 22:05:51,858 ERROR: Error creating user: Username already exists
+2024-08-08 22:05:51,859 INFO: 127.0.0.1 - - [08/Aug/2024 22:05:51] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 22:06:01,864 INFO: 127.0.0.1 - - [08/Aug/2024 22:06:01] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 22:06:01,878 ERROR: Error creating user: Username already exists
+2024-08-08 22:06:01,878 INFO: 127.0.0.1 - - [08/Aug/2024 22:06:01] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 22:09:37,010 INFO: 127.0.0.1 - - [08/Aug/2024 22:09:37] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 22:09:37,024 ERROR: Error creating user: Username already exists
+2024-08-08 22:09:37,025 INFO: 127.0.0.1 - - [08/Aug/2024 22:09:37] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 22:13:32,063 INFO: 127.0.0.1 - - [08/Aug/2024 22:13:32] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 22:13:32,133 ERROR: Error creating user: Username already exists
+2024-08-08 22:13:32,137 INFO: 127.0.0.1 - - [08/Aug/2024 22:13:32] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-08 22:14:32,866 INFO: 127.0.0.1 - - [08/Aug/2024 22:14:32] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-08 22:14:32,908 ERROR: Error creating user: Username already exists
+2024-08-08 22:14:32,910 INFO: 127.0.0.1 - - [08/Aug/2024 22:14:32] "[31m[1mPOST /register HTTP/1.1[0m" 400 -

@@ -43,6 +43,9 @@ class User(db.Model, SerializerMixin):
     def validate_email(self, key, email):
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("Invalid email address")
+        existing_user = db.session.query(User).filter_by(email=email).first()
+        if existing_user:
+            raise ValueError("Email already exists")
         return email
 
     @validates('username')

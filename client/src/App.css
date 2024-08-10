@@ -78,59 +78,65 @@ header a:hover {
   margin-bottom: 20px;
 }
 
-/* Project List Styles */
-.project-list {
-  list-style: none;
-  padding: 0;
-}
-
-.project-list li {
-  background-color: #fff;
-  margin-bottom: 20px;
+.project-list-container {
   padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Background color */
 }
 
-.project-list h3 {
-  margin-top: 0;
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.project-list p {
-  font-size: 1rem;
-  margin-bottom: 10px;
+.search-input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* Image Gallery Styles */
-.image-gallery {
+.sort-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sort-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.project-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  justify-content: space-between;
 }
 
-.image-gallery img {
-  max-width: 100%;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.project-item {
+  flex: 1 1 calc(33.333% - 20px); /* 3 columns layout with space between */
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  header p {
-    font-size: 1rem;
-  }
-
-  form,
-  .profile-container {
-    padding: 15px;
-  }
-
-  .project-list li {
-    padding: 15px;
-  }
+.project-title {
+  color: #E2725B; /* Accent color */
+  font-size: 1.5em;
+  margin-bottom: 5px;
 }
 
+.project-description {
+  font-size: 1em;
+  color: #555;
+}
+
+.project-rating {
+  font-size: 0.9em;
+  color: #777;
+}

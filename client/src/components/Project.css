@@ -1,8 +1,7 @@
 #project-card {
     display: grid;
-    flex-wrap: wrap;
     grid-template-columns: 25% 25% 25% 25%;
-    
+    gap: 10px;
   }
   
   .project-item {
@@ -12,8 +11,12 @@
     box-shadow: 2px 2px 5px #E2725B;
     border-radius: 8px;
     justify-content: space-around;
+    transition: ease-in;
+   
   }
-  
+  .project-item:hover {
+    transform: translateY(-5px);
+  }
   .caption {
     font-size: 14px;
     color: #8B8D98;
@@ -23,5 +26,11 @@
     border-radius: 4px;
     width:350px;
     height: 250px;
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
   }
   

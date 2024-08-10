@@ -1,40 +1,42 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import './Project.css'
 
 export default function ProfileModals() {
-  const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(null);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = (dialogName) => {
+    setOpenDialog(dialogName);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(null);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson);
+    handleClose();
   };
 
   return (
-    <>
-      <Button variant="text" onClick={handleClickOpen}>
-      Update Email Address
+    <div className="button-container">
+      <Button variant="text" onClick={() => handleClickOpen('email')}>
+        Update Email Address?
       </Button>
       <Dialog
-        open={open}
+        open={openDialog === 'email'}
         onClose={handleClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
       >
         <DialogTitle>Update Email Address</DialogTitle>
@@ -42,12 +44,12 @@ export default function ProfileModals() {
           <TextField
             autoFocus
             margin="dense"
-            id="new-Email"
-            name="new-Email"
+            id="new-email"
+            name="email"
             label="New Email Address"
             type="email"
             fullWidth
-            variant='outlined'
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>
@@ -56,22 +58,15 @@ export default function ProfileModals() {
         </DialogActions>
       </Dialog>
 
-      <Button variant="text" onClick={handleClickOpen}>
-      Change Password
+      <Button variant="text" onClick={() => handleClickOpen('password')}>
+        Change Password?
       </Button>
       <Dialog
-        open={open}
+        open={openDialog === 'password'}
         onClose={handleClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
       >
         <DialogTitle>Change Password</DialogTitle>
@@ -79,32 +74,30 @@ export default function ProfileModals() {
           <TextField
             autoFocus
             margin="dense"
-            id="previous-password"
-            name="previous-password"
+            id="current-password"
+            name="current-password"
             label="Current Password"
             type="password"
             fullWidth
-            variant='outlined'
+            variant="outlined"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="new-password"
             name="new-password"
             label="New Password"
             type="password"
             fullWidth
-            variant='outlined'
+            variant="outlined"
           />
-           <TextField
-            autoFocus
+          <TextField
             margin="dense"
             id="confirm-password"
             name="confirm-password"
             label="Confirm Password"
             type="password"
             fullWidth
-            variant='outlined'
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>
@@ -112,6 +105,66 @@ export default function ProfileModals() {
           <Button type="submit">Save Changes</Button>
         </DialogActions>
       </Dialog>
-         </>
+
+      <Button variant="text" onClick={() => handleClickOpen('username')}>
+        Update Username?
+      </Button>
+      <Dialog
+        open={openDialog === 'username'}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: handleSubmit,
+        }}
+      >
+        <DialogTitle>Update Username</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="new-username"
+            name="username"
+            label="New Username"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit">Save Changes</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Button variant="text" onClick={() => handleClickOpen('profile-picture')}>
+        Update Profile Picture?
+      </Button>
+      <Dialog
+        open={openDialog === 'profile-picture'}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+          onSubmit: handleSubmit,
+        }}
+      >
+        <DialogTitle>Update Profile Picture</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="profile-picture"
+            name="profile-picture"
+            label="Profile Picture URL"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit">Save Changes</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }

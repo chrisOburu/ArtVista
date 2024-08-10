@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserProfile } from '../api';
 import '../styles/profile.css'
+import Footer from './footer';
 
 const UserProfile = ({ token }) => {
   const [profile, setProfile] = useState(null);

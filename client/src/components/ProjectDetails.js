@@ -1,15 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import './Project.css';
 import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Rating, Box, Avatar, TextField, List, ListItemText, ListItemAvatar, ListItemButton } from '@mui/material';
 
-function ProjectDetails({ project }) {
-  // Default the project to an empty object to prevent conditional hooks
-  const [currentProject, setCurrentProject] = useState(project || {});
+function ProjectDetails() {
+  const { id } = useParams();
+  const location = useLocation();
+  const projectFromState = location.state?.project;
+
+  const [currentProject, setCurrentProject] = useState(projectFromState || {});
   const [value, setValue] = useState(currentProject.ratings || 3);
   const [hover, setHover] = useState(-1);
   const [comment, setComment] = useState('');
   const [reviews, setReviews] = useState(currentProject.reviews || []);
+  const [loading, setLoading] = useState(!projectFromState);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!projectFromState) {
+      // Fetch project data if not provided via state
+      const fetchProject = async () => {
+        try {
+          const response = await fetch(`http://localhost:5555/projects/${id}`);
+          if (!response.ok) {
+            throw new Error('Project not found');
+          }
+          const data = await response.json();
+          setCurrentProject(data);
+          setReviews(data.reviews || []);
+          setValue(data.ratings || 3);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchProject();
+    } else {
+      setLoading(false);
+    }
+  }, [id, projectFromState]);
 
   const labels = {
     0: 'No rating',
@@ -38,25 +71,37 @@ function ProjectDetails({ project }) {
       };
       setReviews([...reviews, newReview]);
       setComment('');
+    } else {
+      alert('Comment cannot be empty');
     }
   };
 
-  // If no project data
-  if (!project) {
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!currentProject) {
+    return <div>Project not found</div>;
   }
 
   return (
     <div id="project-details">
-      <h2>{project.title}</h2>
-      <img alt={project.title} src={project.image_url} />
+      <h2>{currentProject.title}</h2>
+      <img 
+        alt={currentProject.title} 
+        src={currentProject.image_url} 
+        onError={(e) => e.target.src = 'default-image.jpg'} 
+      />
       <h3>Project Description</h3>
-      <p>{project.description}</p>
+      <p>{currentProject.description}</p>
 
-      {/* Edit and Delete Icons */}
-      <i className="editor-icon" onClick={() => alert('Edit clicked')} />
-      <i className="delete-icon" onClick={() => alert('Delete clicked')} />
-
+      <EditIcon></EditIcon>
+      <DeleteIcon></DeleteIcon>
+      
       <Rating
         name="hover-feedback"
         value={value}

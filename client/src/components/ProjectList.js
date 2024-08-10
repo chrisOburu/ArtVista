@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '/home/dorcas/Phase5/ArtVista/client/src/App.css';
+import '../App.css';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);

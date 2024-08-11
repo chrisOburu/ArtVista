@@ -25,14 +25,17 @@ form textarea:focus {
 }
 
 form button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+  color: #532F27;
+  background-color: #e2725b;
 }
 
 form button:hover {
-  background-color: #0056b3;
+  background-color: white;
+  outline: #e2725b;
+  border-style: solid;
+  border-color: #e2725b;
+  border-width: 2px;
+  color: #532F27;
 }
 
 
@@ -138,4 +141,10 @@ form button:hover {
 
 .popup-content button:hover {
   background-color: #0056b3;
+}
+
+.register-text{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

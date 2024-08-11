@@ -1,0 +1,56 @@
+
+
+#main-section{
+    padding: 20px;
+    background-color: #FFF7F5;
+}
+#main-projects{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 5px;
+    padding-top: 15px;
+}
+#main-banner{
+    min-width: 100vw;
+    background-color: #FFF7F5;
+
+}
+#main-banner>*:hover{
+    background-color: #fefcfcf1;
+}
+.banner-image{
+    object-fit: cover;
+    object-position: center;
+    min-width: 100vw;
+}
+
+.banner-title{
+
+    padding: 10px;
+
+}
+.banner-details{
+
+    min-width: 500px;
+    background-color: #FFF7F5;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+
+}
+.banner-user{
+    padding:5px;
+    min-height: 100px;
+    border-radius: 65px;
+}
+.banner-picture{
+    max-width: 90px;
+    max-height: 100px;
+    border-radius: 65px;
+}
+.banner-caption{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}

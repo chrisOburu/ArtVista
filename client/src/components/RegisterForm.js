@@ -84,7 +84,7 @@ const RegisterForm = ({ onLoginSuccess }) => {
   return (
     <>
       <Header onLoginSuccess={onLoginSuccess}/>
-      <h1>Register</h1>
+      <h1 className='register-text'>Register</h1>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input

@@ -1,6 +1,6 @@
 import React from "react";
 import '../styles/main.css'
-import  ProjectCard from './ProjectCard'
+import  BannerCard from './bannerCard'
 
 function Main(){
     const userPicture = "https://c4.wallpaperflare.com/wallpaper/531/525/90/tv-show-peaky-blinders-wallpaper-preview.jpg"
@@ -37,9 +37,9 @@ function Main(){
                         
                 </div>
                 <div id="main-projects">
-                    <ProjectCard />
-                    <ProjectCard />
-                    <ProjectCard /> 
+                    <BannerCard />
+                    <BannerCard />
+                    <BannerCard /> 
                 </div>
             </div>
         

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './Project.css';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,6 +9,7 @@ import { Rating, Box, Avatar, TextField, List, ListItemText, ListItemAvatar, Lis
 function ProjectDetails() {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const projectFromState = location.state?.project;
 
   const [currentProject, setCurrentProject] = useState(projectFromState || {});
@@ -21,7 +22,6 @@ function ProjectDetails() {
 
   useEffect(() => {
     if (!projectFromState) {
-      // Fetch project data if not provided via state
       const fetchProject = async () => {
         try {
           const response = await fetch(`http://localhost:5555/projects/${id}`);
@@ -68,11 +68,58 @@ function ProjectDetails() {
         comment,
         date: new Date().toLocaleDateString(),
         avatar_url: '', 
+        user: { username: 'Anonymous' }, // Example username
       };
-      setReviews([...reviews, newReview]);
+      const updatedReviews = [...reviews, newReview];
+      setReviews(updatedReviews);
       setComment('');
+
+      fetch(`http://localhost:5555/projects/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ratings: value,
+          reviews: updatedReviews,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to update reviews');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Successfully updated reviews:', data);
+        })
+        .catch((error) => {
+          console.error('Error updating reviews:', error);
+          setReviews(reviews); 
+        });
     } else {
       alert('Comment cannot be empty');
+    }
+  };
+
+  const handleEdit = () => {
+    alert('Edit');
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this project?')) {
+      try {
+        const response = await fetch(`http://localhost:5555/projects/${id}`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to delete project');
+        }
+        alert('Project deleted successfully');
+        navigate('/projects');
+      } catch (err) {
+        console.error('Error deleting project:', err);
+      }
     }
   };
 
@@ -98,27 +145,82 @@ function ProjectDetails() {
       />
       <h3>Project Description</h3>
       <p>{currentProject.description}</p>
-
-      <EditIcon></EditIcon>
-      <DeleteIcon></DeleteIcon>
       
-      <Rating
-        name="hover-feedback"
-        value={value}
-        precision={0.5}
-        getLabelText={getLabelText}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        onChangeActive={(event, newHover) => {
-          setHover(newHover);
-        }}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
+      <div className="card-author">By: {currentProject.owner.name}</div>
 
-      {value !== null && (
-        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-      )}
+      <div className="icon-actions">
+        <EditIcon className='editor-icon' onClick={handleEdit} />
+        <DeleteIcon className='delete-icon' onClick={handleDelete} />
+      </div>
+      <div className="rating-title">
+        <h4>Rate this project</h4>
+      </div>
+      <div className="rating-container">
+        <Rating
+          name="hover-feedback"
+          value={value}
+          precision={0.5}
+          getLabelText={getLabelText}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+          }}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        {value !== null && (
+          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+        <Rating
+          name="hover-feedback"
+          value={value}
+          precision={0.5}
+          getLabelText={getLabelText}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+          }}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        {value !== null && (
+          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+        <Rating
+          name="hover-feedback"
+          value={value}
+          precision={0.5}
+          getLabelText={getLabelText}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+          }}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        {value !== null && (
+          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+        <Rating
+          name="hover-feedback"
+          value={value}
+          precision={0.5}
+          getLabelText={getLabelText}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+          }}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        {value !== null && (
+          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+      </div>
 
       <TextField
         id="outlined-controlled"
@@ -134,14 +236,21 @@ function ProjectDetails() {
       />
       <button onClick={handleCommentSubmit}>Submit Comment</button>
 
-      {/* List of Comments */}
       <List>
         {reviews.map((review, index) => (
           <ListItemButton key={index}>
             <ListItemAvatar>
               <Avatar alt="Profile Picture" src={review.avatar_url} />
             </ListItemAvatar>
-            <ListItemText primary={review.comment} secondary={`Date: ${review.date}`} />
+            <ListItemText
+              primary={
+                <>
+                  <div>{review.comment}</div>
+                  <div className="review-username">{review.user.username}</div>
+                </>
+              }
+              secondary={`Date: ${review.date}`}
+            />
           </ListItemButton>
         ))}
       </List>

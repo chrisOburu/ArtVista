@@ -1,37 +1,215 @@
-#project-card {
+.card-grid {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    gap: 10px;
-  }
-  
-  .project-item {
-    border: 0.9px solid #ddd;
-    padding: 6px;
-    margin: 0;
-    box-shadow: 2px 2px 5px #E2725B;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 20px;
+    background-color: #FFDAD1;
+}
+.card {
+    background-color: #fff;
     border-radius: 8px;
-    justify-content: space-around;
-    transition: ease-in;
-   
-  }
-  .project-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+.card:hover {
     transform: translateY(-5px);
-  }
-  .caption {
-    font-size: 14px;
-    color: #8B8D98;
-  }
+}
+.card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
   
-  img {
-    border-radius: 4px;
-    width:350px;
-    height: 250px;
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-  }
-  
-  
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #E2725B;
+}
+
+.card-description {
+  font-size: 1rem;
+  color: #1E1F24;
+  /* color: #555; */
+  margin-bottom: 10px;
+}
+
+.card-author {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.caption {
+  padding: 10px 15px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E2725B;
+}
+
+.stars svg {
+  margin-right: 2px;
+}
+
+#project-details {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+#project-details h2 {
+  font-size: 2rem;
+  color: #E2725B;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#project-details img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#project-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+#project-details p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.card-author {
+  font-size: 0.9rem;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.icon-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.icon-actions .editor-icon, .icon-actions .delete-icon {
+  cursor: pointer;
+  color: #E2725B;
+  transition: color 0.3s ease;
+}
+
+.icon-actions .editor-icon:hover, .icon-actions .delete-icon:hover {
+  color: #a64e3b;
+}
+
+.rating-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-box .stars {
+  color: #E2725B;
+}
+
+.rating-box .stars svg {
+  margin-right: 2px;
+}
+
+button {
+  background-color: #E2725B;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #a64e3b;
+}
+
+.MuiTextField-root {
+  margin-top: 20px;
+}
+
+.MuiList-root {
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.MuiListItemButton-root {
+  border-bottom: 1px solid #eee;
+}
+
+.MuiListItemText-primary {
+  font-size: 1rem;
+  color: #333;
+}
+
+.MuiListItemText-secondary {
+  font-size: 0.8rem;
+  color: #888;
+}
+.review-username {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+#project-details {
+  padding: 20px;
+}
+
+.card-author {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.icon-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.editor-icon,
+.delete-icon {
+  cursor: pointer;
+}
+
+.review-username {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}

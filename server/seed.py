@@ -25,13 +25,16 @@ with app.app_context():
     db.session.add_all(users)
     db.session.commit()
 
+    # Define possible image URLs with folder path
+    image_urls = [f'image{i}.jpg' for i in range(7)]
+
     # Create fake projects
     projects = []
     for _ in range(10):
         project = Project(
             title=faker.sentence(nb_words=4),
             description=faker.paragraph(nb_sentences=3),
-            image_url=faker.image_url(),
+            image_url=random.choice(image_urls),  # Randomly select from images/image0.jpg to images/image6.jpg
             link=faker.url(),
             owner_id=random.choice(users).id,
             tags=", ".join(faker.words(nb=3))

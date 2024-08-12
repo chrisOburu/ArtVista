@@ -1,23 +1,14 @@
-// import axios from 'axios';
-
-// const API_URL = 'http://localhost:5555'; // Update with your backend URL
-
-// const api = axios.create({
-//   baseURL: API_URL,
-// });
-
-// export const registerUser = (data) => api.post('/users', data);
-// export const loginUser = (data) => api.post('/login', data);
-// export const getUserProfile = (token) => api.get('/profile', { headers: { Authorization: `Bearer ${token}` } });
-
-// export default api;
-
-
 import axios from 'axios';
 
 // API URL base
 const API_BASE_URL = 'https://artvista-dl5j.onrender.com/'; // Replace with your backend URL
 //const API_BASE_URL = 'http://127.0.0.1:5555'; // Replace with your backend URL
+
+// Configure axios to include the token in all requests
+const token = localStorage.getItem('jwtToken');
+// if (token) {
+//   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+// }
 
 export const getProjects = async () => {
   try {
@@ -61,7 +52,16 @@ export const loginUser = async (credentials) => {
 
 export const createProject = async (projectData) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/projects`, projectData);
+      const response = await axios.post(`${API_BASE_URL}/projects`, projectData,
+        {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+
+          }
+        }
+
+      );
       return response;
     } catch (error) {
       console.error('Error creating project:', error);
@@ -69,10 +69,10 @@ export const createProject = async (projectData) => {
     }
   };
 
-export default {
-  getProjects,
-  getUserProfile,
-  registerUser,
-  loginUser,
-  createProject,
-};
+// export default {
+//   getProjects,
+//   getUserProfile,
+//   registerUser,
+//   loginUser,
+//   createProject,
+// };

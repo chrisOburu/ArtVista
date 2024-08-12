@@ -1,22 +1,57 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Project.css';
+import { Link } from 'react-router-dom';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 
 function ProjectCard({ projects }) {
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <>
+        {Array(fullStars)
+          .fill()
+          .map((_, i) => (
+            <StarIcon key={`full-${i}`} />
+          ))}
+        {halfStar && <StarHalfIcon />}
+        {Array(emptyStars)
+          .fill()
+          .map((_, i) => (
+            <StarBorderIcon key={`empty-${i}`} />
+          ))}
+      </>
+    );
+  };
+
   return (
-    <div id="project-card">
+    <div className="card-grid">
       {projects.map((project) => (
-        <div key={project.id} className="project-item">
+        <div key={project.id} className="card">
           <Link to={`/projects/${project.id}`} state={{ project }}>
-            <h3>{project.title}</h3>
-            <img alt={project.title} src={project.image_url} />
+            <div className="card-image">
+              <img src={project.image_url} alt={project.title} />
+            </div>
+            <div className="card-content">
+              <h3 className="card-title">{project.title}</h3>
+              <p className="card-description">{project.description}</p>
+              <p className="card-author">By: {project.owner.name}</p>
+            </div>
           </Link>
           <div className="caption">
+            <div className="stars">
+              {renderStars(project.ratings || 0)}
+            </div>
             <p>
-              Rating: {project.ratings} <span>{project.reviews.length} {project.reviews.length > 1 ? 'comments' : 'comment'}</span>
+              <span>
+                {project.reviews.length} {project.reviews.length === 1 ? 'comment' : 'comments'}
+              </span>
             </p>
           </div>
-          <p>{project.description}</p>
         </div>
       ))}
     </div>

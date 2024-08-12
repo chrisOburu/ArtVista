@@ -1,0 +1,686 @@
+{
+	"info": {
+		"_postman_id": "f3f51853-a3c4-4f7e-a7b0-763ee94b5278",
+		"name": "ArtVista",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33356306"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:5555/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"jdoe\",\n    \"password\": \"qwerty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3NTUwMSwianRpIjoiZGY0ZDlmZmMtZWEwMC00NTU0LWJkNjEtMThkNTkyNDY4ZmYwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3NTUwMSwiY3NyZiI6ImNiZWE4ZDg5LTY4ZTktNDAxOC04MzA4LThhZTIwZjEzNzBhMyIsImV4cCI6MTcyMzQ3NjQwMX0.vMi0VDBzdK2aq41NH3g7KctDdQBcVexUBtAM_HF6Sc4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5555/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"john\",\n    \"username\": \"jdoe\",\n    \"email\": \"jdoe@gmail.com\",\n    \"password\": \"qwerty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/users/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg2ODcxOCwianRpIjoiM2E2ZmVkMmItMDk2MC00OGUzLTljZjUtMmNjYzJmMDYzNGJlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMjg2ODcxOCwiY3NyZiI6IjQ2N2M0NGM0LTcxMTEtNDNjOS1iYjRjLWNjZGFiZWViNTY5YiIsImV4cCI6MTcyMjg2OTYxOH0.GNCIHsL7BIFnc0GkMrNSZwi49kq1JyBT_j-KjMB_3bU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \"username\": \"jdoe\",\n    \"user_role\": \"admin\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/users/11",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"users",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/users/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg2NjM1OSwianRpIjoiMTJkNDRlZTEtNWUxZi00ZGRiLTgxNjEtNzZiMmZhNDVkODZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTIsIm5iZiI6MTcyMjg2NjM1OSwiY3NyZiI6ImQ0ODA1NWMxLTc4MTQtNDU2ZC04MWE3LTY3YjJkMGM1NTY0NyIsImV4cCI6MTcyMjg2NzI1OX0.OafzdRYFSArYdI-kbpvyxkPxqQdDCdzFxwO16FTzws8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5555/users/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"users",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/projects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg2NjM1OSwianRpIjoiMTJkNDRlZTEtNWUxZi00ZGRiLTgxNjEtNzZiMmZhNDVkODZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTIsIm5iZiI6MTcyMjg2NjM1OSwiY3NyZiI6ImQ0ODA1NWMxLTc4MTQtNDU2ZC04MWE3LTY3YjJkMGM1NTY0NyIsImV4cCI6MTcyMjg2NzI1OX0.OafzdRYFSArYdI-kbpvyxkPxqQdDCdzFxwO16FTzws8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5555/projects",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/projects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3NjI1NSwianRpIjoiNmFlMzJhMjQtNjdiNS00YTUzLWIzZmMtZmQzZjg0NDYyNWM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3NjI1NSwiY3NyZiI6Ijg3Zjk3M2MyLTkzYWEtNDQyOS05YmI3LWU1ZmI4OTA3ZGQ2ZCIsImV4cCI6MTcyMzQ3NzE1NX0.INITqj6firScSNLBmRO21ai8CTs567xRi56dq5RslQY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"title\" : \"Project X\",\n    \"description\" : \"Information about project X\",\n    \"image_url\": \"https://placekitten.com/480/403\",\n    \"link\": \"http://www.lutz-phillips.com/\",\n    \"tags\" : \"X, awesome, special\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/projects",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/projects/1",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"title\" : \"Project X\",\n    \"description\" : \"Edited Information about project X\",\n    \"tags\" : \"X, awesomeness, special\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/projects/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/projects/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg2NzM0MCwianRpIjoiOTQyM2ZjOWEtMDE2MC00NDAzLTgzZTItNmZmNDVlYzBmMDlkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTIsIm5iZiI6MTcyMjg2NzM0MCwiY3NyZiI6IjJlODVlMWEzLTYzM2MtNGNiYS04ZjNlLTY2NGU3YmEwNDVmOSIsImV4cCI6MTcyMjg2ODI0MH0.ITP5a6by9ujZTKxCn1HUDsn2MMzxWSW2Rv8pHWnTUjo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/projects/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/reviews",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/reviews",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/reviews",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3NjI1NSwianRpIjoiNmFlMzJhMjQtNjdiNS00YTUzLWIzZmMtZmQzZjg0NDYyNWM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3NjI1NSwiY3NyZiI6Ijg3Zjk3M2MyLTkzYWEtNDQyOS05YmI3LWU1ZmI4OTA3ZGQ2ZCIsImV4cCI6MTcyMzQ3NzE1NX0.INITqj6firScSNLBmRO21ai8CTs567xRi56dq5RslQY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"comment\": \"No comment\",\n    \"project_id\" : 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/reviews",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/reviews/21",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg4Njc5MCwianRpIjoiMzI3NzQ0YWEtYWY3Yi00YTEyLTkyMzQtZTg3MDM4OGI2MDRkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMjg4Njc5MCwiY3NyZiI6ImU3MDQyNDZmLTY0YzEtNDFlMy05YWI5LTMzNjBjZWQxOGM3MCIsImV4cCI6MTcyMjg4NzY5MH0.yt7cUQ0oHhROF1O9IzrYnRb2mD4qszo-NFHLppWUKqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"comment\": \"It was awesome\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/reviews/21",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"reviews",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/reviews/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMjg4Njc5MCwianRpIjoiMzI3NzQ0YWEtYWY3Yi00YTEyLTkyMzQtZTg3MDM4OGI2MDRkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMjg4Njc5MCwiY3NyZiI6ImU3MDQyNDZmLTY0YzEtNDFlMy05YWI5LTMzNjBjZWQxOGM3MCIsImV4cCI6MTcyMjg4NzY5MH0.yt7cUQ0oHhROF1O9IzrYnRb2mD4qszo-NFHLppWUKqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/reviews/11",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"reviews",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/ratings",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/ratings",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"ratings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/ratings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3ODYzMCwianRpIjoiMWFjOTRjNzUtM2M4MS00NGRiLWFlZjctOGJmOWRhMjIxMzQwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3ODYzMCwiY3NyZiI6ImI3OTA4NDY1LWQwYTMtNDhmOC05NDVkLTJiZmM1YWU2MmQ5YyIsImV4cCI6MTcyMzQ3OTUzMH0.jsE4m1tW9bkchyYMt9Zr4veuORpoNr_q9kXJ_wxwOw8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"design_rating\": 1.5,\n    \"usability_rating\": 2.5,\n    \"functionality_rating\": 5,\n    \"project_id\": 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/ratings",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"ratings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/ratings/13",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3OTg2NCwianRpIjoiNTUzNzIwMDEtYTQ1MC00ZDIwLWJiM2ItZjE2ZGE3NWU1NjgyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3OTg2NCwiY3NyZiI6IjkyYWU3YzU3LWJhMDEtNGEzYi05N2E5LTgxZmEwYzcxYzc2YSIsImV4cCI6MTcyMzQ4MDc2NH0.BK6WhGXrzM25q-K5790qcwGptuvXRX7ZQnjiVWTjlII",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"design_rating\": 1.5,\n    \"usability_rating\": 2.5,\n    \"functionality_rating\": 5,\n    \"project_id\": 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/ratings/13",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"ratings",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/ratings/13",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3ODYzMCwianRpIjoiMWFjOTRjNzUtM2M4MS00NGRiLWFlZjctOGJmOWRhMjIxMzQwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3ODYzMCwiY3NyZiI6ImI3OTA4NDY1LWQwYTMtNDhmOC05NDVkLTJiZmM1YWU2MmQ5YyIsImV4cCI6MTcyMzQ3OTUzMH0.jsE4m1tW9bkchyYMt9Zr4veuORpoNr_q9kXJ_wxwOw8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"functionality_rating\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/ratings/13",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"ratings",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5555/ratings/13",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzQ3ODYzMCwianRpIjoiMWFjOTRjNzUtM2M4MS00NGRiLWFlZjctOGJmOWRhMjIxMzQwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTEsIm5iZiI6MTcyMzQ3ODYzMCwiY3NyZiI6ImI3OTA4NDY1LWQwYTMtNDhmOC05NDVkLTJiZmM1YWU2MmQ5YyIsImV4cCI6MTcyMzQ3OTUzMH0.jsE4m1tW9bkchyYMt9Zr4veuORpoNr_q9kXJ_wxwOw8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/ratings/13",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"ratings",
+						"13"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,5 @@
 from app import app, db
-from models import User, Project, Review
+from models import User, Project, Review, Rating
 from faker import Faker
 import random
 
@@ -41,13 +41,11 @@ with app.app_context():
     db.session.add_all(projects)
     db.session.commit()
 
-    # Create fake reviews with dates
+    # Create fake reviews
     reviews = []
     for _ in range(20):
         review = Review(
-            #date=faker.date_this_year(),
             comment=faker.sentence(),
-            rating=random.randint(1, 5),
             user_id=random.choice(users).id,
             project_id=random.choice(projects).id
         )
@@ -56,4 +54,27 @@ with app.app_context():
     db.session.add_all(reviews)
     db.session.commit()
 
-    print("Database seeded successfully with Faker!")
+    # Create fake ratings
+    ratings = []
+    for _ in range(12):
+    # Ensure there are users and projects available
+        if not users or not projects:
+            raise ValueError("No users or projects found in the database")
+        
+        rating = Rating(
+            design_rating=round(random.uniform(1.0, 5.0), 1),
+            usability_rating=round(random.uniform(1.0, 5.0), 1),
+            functionality_rating=round(random.uniform(1.0, 5.0), 1),
+            user_id=random.choice(users).id,
+            project_id=random.choice(projects).id
+        )
+        ratings.append(rating)
+
+    try:
+        db.session.add_all(ratings)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print(f"An error occurred: {e}")
+
+print("Database seeded successfully with Faker!")

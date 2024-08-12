@@ -76,9 +76,10 @@ class Project(db.Model, SerializerMixin):
     ratings = db.relationship('Rating', back_populates='project', cascade='all, delete-orphan')
 
     serialize_rules = (
-        '-reviews.project',  # Prevent recursive serialization
-        '-user.projects',  # Prevent recursive serialization
-        '-ratings.project',  # Prevent recursive serialization
+        '-reviews.project',
+        '-user.projects',
+        '-ratings.project',
+        'average_rating',
     )
 
     @property

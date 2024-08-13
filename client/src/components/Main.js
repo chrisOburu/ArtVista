@@ -18,30 +18,45 @@ function Main(){
 
     return(
         <>
-            <div id="main-section">
-                <div id="main-banner">
-                        <h1 className="banner-title">{banner.title}</h1>
-                        <img className="banner-image" src={banner.image_url} alt=" " />
-                        <div className="banner-details">
-                                <span className="banner-user">
-                                    <img className="banner-picture" src={userPicture} alt="" />
-                                </span>
-                                <h2 className="banner-user-name"> Samuel King</h2>
-                                <div className="banner-caption">
-                                    <h3>
-                                    Rating: {banner.ratings} <span>{banner.reviews.length} {banner.reviews.length > 1 ? 'comments' : 'comment'}</span>
-                                    </h3>
-                            </div>
+            <div id="project-banner">
+                <div id="project-details">
 
-                        </div>
-                        
+                    <a href="https://camillemormal.com/" id="site-link" target="new">
+                        <h1 id="site-url">
+                            camillemormal
+                        </h1>
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </a>
+
+
+
                 </div>
-                <div id="main-projects">
-                    <BannerCard />
-                    <BannerCard />
-                    <BannerCard /> 
+                <iframe id="iframe-screen" src="https://camillemormal.com/" height="700" width="1300" allowFullScreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+
+           </div>
+           <div id="project-highlights">
+
+                <div id="project-info">
+                    <div id="user-details">
+                        <img src="https://images.unsplash.com/photo-1721332149274-586f2604884d?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" id="user-image" alt="" />
+                    </div>
+                    <div id="project-reviews">
+                        <h1 id="project-rating">4.0</h1>
+                        <p>comments</p>
+                        <i class="bi bi-chat-dots">
+                            
+                        </i>
+                       
+                    </div>
                 </div>
+                    <a href="/projects" id="site-link" >
+                            <h1 id="site-url">
+                               view more projects
+                            </h1>
+                            <i class="bi bi-arrow-right-circle-fill"></i>
+                    </a>
             </div>
+
         
         </>
     )

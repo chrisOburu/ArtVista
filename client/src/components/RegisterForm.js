@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { registerUser } from '../api';
 import './Forms.css';
 import LoginForm from './LoginForm';
-import Popup from './Popup';
+import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
+
+Modal.setAppElement('#root');
 
 const RegisterForm = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -20,6 +22,8 @@ const RegisterForm = ({ onLoginSuccess }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false); // State for message modal
+  const [messageType, setMessageType] = useState(''); // State for the message type (success or error)
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
@@ -52,30 +56,43 @@ const RegisterForm = ({ onLoginSuccess }) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+        setErrors(validationErrors);
+        return;
     }
 
     setIsSubmitting(true);
     setPopupMessage('');
+    setMessageType('');
     try {
-      const response = await registerUser(formData);
-      setPopupMessage(response.data);
-      setFormData({
-        name: '',
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-      navigate('/');
+        const response = await registerUser(formData);
+        setPopupMessage('Registration successful!');
+        setMessageType('success'); // Set message type to success
+        setIsMessageModalOpen(true); // Show the message modal immediately
+        setFormData({
+            name: '',
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+        });
+
+        // Close the modal after a delay, then navigate to the home page
+        setTimeout(() => {
+            setIsMessageModalOpen(false);
+            //navigate('/');
+            openModal();
+        }, 3000);
     } catch (error) {
-      setPopupMessage(`Registration failed. ${error}`);
-      //console.error('Registration failed', error);
+        setPopupMessage(`Registration failed. ${error.message}`);
+        setMessageType('error'); // Set message type to error
+        setIsMessageModalOpen(true); // Show the message modal immediately
+        setTimeout(() => {
+            setIsMessageModalOpen(false);
+        }, 3000);
     } finally {
-      setIsSubmitting(false);
+        setIsSubmitting(false);
     }
-  };
+};
 
   const closePopup = () => {
     setPopupMessage('');
@@ -83,7 +100,7 @@ const RegisterForm = ({ onLoginSuccess }) => {
 
   return (
     <>
-      <Header onLoginSuccess={onLoginSuccess}/>
+      <Header onLoginSuccess={onLoginSuccess} />
       <h1 className='register-text'>Register</h1>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
@@ -155,11 +172,25 @@ const RegisterForm = ({ onLoginSuccess }) => {
           onLoginSuccess={onLoginSuccess}
         />
       </div>
-      {popupMessage && <Popup message={popupMessage} onClose={closePopup} />}
+
+      {/* Independent Message Modal */}
+      <Modal
+        isOpen={isMessageModalOpen}
+        onRequestClose={() => setIsMessageModalOpen(false)}
+        contentLabel="Message"
+        className={`message-modal ${messageType === 'success' ? 'success' : 'error'}`} // Conditionally apply class
+        overlayClassName="message-modal-overlay"
+      >
+        <div className="message-content">
+          <p>{popupMessage}</p>
+        </div>
+      </Modal>
+
       <Footer />
     </>
   );
 };
 
 export default RegisterForm;
+
 

@@ -37,7 +37,7 @@ function ProjectDetails() {
     if (!projectFromState) {
       const fetchProject = async () => {
         try {
-          const response = await fetch(`http://localhost:5555/projects/${id}`);
+          const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`);
           if (!response.ok) {
             throw new Error('Project not found');
           }
@@ -89,7 +89,7 @@ function ProjectDetails() {
       setReviews(updatedReviews);
       setComment('');
 
-      fetch(`http://localhost:5555/reviews/${id}`, {
+      fetch(`https://artvista-dl5j.onrender.com/reviews/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ function ProjectDetails() {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        const response = await fetch(`http://localhost:5555/projects/${id}`, {
+        const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {

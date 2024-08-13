@@ -19,6 +19,7 @@ const LoginForm = ({ isOpen, onRequestClose,onLoginSuccess}) => {
     try {
       const response = await loginUser(formData);
       //console.log(response.data)
+      localStorage.setItem('jwtToken', response.data.access_token);
       onLoginSuccess(response.data.access_token);
       onRequestClose();
     } catch (error) {

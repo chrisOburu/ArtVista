@@ -213,3 +213,678 @@ werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on 
 2024-08-08 22:14:32,866 INFO: 127.0.0.1 - - [08/Aug/2024 22:14:32] "OPTIONS /register HTTP/1.1" 200 -
 2024-08-08 22:14:32,908 ERROR: Error creating user: Username already exists
 2024-08-08 22:14:32,910 INFO: 127.0.0.1 - - [08/Aug/2024 22:14:32] "[31m[1mPOST /register HTTP/1.1[0m" 400 -
+2024-08-12 15:15:36,782 ERROR: Error: Directory migrations already exists and is not empty
+2024-08-12 15:15:42,120 ERROR: Error: Directory migrations already exists and is not empty
+2024-08-12 15:17:58,502 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 15:17:58,503 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 15:17:58,504 INFO:  * Restarting with stat
+2024-08-12 15:17:58,910 WARNING:  * Debugger is active!
+2024-08-12 15:17:58,932 INFO:  * Debugger PIN: 640-244-830
+2024-08-12 15:18:14,870 INFO: Request: home route accessed
+2024-08-12 15:18:14,871 INFO: 127.0.0.1 - - [12/Aug/2024 15:18:14] "GET / HTTP/1.1" 200 -
+2024-08-12 15:18:15,993 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:18:16,012 INFO: 127.0.0.1 - - [12/Aug/2024 15:18:16] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:18:20,287 INFO: Fetched all projects.
+2024-08-12 15:18:20,289 INFO: 127.0.0.1 - - [12/Aug/2024 15:18:20] "GET /projects HTTP/1.1" 200 -
+2024-08-12 15:18:20,540 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:18:20,543 INFO: 127.0.0.1 - - [12/Aug/2024 15:18:20] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:19:41,157 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/seed.py', reloading
+2024-08-12 15:19:41,272 INFO:  * Restarting with stat
+2024-08-12 15:19:41,756 WARNING:  * Debugger is active!
+2024-08-12 15:19:41,758 INFO:  * Debugger PIN: 640-244-830
+2024-08-12 15:21:30,224 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 15:21:30,224 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 15:21:30,225 INFO:  * Restarting with stat
+2024-08-12 15:21:30,654 WARNING:  * Debugger is active!
+2024-08-12 15:21:30,656 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 15:21:46,652 INFO: Fetched all projects.
+2024-08-12 15:21:46,653 INFO: 127.0.0.1 - - [12/Aug/2024 15:21:46] "GET /projects HTTP/1.1" 200 -
+2024-08-12 15:21:47,202 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:21:47,209 INFO: 127.0.0.1 - - [12/Aug/2024 15:21:47] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:22:13,007 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:22:13,010 INFO: 127.0.0.1 - - [12/Aug/2024 15:22:13] "[35m[1mGET /images/mage%205.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:22:13,255 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:22:13,257 INFO: 127.0.0.1 - - [12/Aug/2024 15:22:13] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:26:58,683 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/seed.py', reloading
+2024-08-12 15:26:59,880 INFO:  * Restarting with stat
+2024-08-12 15:27:01,433 WARNING:  * Debugger is active!
+2024-08-12 15:27:01,449 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 15:27:19,344 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 15:27:19,344 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 15:27:19,345 INFO:  * Restarting with stat
+2024-08-12 15:27:19,846 WARNING:  * Debugger is active!
+2024-08-12 15:27:19,850 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 15:27:26,982 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:27:26,997 INFO: 127.0.0.1 - - [12/Aug/2024 15:27:26] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:27:33,753 INFO: Fetched all projects.
+2024-08-12 15:27:33,755 INFO: 127.0.0.1 - - [12/Aug/2024 15:27:33] "GET /projects HTTP/1.1" 200 -
+2024-08-12 15:27:33,986 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:27:33,988 INFO: 127.0.0.1 - - [12/Aug/2024 15:27:33] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:29:52,905 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:29:52,908 INFO: 127.0.0.1 - - [12/Aug/2024 15:29:52] "[35m[1mGET /images/images0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:29:53,206 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:29:53,210 INFO: 127.0.0.1 - - [12/Aug/2024 15:29:53] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:30:14,678 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:30:14,679 INFO: 127.0.0.1 - - [12/Aug/2024 15:30:14] "[35m[1mGET /images/images/images0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:30:14,912 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:30:14,914 INFO: 127.0.0.1 - - [12/Aug/2024 15:30:14] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:32:50,311 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:32:50,313 INFO: 127.0.0.1 - - [12/Aug/2024 15:32:50] "[35m[1mGET /images/images0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:32:50,791 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:32:50,792 INFO: 127.0.0.1 - - [12/Aug/2024 15:32:50] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:36:31,061 INFO: 127.0.0.1 - - [12/Aug/2024 15:36:31] "GET /images/image0.jpg HTTP/1.1" 200 -
+2024-08-12 15:36:31,513 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:36:31,524 INFO: 127.0.0.1 - - [12/Aug/2024 15:36:31] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:44:22,033 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:22,065 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:22] "[35m[1mGET /images/image0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:44:22,544 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:22,547 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:22] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:44:33,543 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:33,551 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:33] "[35m[1mGET /images/image0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:44:33,800 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:33,803 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:33] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:44:34,586 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/server/app.py", line 56, in get_image
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/helpers.py", line 552, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/utils.py", line 575, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:34,589 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:34] "[35m[1mGET /images/image0.jpg HTTP/1.1[0m" 500 -
+2024-08-12 15:44:34,832 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:44:34,885 INFO: 127.0.0.1 - - [12/Aug/2024 15:44:34] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:44:43,258 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 15:44:43,258 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 15:44:43,258 INFO:  * Restarting with stat
+2024-08-12 15:44:44,100 WARNING:  * Debugger is active!
+2024-08-12 15:44:44,112 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 15:47:14,002 INFO: 127.0.0.1 - - [12/Aug/2024 15:47:14] "GET /images/image0.jpg HTTP/1.1" 200 -
+2024-08-12 15:47:14,407 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:47:14,448 INFO: 127.0.0.1 - - [12/Aug/2024 15:47:14] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:47:34,392 INFO: 127.0.0.1 - - [12/Aug/2024 15:47:34] "GET /images/image5.jpg HTTP/1.1" 200 -
+2024-08-12 15:47:34,637 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 15:47:34,641 INFO: 127.0.0.1 - - [12/Aug/2024 15:47:34] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 15:52:30,415 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 15:52:30,778 INFO:  * Restarting with stat
+2024-08-12 15:52:31,461 WARNING:  * Debugger is active!
+2024-08-12 15:52:31,471 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 15:52:32,489 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 15:52:32,620 INFO:  * Restarting with stat
+2024-08-12 15:52:33,107 WARNING:  * Debugger is active!
+2024-08-12 15:52:33,110 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 16:10:05,305 INFO: 127.0.0.1 - - [12/Aug/2024 16:10:05] "OPTIONS /register HTTP/1.1" 200 -
+2024-08-12 16:10:05,824 INFO: Created new user: yryt6780
+2024-08-12 16:10:05,829 INFO: 127.0.0.1 - - [12/Aug/2024 16:10:05] "[35m[1mPOST /register HTTP/1.1[0m" 201 -
+2024-08-12 16:10:55,350 INFO: 127.0.0.1 - - [12/Aug/2024 16:10:55] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-12 16:10:55,498 INFO: User 11 logged in successfully.
+2024-08-12 16:10:55,499 INFO: 127.0.0.1 - - [12/Aug/2024 16:10:55] "POST /login HTTP/1.1" 200 -
+2024-08-12 16:11:46,930 INFO: 127.0.0.1 - - [12/Aug/2024 16:11:46] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 16:11:47,021 ERROR: Error: Object of type Response is not JSON serializable
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 295, in error_router
+    return self.handle_error(e)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 310, in handle_error
+    _handle_flask_propagate_exceptions_config(current_app, e)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 493, in wrapper
+    return self.make_response(data, code, headers=headers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 522, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/representations/json.py", line 21, in output_json
+    dumped = dumps(data, **settings) + "\n"
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Response is not JSON serializable
+2024-08-12 16:11:47,048 INFO: 127.0.0.1 - - [12/Aug/2024 16:11:47] "[35m[1mPOST /projects HTTP/1.1[0m" 500 -
+2024-08-12 16:17:56,855 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 16:17:57,106 INFO:  * Restarting with stat
+2024-08-12 16:17:58,137 WARNING:  * Debugger is active!
+2024-08-12 16:17:58,157 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 16:18:09,243 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 16:18:09,369 INFO:  * Restarting with stat
+2024-08-12 16:18:09,871 WARNING:  * Debugger is active!
+2024-08-12 16:18:09,873 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 17:16:22,535 INFO: 127.0.0.1 - - [12/Aug/2024 17:16:22] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-12 17:16:23,106 INFO: User 11 logged in successfully.
+2024-08-12 17:16:23,110 INFO: 127.0.0.1 - - [12/Aug/2024 17:16:23] "POST /login HTTP/1.1" 200 -
+2024-08-12 17:17:06,087 INFO: 127.0.0.1 - - [12/Aug/2024 17:17:06] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:17:06,123 ERROR: Error creating project: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2024-08-12 17:17:06,126 INFO: 127.0.0.1 - - [12/Aug/2024 17:17:06] "[31m[1mPOST /projects HTTP/1.1[0m" 400 -
+2024-08-12 17:18:53,269 INFO: 127.0.0.1 - - [12/Aug/2024 17:18:53] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:18:53,307 ERROR: Error: Object of type Response is not JSON serializable
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 295, in error_router
+    return self.handle_error(e)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 310, in handle_error
+    _handle_flask_propagate_exceptions_config(current_app, e)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 493, in wrapper
+    return self.make_response(data, code, headers=headers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 522, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/representations/json.py", line 21, in output_json
+    dumped = dumps(data, **settings) + "\n"
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Response is not JSON serializable
+2024-08-12 17:18:53,340 INFO: 127.0.0.1 - - [12/Aug/2024 17:18:53] "[35m[1mPOST /projects HTTP/1.1[0m" 500 -
+2024-08-12 17:19:32,480 INFO: 127.0.0.1 - - [12/Aug/2024 17:19:32] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:19:32,493 ERROR: Error creating project: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2024-08-12 17:19:32,494 INFO: 127.0.0.1 - - [12/Aug/2024 17:19:32] "[31m[1mPOST /projects HTTP/1.1[0m" 400 -
+2024-08-12 17:21:06,549 INFO: 127.0.0.1 - - [12/Aug/2024 17:21:06] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:21:06,560 ERROR: Error: Object of type Response is not JSON serializable
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 295, in error_router
+    return self.handle_error(e)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 310, in handle_error
+    _handle_flask_propagate_exceptions_config(current_app, e)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 493, in wrapper
+    return self.make_response(data, code, headers=headers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 522, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask_restful/representations/json.py", line 21, in output_json
+    dumped = dumps(data, **settings) + "\n"
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/home/chrizob/.pyenv/versions/3.12.3/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Response is not JSON serializable
+2024-08-12 17:21:06,564 INFO: 127.0.0.1 - - [12/Aug/2024 17:21:06] "[35m[1mPOST /projects HTTP/1.1[0m" 500 -
+2024-08-12 17:41:28,421 INFO: 127.0.0.1 - - [12/Aug/2024 17:41:28] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:41:28,459 INFO: 127.0.0.1 - - [12/Aug/2024 17:41:28] "[31m[1mPOST /projects HTTP/1.1[0m" 401 -
+2024-08-12 17:41:41,138 INFO: 127.0.0.1 - - [12/Aug/2024 17:41:41] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-12 17:41:41,342 INFO: User 11 logged in successfully.
+2024-08-12 17:41:41,343 INFO: 127.0.0.1 - - [12/Aug/2024 17:41:41] "POST /login HTTP/1.1" 200 -
+2024-08-12 17:42:14,539 INFO: 127.0.0.1 - - [12/Aug/2024 17:42:14] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:42:14,553 ERROR: Error creating project: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2024-08-12 17:42:14,553 INFO: 127.0.0.1 - - [12/Aug/2024 17:42:14] "[31m[1mPOST /projects HTTP/1.1[0m" 400 -
+2024-08-12 17:54:32,041 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 17:54:33,224 INFO:  * Restarting with stat
+2024-08-12 17:54:35,272 WARNING:  * Debugger is active!
+2024-08-12 17:54:35,295 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 17:54:37,329 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 17:54:37,559 INFO:  * Restarting with stat
+2024-08-12 17:54:38,437 WARNING:  * Debugger is active!
+2024-08-12 17:54:38,439 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 17:54:39,463 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 17:54:39,642 INFO:  * Restarting with stat
+2024-08-12 17:54:40,368 WARNING:  * Debugger is active!
+2024-08-12 17:54:40,371 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 17:54:46,433 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 17:54:46,689 INFO:  * Restarting with stat
+2024-08-12 17:56:31,835 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 17:56:31,835 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 17:56:31,836 INFO:  * Restarting with stat
+2024-08-12 17:56:32,306 WARNING:  * Debugger is active!
+2024-08-12 17:56:32,308 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 17:56:35,469 INFO: 127.0.0.1 - - [12/Aug/2024 17:56:35] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-12 17:56:35,615 INFO: User 11 logged in successfully.
+2024-08-12 17:56:35,616 INFO: 127.0.0.1 - - [12/Aug/2024 17:56:35] "POST /login HTTP/1.1" 200 -
+2024-08-12 17:57:24,582 INFO: 127.0.0.1 - - [12/Aug/2024 17:57:24] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 17:57:24,597 ERROR: Error creating project: 'method' object is not subscriptable
+2024-08-12 17:57:24,598 INFO: 127.0.0.1 - - [12/Aug/2024 17:57:24] "[31m[1mPOST /projects HTTP/1.1[0m" 400 -
+2024-08-12 18:02:01,951 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 18:02:02,098 INFO:  * Restarting with stat
+2024-08-12 18:02:02,611 WARNING:  * Debugger is active!
+2024-08-12 18:02:02,614 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 18:02:06,638 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 18:02:06,775 INFO:  * Restarting with stat
+2024-08-12 18:02:07,194 WARNING:  * Debugger is active!
+2024-08-12 18:02:07,196 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 18:02:41,361 INFO:  * Detected change in '/home/chrizob/Development/code/phase-4/ArtVista/server/app.py', reloading
+2024-08-12 18:02:41,556 INFO:  * Restarting with stat
+2024-08-12 18:03:34,205 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5555
+2024-08-12 18:03:34,205 INFO: [33mPress CTRL+C to quit[0m
+2024-08-12 18:03:34,206 INFO:  * Restarting with stat
+2024-08-12 18:03:34,617 WARNING:  * Debugger is active!
+2024-08-12 18:03:34,620 INFO:  * Debugger PIN: 131-357-476
+2024-08-12 18:04:03,478 INFO: 127.0.0.1 - - [12/Aug/2024 18:04:03] "OPTIONS /login HTTP/1.1" 200 -
+2024-08-12 18:04:03,589 INFO: User 11 logged in successfully.
+2024-08-12 18:04:03,590 INFO: 127.0.0.1 - - [12/Aug/2024 18:04:03] "POST /login HTTP/1.1" 200 -
+2024-08-12 18:04:33,578 INFO: 127.0.0.1 - - [12/Aug/2024 18:04:33] "OPTIONS /projects HTTP/1.1" 200 -
+2024-08-12 18:04:33,622 INFO: User 11 created new project: gettyhyr
+2024-08-12 18:04:33,623 INFO: 127.0.0.1 - - [12/Aug/2024 18:04:33] "[35m[1mPOST /projects HTTP/1.1[0m" 201 -
+2024-08-12 18:09:33,477 INFO: Request: home route accessed
+2024-08-12 18:09:33,481 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:33] "GET / HTTP/1.1" 200 -
+2024-08-12 18:09:34,695 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 18:09:34,710 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:34] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 18:09:40,956 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:40] "[36mGET /images/image5.jpg HTTP/1.1[0m" 304 -
+2024-08-12 18:09:41,189 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 18:09:41,190 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:41] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2024-08-12 18:09:49,558 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:49] "GET /images/image3.jpg HTTP/1.1" 200 -
+2024-08-12 18:09:49,812 ERROR: Error: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+Traceback (most recent call last):
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chrizob/Development/code/phase-4/ArtVista/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2024-08-12 18:09:49,815 INFO: 127.0.0.1 - - [12/Aug/2024 18:09:49] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -

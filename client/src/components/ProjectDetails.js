@@ -37,7 +37,7 @@ function ProjectDetails() {
     if (!projectFromState) {
       const fetchProject = async () => {
         try {
-          const response = await fetch(`http://localhost:5555/projects/${id}`);
+          const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`);
           if (!response.ok) {
             throw new Error('Project not found');
           }
@@ -89,7 +89,7 @@ function ProjectDetails() {
       setReviews(updatedReviews);
       setComment('');
 
-      fetch(`http://localhost:5555/reviews/${id}`, {
+      fetch(`https://artvista-dl5j.onrender.com/reviews/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ function ProjectDetails() {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        const response = await fetch(`http://localhost:5555/projects/${id}`, {
+        const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {
@@ -154,11 +154,11 @@ function ProjectDetails() {
   const averageRating = ((designRating + usabilityRating + functionalityRating) / 3).toFixed(1);
 
   return (
-    <div id="project-details">
+    <div id="cardinfo-details">
       <h2>{currentProject.title}</h2>
       <img
+        src={`https://artvista-dl5j.onrender.com/images/${currentProject.image_url}`}
         alt={currentProject.title}
-        src={currentProject.image_url}
         onError={(e) => (e.target.src = 'default-image.jpg')}
       />
       <h3>Project Description</h3>
@@ -175,7 +175,7 @@ function ProjectDetails() {
         <h4>Rate this project</h4>
 
         <div className="rating-container">
-          <div className="rating-item">
+          <div className="cardinfo-rating-item">
             <h5>Design</h5>
             <Rating
               name="design-rating"
@@ -195,7 +195,7 @@ function ProjectDetails() {
             )}
           </div>
 
-          <div className="rating-item">
+          <div className="cardinfo-rating-item">
             <h5>Usability</h5>
             <Rating
               name="usability-rating"
@@ -215,7 +215,7 @@ function ProjectDetails() {
             )}
           </div>
 
-          <div className="rating-item">
+          <div className="cardinfo-rating-item">
             <h5>Functionality</h5>
             <Rating
               name="functionality-rating"
@@ -253,7 +253,7 @@ function ProjectDetails() {
         rows={4}
         variant="outlined"
       />
-      <button onClick={handleCommentSubmit}>Submit Comment</button>
+      <button className='comment-button' onClick={handleCommentSubmit}>Submit Comment</button>
 
       <List>
         {reviews.map((review, index) => (

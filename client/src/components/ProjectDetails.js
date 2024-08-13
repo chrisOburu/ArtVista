@@ -57,7 +57,7 @@ function ProjectDetails() {
     } else {
       setLoading(false);
     }
-  }, [id, projectFromState]);
+  }, {});
 
   const labels = {
     0: 'Not Rated',

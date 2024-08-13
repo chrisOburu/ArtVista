@@ -184,7 +184,7 @@ class Projects(Resource):
                 new_record = Project(
                     title=request.form.get("title"),
                     description=request.form.get("description"),
-                    image_url= file_path, #request.json.get("image_url", None),
+                    image_url= filename, #file_path, #request.json.get("image_url", None),
                     link=request.form.get("link"),
                     owner_id=current_user_id,
                     tags=request.form.get("tags")

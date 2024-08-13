@@ -34,7 +34,7 @@ function ProjectCard({ projects }) {
         <div key={project.id} className="card">
           <Link to={`/projects/${project.id}`} state={{ project }}>
             <div className="card-image">
-              <img src={project.image_url} alt={project.title} />
+              <img src={`https://artvista-dl5j.onrender.com/images/${project.image_url}`} alt={project.title} />
             </div>
             <div className="card-content">
               <h3 className="card-title">{project.title}</h3>

@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage';
 import UserProfile from './components/UserProfile';
 import ProjectList from './components/ProjectList';
 import ProjectForm from './components/ProjectForm';
+import ProjectDetails from './components/ProjectDetails';
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -23,6 +24,7 @@ const App = () => {
         {/* <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} /> */}
         <Route path="/profile" element={<UserProfile token={token} />} />
         <Route path="/projects" element={<ProjectList />} />
+        <Route path="/projects/:id" element={<ProjectDetails />} />
         <Route path="/submit-project" element={<ProjectForm token={token} />} />
       </Routes>
     </Router>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
+import ProjectCard from './ProjectCard';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -65,7 +66,8 @@ const ProjectList = () => {
           <option value="title">Title</option>
         </select>
       </div>
-      <ul className="project-list">
+      <ProjectCard projects={projects} />
+      {/* <ul className="project-list">
         {filteredProjects.map((project) => (
           <li key={project.id} className="project-item">
             <h3 className="project-title">{project.title}</h3>
@@ -73,7 +75,7 @@ const ProjectList = () => {
             <p className="project-rating">Rating: {project.rating}</p>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

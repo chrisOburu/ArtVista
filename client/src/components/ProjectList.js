@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ProjectCard from './ProjectCard';
+import Header from './header';
+import Footer from './footer';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -45,6 +47,7 @@ const ProjectList = () => {
 
   return (
     <>
+      <Header />
       <div className="project-list-container">
         <h2>Projects</h2>
         <div className="controls">
@@ -69,6 +72,7 @@ const ProjectList = () => {
         </div>
         <ProjectCard projects={projects} />
       </div>
+      <Footer />
     </>
   );
 };

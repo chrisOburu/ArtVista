@@ -3,14 +3,12 @@ import { registerUser } from '../api';
 import './Forms.css';
 import LoginForm from './LoginForm';
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
 
 Modal.setAppElement('#root');
 
 const RegisterForm = ({ onLoginSuccess }) => {
-  const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -94,14 +92,10 @@ const RegisterForm = ({ onLoginSuccess }) => {
     }
 };
 
-  const closePopup = () => {
-    setPopupMessage('');
-  };
-
   return (
     <>
       <Header onLoginSuccess={onLoginSuccess} />
-      <h1 className='register-text'>Register</h1>
+      <h1 className='form-text'>Register</h1>
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input

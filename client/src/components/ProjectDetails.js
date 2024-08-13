@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './Project.css';
+import Header from './header';
+import Footer from './footer';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -154,126 +156,130 @@ function ProjectDetails() {
   const averageRating = ((designRating + usabilityRating + functionalityRating) / 3).toFixed(1);
 
   return (
-    <div id="cardinfo-details">
-      <h2>{currentProject.title}</h2>
-      <img
-        src={`https://artvista-dl5j.onrender.com/images/${currentProject.image_url}`}
-        alt={currentProject.title}
-        onError={(e) => (e.target.src = 'default-image.jpg')}
-      />
-      <h3>Project Description</h3>
-      <p>{currentProject.description}</p>
+    <>
+      <Header />
+      <div id="cardinfo-details">
+        <h2>{currentProject.title}</h2>
+        <img
+          src={`https://artvista-dl5j.onrender.com/images/${currentProject.image_url}`}
+          alt={currentProject.title}
+          onError={(e) => (e.target.src = 'default-image.jpg')}
+        />
+        <h3>Project Description</h3>
+        <p>{currentProject.description}</p>
 
-      <div className="card-author">By: {currentProject.user.name}</div>
+        <div className="card-author">By: {currentProject.user.name}</div>
 
-      <div className="icon-actions">
-        <EditIcon className="editor-icon" onClick={handleEdit} />
-        <DeleteIcon className="delete-icon" onClick={handleDelete} />
-      </div>
+        <div className="icon-actions">
+          <EditIcon className="editor-icon" onClick={handleEdit} />
+          <DeleteIcon className="delete-icon" onClick={handleDelete} />
+        </div>
 
-      <div className="rating-section">
-        <h4>Rate this project</h4>
+        <div className="rating-section">
+          <h4>Rate this project</h4>
 
-        <div className="rating-container">
-          <div className="cardinfo-rating-item">
-            <h5>Design</h5>
-            <Rating
-              name="design-rating"
-              value={designRating}
-              precision={0.5}
-              getLabelText={getLabelText}
-              onChange={(event, newValue) => {
-                setDesignRating(newValue);
-              }}
-              onChangeActive={(event, newHover) => {
-                setDesignHover(newHover);
-              }}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-            />
-            {designRating !== null && (
-              <Box sx={{ ml: 2 }}>{labels[designHover !== -1 ? designHover : designRating]}</Box>
-            )}
-          </div>
+          <div className="rating-container">
+            <div className="cardinfo-rating-item">
+              <h5>Design</h5>
+              <Rating
+                name="design-rating"
+                value={designRating}
+                precision={0.5}
+                getLabelText={getLabelText}
+                onChange={(event, newValue) => {
+                  setDesignRating(newValue);
+                }}
+                onChangeActive={(event, newHover) => {
+                  setDesignHover(newHover);
+                }}
+                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+              />
+              {designRating !== null && (
+                <Box sx={{ ml: 2 }}>{labels[designHover !== -1 ? designHover : designRating]}</Box>
+              )}
+            </div>
 
-          <div className="cardinfo-rating-item">
-            <h5>Usability</h5>
-            <Rating
-              name="usability-rating"
-              value={usabilityRating}
-              precision={0.5}
-              getLabelText={getLabelText}
-              onChange={(event, newValue) => {
-                setUsabilityRating(newValue);
-              }}
-              onChangeActive={(event, newHover) => {
-                setUsabilityHover(newHover);
-              }}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-            />
-            {usabilityRating !== null && (
-              <Box sx={{ ml: 2 }}>{labels[usabilityHover !== -1 ? usabilityHover : usabilityRating]}</Box>
-            )}
-          </div>
+            <div className="cardinfo-rating-item">
+              <h5>Usability</h5>
+              <Rating
+                name="usability-rating"
+                value={usabilityRating}
+                precision={0.5}
+                getLabelText={getLabelText}
+                onChange={(event, newValue) => {
+                  setUsabilityRating(newValue);
+                }}
+                onChangeActive={(event, newHover) => {
+                  setUsabilityHover(newHover);
+                }}
+                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+              />
+              {usabilityRating !== null && (
+                <Box sx={{ ml: 2 }}>{labels[usabilityHover !== -1 ? usabilityHover : usabilityRating]}</Box>
+              )}
+            </div>
 
-          <div className="cardinfo-rating-item">
-            <h5>Functionality</h5>
-            <Rating
-              name="functionality-rating"
-              value={functionalityRating}
-              precision={0.5}
-              getLabelText={getLabelText}
-              onChange={(event, newValue) => {
-                setFunctionalityRating(newValue);
-              }}
-              onChangeActive={(event, newHover) => {
-                setFunctionalityHover(newHover);
-              }}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-            />
-            {functionalityRating !== null && (
-              <Box sx={{ ml: 2 }}>{labels[functionalityHover !== -1 ? functionalityHover : functionalityRating]}</Box>
-            )}
+            <div className="cardinfo-rating-item">
+              <h5>Functionality</h5>
+              <Rating
+                name="functionality-rating"
+                value={functionalityRating}
+                precision={0.5}
+                getLabelText={getLabelText}
+                onChange={(event, newValue) => {
+                  setFunctionalityRating(newValue);
+                }}
+                onChangeActive={(event, newHover) => {
+                  setFunctionalityHover(newHover);
+                }}
+                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+              />
+              {functionalityRating !== null && (
+                <Box sx={{ ml: 2 }}>{labels[functionalityHover !== -1 ? functionalityHover : functionalityRating]}</Box>
+              )}
+            </div>
           </div>
         </div>
+
+        <div className="average-rating">
+          <h4>Your Average Rating: {averageRating} Stars </h4>
+        </div>
+
+        <TextField
+          id="outlined-controlled"
+          label="Add a Comment"
+          value={comment}
+          onChange={(event) => {
+            setComment(event.target.value);
+          }}
+          fullWidth
+          multiline
+          rows={4}
+          variant="outlined"
+        />
+        <button className='comment-button' onClick={handleCommentSubmit}>Submit Comment</button>
+
+        <List>
+          {reviews.map((review, index) => (
+            <ListItemButton key={index}>
+              <ListItemAvatar>
+                <Avatar alt="Profile Picture" src={review.avatar_url || 'default-avatar.jpg'} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <>
+                    <div>{review.comment}</div>
+                    <div className="review-username">{review.user.username}</div>
+                  </>
+                }
+                secondary={`Date: ${review.date}`}
+              />
+            </ListItemButton>
+          ))}
+        </List>
       </div>
-
-      <div className="average-rating">
-        <h4>Your Average Rating: {averageRating} Stars </h4>
-      </div>
-
-      <TextField
-        id="outlined-controlled"
-        label="Add a Comment"
-        value={comment}
-        onChange={(event) => {
-          setComment(event.target.value);
-        }}
-        fullWidth
-        multiline
-        rows={4}
-        variant="outlined"
-      />
-      <button className='comment-button' onClick={handleCommentSubmit}>Submit Comment</button>
-
-      <List>
-        {reviews.map((review, index) => (
-          <ListItemButton key={index}>
-            <ListItemAvatar>
-              <Avatar alt="Profile Picture" src={review.avatar_url || 'default-avatar.jpg'} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <>
-                  <div>{review.comment}</div>
-                  <div className="review-username">{review.user.username}</div>
-                </>
-              }
-              secondary={`Date: ${review.date}`}
-            />
-          </ListItemButton>
-        ))}
-      </List>
-    </div>
+      <Footer />
+    </>
   );
 }
 

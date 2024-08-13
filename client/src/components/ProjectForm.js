@@ -77,14 +77,11 @@ const ProjectForm = () => {
     }
   };
 
-  const closePopup = () => {
-    setIsMessageModalOpen(false);
-  };
 
   return (
     <>
       <Header/>
-      <h2>Project submission form</h2>
+      <h2 className='form-text'>Project submission form</h2>
       <form onSubmit={handleSubmit}>
         <label>Title</label>
         <br></br>

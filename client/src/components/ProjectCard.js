@@ -39,12 +39,12 @@ function ProjectCard({ projects }) {
             <div className="card-content">
               <h3 className="card-title">{project.title}</h3>
               <p className="card-description">{project.description}</p>
-              <p className="card-author">By: {project.owner.name}</p>
+              <p className="card-author">By: {project.user.name}</p>
             </div>
           </Link>
           <div className="caption">
             <div className="stars">
-              {renderStars(project.ratings || 0)}
+              {renderStars(project.average_rating || 0)}
             </div>
             <p>
               <span>

@@ -1,4 +1,4 @@
-from models import db, User, Review, Project
+from models import db, User, Review, Project, Rating
 from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify,send_from_directory
 from flask_restful import Api, Resource
@@ -294,7 +294,6 @@ class Reviews(Resource):
             new_record = Review(
                 date=request.json.get("date", None),
                 comment=request.json["comment"],
-                rating=request.json["rating"],
                 user_id=current_user_id,
                 project_id=request.json["project_id"]
             )
@@ -377,6 +376,99 @@ class ReviewByID(Resource):
             logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
 
+class Ratings(Resource):
+    def get(self):
+        response_dict_list = [r.to_dict() for r in Rating.query.all()]
+        logging.info(f"Fetched all ratings.")
+        return make_response(jsonify(response_dict_list), 200)
+    
+    @jwt_required()
+    def post(self):
+        try:
+            current_user_id = get_jwt_identity()
+            new_record = Rating(
+                design_rating=request.json["design_rating"],
+                usability_rating=request.json["usability_rating"],
+                functionality_rating=request.json["functionality_rating"],
+                user_id=current_user_id,
+                project_id=request.json["project_id"]
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            response = new_record.to_dict()
+            response['project'] = new_record.project.to_dict(only=('id', 'title'))
+            response['user'] = new_record.user.to_dict(only=('id', 'username'))
+            logging.info(f"Created new rating for project ID {new_record.project_id} by user ID {new_record.user_id}")
+            return make_response(jsonify(response), 201)
+        except Exception as e:
+            logging.error(f"Error creating rating: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
+    
+
+class RatingsByID(Resource):
+    @jwt_required()
+    def put(self, id):
+        current_user_id = get_jwt_identity()
+        rating = Rating.query.filter_by(id=id).first()
+
+        if rating:
+            if rating.user_id!= current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify rating {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this rating"}), 403)
+
+            try:
+                rating.design_rating = request.json.get("rating", rating.design_rating)
+                rating.usability_rating = request.json.get("user_id", rating.usability_rating)
+                rating.functionality_rating = request.json.get("rating", rating.functionality_rating)
+                rating.user_id = request.json.get("user_id", rating.user_id)
+                rating.project_id = request.json.get("project_id", rating.project_id)
+                db.session.commit()
+                logging.info(f"User {current_user_id} updated rating with ID: {id}")
+                return make_response(jsonify(rating.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error updating rating with ID {id}: {str(e)}")
+                return make_response(jsonify({"errors": [str(e)]}), 400)
+        else:
+            logging.warning(f"Rating with ID {id} not found.")
+            return make_response(jsonify({"error": "Rating not found"}), 404)
+    
+    @jwt_required()
+    def delete(self, id):
+        current_user_id = get_jwt_identity()
+        rating = Rating.query.filter_by(id=id).first()
+
+        if rating:
+            if rating.user_id!= current_user_id:
+                logging.warning(f"User {current_user_id} attempted to delete rating {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to delete this rating"}), 403)
+
+            db.session.delete(rating)
+            db.session.commit()
+            logging.info(f"User {current_user_id} deleted rating with ID: {id}")
+            return make_response(jsonify({"message": "Rating successfully deleted"}), 200)
+        else:
+            logging.warning(f"Rating with ID {id} not found.")
+            return make_response(jsonify({"error": "Rating not found"}), 400)
+    
+    @jwt_required()
+    def patch(self, id):
+        current_user_id = get_jwt_identity()
+        rating = Rating.query.filter_by(id=id).first()
+
+        if rating:
+            if rating.user_id!= current_user_id:
+                logging.warning(f"User {current_user_id} attempted to modify rating {id} without permission.")
+                return make_response(jsonify({"error": "You do not have permission to modify this rating"}), 403)
+
+            try:
+                for key, value in request.json.items():
+                    if hasattr(rating, key):
+                        setattr(rating, key, value)
+                db.session.commit()
+                logging.info(f"User {current_user_id} partially updated rating with ID: {id}")
+                return make_response(jsonify(rating.to_dict()), 200)
+            except Exception as e:
+                logging.error(f"Error partially updating rating with ID: {id})", e)
 
 api.add_resource(Users, "/users")
 api.add_resource(UserByID, "/users/<int:id>")
@@ -384,6 +476,8 @@ api.add_resource(Projects, "/projects")
 api.add_resource(ProjectByID, "/projects/<int:id>")
 api.add_resource(Reviews, "/reviews")
 api.add_resource(ReviewByID, "/reviews/<int:id>")
+api.add_resource(Ratings, "/ratings")
+api.add_resource(RatingsByID, "/ratings/<int:id>")
 
 
 if __name__ == "__main__":

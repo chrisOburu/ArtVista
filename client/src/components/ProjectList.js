@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ProjectCard from './ProjectCard';
+import Header from './header';
+import Footer from './footer';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -44,39 +46,34 @@ const ProjectList = () => {
   }, [projects, sortOption, searchTerm]);
 
   return (
-    <div className="project-list-container">
-      <h2>Projects</h2>
-      <div className="controls">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-        <label htmlFor="sort" className="sort-label">Sort by: </label>
-        <select
-          id="sort"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className="sort-select"
-        >
-          <option value="">Select</option>
-          <option value="rating">Rating</option>
-          <option value="title">Title</option>
-        </select>
+    <>
+      <Header />
+      <div className="project-list-container">
+        <h2>Projects</h2>
+        <div className="controls">
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          <label htmlFor="sort" className="sort-label">Sort by: </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            className="sort-select"
+          >
+            <option value="">Select</option>
+            <option value="rating">Rating</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
+        <ProjectCard projects={projects} />
       </div>
-      <ProjectCard projects={projects} />
-      {/* <ul className="project-list">
-        {filteredProjects.map((project) => (
-          <li key={project.id} className="project-item">
-            <h3 className="project-title">{project.title}</h3>
-            <p className="project-description">{project.description}</p>
-            <p className="project-rating">Rating: {project.rating}</p>
-          </li>
-        ))}
-      </ul> */}
-    </div>
+      <Footer />
+    </>
   );
 };
 

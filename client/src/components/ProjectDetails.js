@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './Project.css';
+import Header from './header';
+import Footer from './footer';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -232,7 +234,8 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
   }
 };
 
-return (
+return (<>
+        <Header />
 <div id="cardinfo-details">
   <h2>{currentProject.title}</h2>
   <img
@@ -361,7 +364,8 @@ return (
     ))}
   </List>
 </div>
+<Footer />
+    </>
 );
-}
 
 export default ProjectDetails;

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProject } from '../api';
+import Modal from 'react-modal';
+import Header from './header';
+import Footer from './footer';
+
 
 const ProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +15,9 @@ const ProjectForm = () => {
   });
 
   const [image, setImage] = useState(null);
-  const [error, setError] = useState(null); // State for error handling
+  const [popupMessage, setPopupMessage] = useState('');
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,12 +27,15 @@ const ProjectForm = () => {
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
     if (!formData.title || !formData.description || !image || !formData.link) {
-      setError('Please fill out all required fields and upload an image.');
+      setPopupMessage('Please fill out all required fields and upload an image.');
+      setMessageType('error');
+      setIsMessageModalOpen(true);
       return;
     }
 
@@ -39,26 +48,41 @@ const ProjectForm = () => {
     data.append('image', image);
 
     try {
-      await createProject(data,); // Pass FormData and indicate multipart/form-data
+      await createProject(data); // Pass FormData and indicate multipart/form-data
+      setPopupMessage('Project submitted successfully!');
+      setMessageType('success');
+      setIsMessageModalOpen(true);
+
+      // Reset form fields and navigate after a delay
       setFormData({
         title: '',
         description: '',
         link: '',
         tags: '',
       });
-      setImage(null); // Reset image file
-      navigate('/projects');
+      setImage(null);
+
+      setTimeout(() => {
+        setIsMessageModalOpen(false);
+        navigate('/projects');
+      }, 3000);
     } catch (error) {
-      console.error('Project submission failed', error);
-      setError('Project submission failed. Please try again.');
+      setPopupMessage('Project submission failed. Please try again.');
+      setMessageType('error');
+      setIsMessageModalOpen(true);
+
+      setTimeout(() => {
+        setIsMessageModalOpen(false);
+      }, 3000);
     }
   };
 
+
   return (
     <>
-      <h2>Project submission form</h2>
+      <Header/>
+      <h2 className='form-text'>Project submission form</h2>
       <form onSubmit={handleSubmit}>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
         <label>Title</label>
         <br></br>
         <input
@@ -112,6 +136,18 @@ const ProjectForm = () => {
         />
         <button type="submit">Submit Project</button>
       </form>
+      <Modal
+        isOpen={isMessageModalOpen}
+        onRequestClose={() => setIsMessageModalOpen(false)}
+        contentLabel="Message"
+        className={`message-modal ${messageType === 'success' ? 'success' : 'error'}`} // Conditionally apply class
+        overlayClassName="message-modal-overlay"
+      >
+        <div className="message-content">
+          <p>{popupMessage}</p>
+        </div>
+      </Modal>
+      <Footer/>
     </>
   );
 };

@@ -381,7 +381,7 @@ def get_project_reviews(project_id):
     reviews = Review.query.filter_by(project_id=project_id).all()
     return jsonify([r.to_dict() for r in reviews]), 200
 
-@app.route('/reviews/user/<project_id>', methods=['POST'])
+@app.route('/reviews/project/<project_id>', methods=['POST'])
 @jwt_required()
 def create_user_project_review(project_id):
     current_user_id = get_jwt_identity()
@@ -492,7 +492,7 @@ class RatingsByID(Resource):
             except Exception as e:
                 logging.error(f"Error partially updating rating with ID: {id})", e)
 
-@app.route('/ratings/user/<project_id>', methods=['GET'])
+@app.route('/ratings/project/<project_id>', methods=['GET'])
 @jwt_required()
 def get_user_project_ratings(project_id):
     user_id = get_jwt_identity()
@@ -502,7 +502,7 @@ def get_user_project_ratings(project_id):
     else:
         return jsonify({"message": "No rating found"}), 404
 
-@app.route('/ratings/user/<project_id>', methods=['PUT'])
+@app.route('/ratings/project/<project_id>', methods=['PUT'])
 @jwt_required()
 def update_user_project_rating(project_id):
     user_id = get_jwt_identity()
@@ -518,7 +518,19 @@ def update_user_project_rating(project_id):
         except Exception as e:
             return jsonify({"errors": [str(e)]}), 400
     else:
-        return jsonify({"message": "No rating found"}), 404
+        try:
+            new_record = Rating(
+                design_rating=request.json["design_rating"],
+                usability_rating=request.json["usability_rating"],
+                functionality_rating=request.json["functionality_rating"],
+                user_id=user_id,
+                project_id=project_id
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            return jsonify(new_record.to_dict()), 201
+        except Exception as e:
+            return jsonify({"errors": [str(e)]}), 400
 
 api.add_resource(Users, "/users")
 api.add_resource(UserByID, "/users/<int:id>")

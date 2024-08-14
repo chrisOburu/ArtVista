@@ -397,7 +397,6 @@ def create_user_project_review(project_id):
         return jsonify(new_record.to_dict()), 201
     except Exception as e:
         return jsonify({"errors": [str(e)]}), 400
-    
 
 class Ratings(Resource):
     def get(self):

@@ -375,38 +375,28 @@ class ReviewByID(Resource):
         else:
             logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
-
-class ProjectReviews(Resource):
-    def get(self, project_id):
-        try:
-            reviews = Review.query.filter_by(project_id=project_id).all()
-            if not reviews:
-                return jsonify({"message": "No reviews found for this project."}), 404
-            return jsonify([r.to_dict() for r in reviews]), 200
-        except Exception as e:
-            return jsonify({"errors": ["Failed to fetch reviews.", str(e)]}), 500
     
-    @jwt_required()
-    def post(self, project_id):
-        current_user_id = get_jwt_identity()
-        data = request.json
+@app.route('/reviews/project/<project_id>', methods=['GET'])
+def get_project_reviews(project_id):
+    reviews = Review.query.filter_by(project_id=project_id).all()
+    return jsonify([r.to_dict() for r in reviews]), 200
 
-        if "comment" not in data or not data["comment"]:
-            return jsonify({"errors": ["Comment is required."]}), 400
-
-        try:
-            new_review = Review(
-                date=data.get("date", None),
-                comment=data["comment"],
-                user_id=current_user_id,
-                project_id=project_id
-            )
-            db.session.add(new_review)
-            db.session.commit()
-            return jsonify(new_review.to_dict()), 201
-        except Exception as e:
-            return jsonify({"errors": ["Failed to post review.", str(e)]}), 400
-
+@app.route('/reviews/project/<project_id>', methods=['POST'])
+@jwt_required()
+def create_user_project_review(project_id):
+    current_user_id = get_jwt_identity()
+    try:
+        new_record = Review(
+            date=request.json.get("date", None),
+            comment=request.json["comment"],
+            user_id=current_user_id,
+            project_id=project_id
+        )
+        db.session.add(new_record)
+        db.session.commit()
+        return jsonify(new_record.to_dict()), 201
+    except Exception as e:
+        return jsonify({"errors": [str(e)]}), 400
 
 class Ratings(Resource):
     def get(self):
@@ -501,61 +491,47 @@ class RatingsByID(Resource):
                 return make_response(jsonify(rating.to_dict()), 200)
             except Exception as e:
                 logging.error(f"Error partially updating rating with ID: {id})", e)
-from flask_restful import Resource
-from flask import jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from models import Rating, db
 
-class AuthenticatedUserRating(Resource):
-    @jwt_required()
-    def get(self, project_id):
-        user_id = get_jwt_identity()
+@app.route('/ratings/project/<project_id>', methods=['GET'])
+@jwt_required()
+def get_user_project_ratings(project_id):
+    user_id = get_jwt_identity()
+    rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
+    if rating:
+        return jsonify(rating.to_dict()), 200
+    else:
+        return jsonify({"message": "No rating found"}), 404
+
+@app.route('/ratings/project/<project_id>', methods=['PUT'])
+@jwt_required()
+def update_user_project_rating(project_id):
+    user_id = get_jwt_identity()
+    rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
+
+    if rating:
         try:
-            rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
-            
-            if rating:
-                return jsonify(rating.to_dict()), 200
-            else:
-                return jsonify({"message": "No rating found for this project and user."}), 404
+            rating.design_rating = request.json.get("design_rating", rating.design_rating)
+            rating.usability_rating = request.json.get("usability_rating", rating.usability_rating)
+            rating.functionality_rating = request.json.get("functionality_rating", rating.functionality_rating)
+            db.session.commit()
+            return jsonify(rating.to_dict()), 200
         except Exception as e:
-            return jsonify({"errors": ["Failed to retrieve rating.", str(e)]}), 500
-
-    @jwt_required()
-    def put(self, project_id):
-        user_id = get_jwt_identity()
-        data = request.json
-
+            return jsonify({"errors": [str(e)]}), 400
+    else:
         try:
-            rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
-
-            if rating:
-                rating.design_rating = data.get("design_rating", rating.design_rating)
-                rating.usability_rating = data.get("usability_rating", rating.usability_rating)
-                rating.functionality_rating = data.get("functionality_rating", rating.functionality_rating)
-                
-                db.session.commit()
-                return jsonify(rating.to_dict()), 200
-            else:
-                required_fields = ["design_rating", "usability_rating", "functionality_rating"]
-                if not all(field in data and data[field] is not None for field in required_fields):
-                    return jsonify({"errors": ["All rating fields (design, usability, functionality) are required for creating a new rating."]}), 400
-
-                new_rating = Rating(
-                    design_rating=data["design_rating"],
-                    usability_rating=data["usability_rating"],
-                    functionality_rating=data["functionality_rating"],
-                    user_id=user_id,
-                    project_id=project_id
-                )
-                db.session.add(new_rating)
-                db.session.commit()
-                return jsonify(new_rating.to_dict()), 201
-
+            new_record = Rating(
+                design_rating=request.json["design_rating"],
+                usability_rating=request.json["usability_rating"],
+                functionality_rating=request.json["functionality_rating"],
+                user_id=user_id,
+                project_id=project_id
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            return jsonify(new_record.to_dict()), 201
         except Exception as e:
-            return jsonify({"errors": ["Failed to update/create rating.", str(e)]}), 400
-        
-api.add_resource(ProjectReviews, "/reviews/project/<project_id>")
-api.add_resource(AuthenticatedUserRating, "/ratings/project/<project_id>")
+            return jsonify({"errors": [str(e)]}), 400
+
 api.add_resource(Users, "/users")
 api.add_resource(UserByID, "/users/<int:id>")
 api.add_resource(Projects, "/projects")

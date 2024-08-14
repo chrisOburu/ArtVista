@@ -27,9 +27,9 @@ const projectFromState = location.state?.project;
 const jwtToken = localStorage.getItem('jwtToken');
 
 const [currentProject, setCurrentProject] = useState(projectFromState || {});
-const [designRating, setDesignRating] = useState(currentProject.design_rating || 0);
-const [usabilityRating, setUsabilityRating] = useState(currentProject.usability_rating || 0);
-const [functionalityRating, setFunctionalityRating] = useState(currentProject.functionality_rating || 0);
+const [designRating, setDesignRating] = useState(currentProject.design_rating !== undefined ? currentProject.design_rating : null);
+const [usabilityRating, setUsabilityRating] = useState(currentProject.usability_rating !== undefined ? currentProject.usability_rating : null);
+const [functionalityRating, setFunctionalityRating] = useState(currentProject.functionality_rating !== undefined ? currentProject.functionality_rating : null);
 const [designHover, setDesignHover] = useState(-1);
 const [usabilityHover, setUsabilityHover] = useState(-1);
 const [functionalityHover, setFunctionalityHover] = useState(-1);
@@ -86,38 +86,6 @@ if (!projectFromState) {
   setLoading(false);
 }
 }, [id, projectFromState]);
-
-useEffect(() => {
-  const fetchRatings = async () => {
-    try {
-      const response = await fetch(`https://artvista-dl5j.onrender.com/ratings/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      });
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Server responded with an error:', errorData);
-        throw new Error(`Server error: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      setDesignRating(data.design_rating);
-      setUsabilityRating(data.usability_rating);
-      setFunctionalityRating(data.functionality_rating);
-
-    } catch (error) {
-      console.error('Error fetching ratings:', error);
-    }
-  };
-
-  fetchRatings();
-}, [id, jwtToken]);
 
 const handleOpen = () => setIsModalOpen(true);
 const handleClose = () => setIsModalOpen(false);
@@ -203,11 +171,10 @@ if (!currentProject) {
 return <div>Project not found</div>;
 }
 
-
 const sendRatingToServer = async (designRating, usabilityRating, functionalityRating) => {
   try {
-    const response = await fetch('https://artvista-dl5j.onrender.com/ratings', {
-      method: 'POST',
+    const response = await fetch(`https://artvista-dl5j.onrender.com/ratings/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${jwtToken}`,
@@ -220,7 +187,6 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
       }),
     });
 
-    // Check if response is OK
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server responded with an error:', errorData);
@@ -228,7 +194,7 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
     }
 
     const data = await response.json();
-    console.log('Response:', data);
+    console.log('Rating response:', data);
   } catch (error) {
     console.error('Error sending rating to server:', error.message);
   }
@@ -246,7 +212,10 @@ return (<>
   <h3>Project Description</h3>
   <p>{currentProject.description}</p>
 
-  <div className="card-author">By: {currentProject.user.name}</div>
+  {/* <div className="card-author">By: {currentProject.user.name}</div> */}
+  <div className="card-author">
+      By: {currentProject.user?.name || 'Unknown Author'}
+  </div>
 
   <div className="icon-actions">
     <EditIcon className="editor-icon" onClick={handleOpen} />
@@ -345,24 +314,45 @@ return (<>
   />
   <button className='comment-button' onClick={handleCommentSubmit}>Submit Comment</button>
 
-  <List>
-    {reviews.map((review, index) => (
+  {/* <List>
+    {currentProject.reviews.map((projreview, index) => (
       <ListItemButton key={index}>
         <ListItemAvatar>
-          <Avatar alt="Profile Picture" src={review.avatar_url || 'default-avatar.jpg'} />
+          <Avatar alt="Profile Picture" src={projreview.avatar_url || 'default-avatar.jpg'} />
         </ListItemAvatar>
         <ListItemText
           primary={
+
             <>
-              <div>{review.comment}</div>
-              <div className="review-username">{review.user.username}</div>
+              <div>{projreview.comment}</div>
+              <div className="review-username">{projreview.user?.username || 'Anonymous'}</div>
+
             </>
           }
-          secondary={`${review.date}`}
+          secondary={`${projreview.date}`}
         />
       </ListItemButton>
     ))}
-  </List>
+  </List> */}
+  <List>
+  {reviews.map((projreview, index) => (
+    <ListItemButton key={index}>
+      <ListItemAvatar>
+        <Avatar alt="Profile Picture" src={projreview.avatar_url || 'default-avatar.jpg'} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={
+          <>
+            <div>{projreview.comment}</div>
+            <div className="review-username">{projreview.user?.username || 'Anonymous'}</div>
+          </>
+        }
+        secondary={`${projreview.date}`}
+      />
+    </ListItemButton>
+  ))}
+</List>
+
 </div>
 <Footer />
     </>

@@ -1,54 +1,74 @@
 import React, { useState } from 'react';
 import { Modal, Button, TextField, Box, Typography } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 
 const EditProjectModal = ({ open, onClose, project, onSave }) => {
   const [formData, setFormData] = useState({
     title: project.title,
     description: project.description,
-    image_url: project.image_url,
     link: project.link,
     tags: project.tags,
+    image: null,
   });
+  const jwtToken = localStorage.getItem('jwtToken');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-//   const updateProjectDetails = async (updatedProject) => {
-//     try {
-//       const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${projectId}`, {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${jwtToken}`, 
-//         },
-//         body: JSON.stringify(updatedProject),
-//       });
-  
-//       if (!response.ok) {
-//         const errorData = await response.json();
-//         console.error('Error updating project details:', errorData);
-//         throw new Error(`Server error: ${response.status}`);
-//       }
-  
-//       const data = await response.json();
-//       console.log('Project updated successfully:', data);
-  
-//     } catch (error) {
-//       console.error('Error:', error);
-//     }
-//   };
-  
-//     updateProjectDetails(updatedProject);
-//   };
-
-  const handleSave = () => {
-    onSave(formData);
-    onClose();
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFormData({ ...formData, image: file });
   };
+
+  const handleSave = async () => {
+    const { title, description, link, tags, image } = formData;
   
+    const updatedProject = {
+      title,
+      description,
+      link,
+      tags,
+      image: image? URL.createObjectURL(image) : project.image_url,
+    };
+  
+    try {
+      let formDataToSend;
+      if (image) {
+        formDataToSend = new FormData();
+        formDataToSend.append('title', title);
+        formDataToSend.append('description', description);
+        formDataToSend.append('link', link);
+        formDataToSend.append('tags', tags);
+        formDataToSend.append('image', image);
+      } else {
+        formDataToSend = JSON.stringify(updatedProject);
+      }
+  
+      const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${project.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`,
+          ...(image ? {} : { 'Content-Type': 'application/json' }),
+        },
+        body: formDataToSend,
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error updating project details:', errorData);
+        throw new Error(`Server error: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Project updated successfully:', data);
+      onSave(data);
+      onClose();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -85,14 +105,6 @@ const EditProjectModal = ({ open, onClose, project, onSave }) => {
           rows={4}
         />
         <TextField
-          label="Image URL"
-          name="image_url"
-          value={formData.image_url}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
           label="Link"
           name="link"
           value={formData.link}
@@ -108,14 +120,24 @@ const EditProjectModal = ({ open, onClose, project, onSave }) => {
           fullWidth
           margin="normal"
         />
+        <Box mt={2}>
+          <Typography variant="body1">Upload Image</Typography>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            name="images"
+          />
+        </Box>
+        
         <Button 
-        variant="contained" 
-        onClick={handleSave} 
-        sx={{ 
+          variant="contained" 
+          onClick={handleSave} 
+          sx={{ 
             mt: 2,
             bgcolor: '#E2725B',
             '&:hover': {bgcolor: '#a64e3b'}
-            }}>
+          }}>
           Save
         </Button>
       </Box>

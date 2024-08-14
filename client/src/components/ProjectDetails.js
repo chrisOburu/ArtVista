@@ -97,13 +97,12 @@ const handleSave = (updatedProject) => {
 const handleCommentSubmit = () => {
 if (comment.trim()) {
   const newReview = {
-    comment: comment,
-    project_id: id//currentProject.id,
+    comment: comment
   };
 
   console.log('Submitting new review:', newReview);
 
-  fetch(`https://artvista-dl5j.onrender.com/reviews`, {
+  fetch(`https://artvista-dl5j.onrender.com/reviews/project/${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -173,7 +172,7 @@ return <div>Project not found</div>;
 
 const sendRatingToServer = async (designRating, usabilityRating, functionalityRating) => {
   try {
-    const response = await fetch(`https://artvista-dl5j.onrender.com/ratings/${id}`, {
+    const response = await fetch(`https://artvista-dl5j.onrender.com/ratings/project/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -182,8 +181,8 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
       body: JSON.stringify({
         design_rating: designRating,
         usability_rating: usabilityRating,
-        functionality_rating: functionalityRating,
-        project_id: id,
+        functionality_rating: functionalityRating
+        // project_id: id,
       }),
     });
 
@@ -204,15 +203,15 @@ return (<>
         <Header />
 <div id="cardinfo-details">
   <h2>{currentProject.title}</h2>
-  <img
+  {/* <img
     src={`https://artvista-dl5j.onrender.com/images/${currentProject.image_url}`}
     alt={currentProject.title}
     onError={(e) => (e.target.src = 'default-image.jpg')}
-  />
+  /> */}
+  <iframe id="card-livelink" title="card-livelink" src={currentProject.link} height="700" width="1300" allowFullScreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
   <h3>Project Description</h3>
   <p>{currentProject.description}</p>
 
-  {/* <div className="card-author">By: {currentProject.user.name}</div> */}
   <div className="card-author">
       By: {currentProject.user?.name || 'Unknown Author'}
   </div>

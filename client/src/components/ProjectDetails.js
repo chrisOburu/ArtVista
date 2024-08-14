@@ -367,5 +367,6 @@ return (<>
 <Footer />
     </>
 );
+}
 
 export default ProjectDetails;

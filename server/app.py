@@ -376,7 +376,7 @@ class ReviewByID(Resource):
             logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
     
-@app.route('/reviews/<project_id>', methods=['GET'])
+@app.route('/reviews/project/<project_id>', methods=['GET'])
 def get_project_reviews(project_id):
     reviews = Review.query.filter_by(project_id=project_id).all()
     return jsonify([r.to_dict() for r in reviews]), 200

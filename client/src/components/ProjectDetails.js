@@ -87,6 +87,28 @@ if (!projectFromState) {
 }
 }, [id, projectFromState]);
 
+useEffect(() => {
+  const fetchRating = async () => {
+    try {
+      const response = await fetch(`https://artvista-dl5j.onrender.com/ratings/project/${id}`,{
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+      );
+      const data = await response.json();
+      console.log('Fetched ratings:', data);
+      setDesignRating(data.design_rating);
+      setUsabilityRating(data.usability_rating);
+      setFunctionalityRating(data.functionality_rating);
+    } catch (error) {
+      console.error('Failed to fetch rating:', error);
+    }
+  };
+
+  fetchRating();
+}, [id]);
+
 const handleOpen = () => setIsModalOpen(true);
 const handleClose = () => setIsModalOpen(false);
 ////////////////////////////////////////////////////////////////

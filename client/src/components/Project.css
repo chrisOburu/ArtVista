@@ -104,25 +104,6 @@ line-height: 1.6;
 margin-bottom: 20px;
 }
 
-.icon-actions {
-display: flex;
-justify-content: flex-end;
-gap: 10px;
-margin-bottom: 20px;
-margin-top: 10px;
-}
-
-.icon-actions .editor-icon, .icon-actions .delete-icon {
-cursor: pointer;
-color: #E2725B;
-transition: color 0.3s ease;
-margin-left: 10px;
-}
-
-.icon-actions .editor-icon:hover, .icon-actions .delete-icon:hover {
-color: #a64e3b;
-}
-
 .rating-box {
 display: flex;
 align-items: center;
@@ -212,3 +193,74 @@ font-weight: bold;
 #outlined-controlled {
 margin-top: 20px;
 }
+
+.Stack-icons {
+  position: sticky;
+  gap: 10px;
+  top: 15px; 
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.Stack-icons .MuiFab-root {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.Stack-icons .MuiFab-root:hover {
+  transform: scale(1.1);
+}
+
+.Stack-icons .addNew-icon, .Stack-icons .delete-icon, .Stack-icons .editor-icon {
+  color: #F9F9FB;
+  background-color:#E2725B;
+  transition: color 0.3s ease;
+  width: 35px;
+  height: 35px;
+}
+.Stack-icons .addNew-icon:hover, .Stack-icons .delete-icon:hover, .Stack-icons .editor-icon:hover {
+  background-color:#a64e3b;
+}
+
+#alert-dialog-title {
+  color: #D22400A4;
+}
+#alert-dialog-description {
+  color: rgb(8, 8, 8);
+}
+
+.dialog-buttonDelete:hover {
+  color:#a64e3b;
+}
+
+.defined-average-rating {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+.defined-average-rating h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0;
+  color: #4A4A4A;
+}
+
+.defined-rating-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E2725B; 
+  margin-left: 10px;
+  display: inline-block;
+  background-color: #FFF7F5;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

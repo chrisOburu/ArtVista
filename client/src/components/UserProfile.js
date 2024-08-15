@@ -3,8 +3,10 @@ import { getUserProfile } from '../api';
 import '../styles/profile.css'
 import Footer from './footer';
 
-const UserProfile = ({ token }) => {
+const UserProfile = () => {
+  const token = localStorage.getItem('jwtToken');
   const [profile, setProfile] = useState(null);
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -19,6 +21,7 @@ const UserProfile = ({ token }) => {
     fetchProfile();
   }, [token]);
 
+
   if (!profile) return <p>Loading...</p>;
 
   return (
@@ -26,7 +29,7 @@ const UserProfile = ({ token }) => {
     <div id="user-profile">
         <div id="user-banner">
             <button id="edit-profile">
-                <i class="bi bi-pencil-square"></i>
+                <i className="bi bi-pencil-square"></i>
                 <h2 id="user-edit">Edit profile</h2>
             </button>
         </div>
@@ -43,12 +46,12 @@ const UserProfile = ({ token }) => {
                     <h2>Account summary</h2>
                     <table id='table'>
                         <tr className="table-row">
-                            <td className="table-data"><i class="bi bi-cast"></i></td>
+                            <td className="table-data"><i className="bi bi-cast"></i></td>
                             <td className="table-data"> Projects</td>
                             <td className="table-data"> 120</td>
                         </tr>
                         <tr  className='table-row'>
-                            <td className="table-data"><i class="bi bi-chat-square-text"></i></td>
+                            <td className="table-data"><i className="bi bi-chat-square-text"></i></td>
                             <td className="table-data">Reviews</td>
                             <td className="table-data">5000</td>
                         </tr>

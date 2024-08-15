@@ -20,3 +20,15 @@
     color:#532F27;
     font-size: 20px;
 }
+.header-nav{
+    text-decoration:none;
+    background-color: #FFF7F5;
+    color:#532F27;
+    height: 30px;
+    font-size:20px ;
+}
+.header-nav:hover{
+    background-color:#532F27; 
+    color:  #FFCCBF;
+
+}

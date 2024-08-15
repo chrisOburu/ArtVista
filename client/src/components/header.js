@@ -8,7 +8,7 @@ import User from './usernav';
 
 function Header({onLoginSuccess}) {
   const navigate = useNavigate()
-const [isLogged,setLogged] = useState(false)
+const [isLogged,setLogged] = useState(true)
 
 
   return (

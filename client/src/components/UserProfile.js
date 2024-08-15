@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../api';
 import '../styles/profile.css'
 import Footer from './footer';
 
 const UserProfile = () => {
+  const navigate = useNavigate()
   const token = localStorage.getItem('jwtToken');
   const [profile, setProfile] = useState(null);
 
@@ -30,7 +32,11 @@ const UserProfile = () => {
   }, [token])
   console.log(profile)
   if (!profile) return <p>Loading...</p>;
-
+  const logout = ()=>{
+    localStorage.removeItem('jwtToken')
+    console.log(token)
+    navigate("/")
+  }
   return (
     <>
     <div id="user-profile">
@@ -42,8 +48,8 @@ const UserProfile = () => {
                 <button className="edit-profile">
                     <a href="/submit-project" className="header-nav"><i className="bi bi-folder-plus"></i>|project</a>
                 </button>
-                <button className="edit-profile">
-                  <a href="/submit-project" className="header-nav">
+                <button className="edit-profile" onClick={logout}>
+                  <a href="" className="header-nav">
                     <i className="bi bi-pencil-square"></i>
                     <p >logout</p></a>
                 </button>

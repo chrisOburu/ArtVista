@@ -107,7 +107,7 @@ useEffect(() => {
   };
 
   fetchRating();
-}, [id]);
+}, [id, jwtToken]);
 
 const handleOpen = () => setIsModalOpen(true);
 const handleClose = () => setIsModalOpen(false);

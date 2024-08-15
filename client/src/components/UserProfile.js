@@ -7,39 +7,54 @@ const UserProfile = () => {
   const token = localStorage.getItem('jwtToken');
   const [profile, setProfile] = useState(null);
 
-  const current_user = async (projectData) => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}projects`, projectData,
-        {
-          headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-          }
-        }
-      );
-      return response;
-    } catch (error) {
-      console.error('Error creating project:', error);
-      throw error;
+  useEffect(() => {
+    if(token){
+        fetch('https://artvista-dl5j.onrender.com/curent_user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            }
+        
+        })
+        .then(res => res.json())
+        .then(res => {
+            setProfile(res)
+        })
+
+        
     }
-  };
-
-
+    else{
+        setProfile(null)
+    }
+  }, [token])
+  console.log(profile)
   if (!profile) return <p>Loading...</p>;
 
   return (
     <>
     <div id="user-profile">
         <div id="user-banner">
-            <button id="edit-profile">
-                <i className="bi bi-pencil-square"></i>
-                <h2 id="user-edit">Edit profile</h2>
-            </button>
+        <nav id='user-nav'>
+                <button className="edit-profile">
+                    <a href="/" className="header-nav"><i class="bi bi-house-check-fill"></i>|Home</a>
+                </button>
+                <button className="edit-profile">
+                    <a href="/submit-project" className="header-nav"><i className="bi bi-folder-plus"></i>|project</a>
+                </button>
+                <button className="edit-profile">
+                  <a href="/submit-project" className="header-nav">
+                    <i className="bi bi-pencil-square"></i>
+                    <p >logout</p></a>
+                </button>
+                
+        </nav>
+            
         </div>
         <div id="profile-picture">
 
         </div>
-        <h1 id='user-name'>{profile.user}</h1>
+        <h1 id='user-name'>{profile.name}</h1>
         <h2 id='user-role'>{profile.email}</h2>
         <div id="user-summary">
             <div id="projects">

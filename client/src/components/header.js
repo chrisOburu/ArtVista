@@ -11,7 +11,7 @@ function Header({onLoginSuccess}) {
   const [isLogged,setLogged] = useState(false)
   const token = localStorage.getItem('jwtToken');
 
-
+  console.log(token)
   return (
     <>
         <header id='header' >

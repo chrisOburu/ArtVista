@@ -20,36 +20,27 @@ const EditProjectModal = ({ open, onClose, project, onSave }) => {
     const file = event.target.files[0];
     setFormData({ ...formData, image: file });
   };
-
   const handleSave = async () => {
     const { title, description, link, tags, image } = formData;
   
-    const updatedProject = {
-      title,
-      description,
-      link,
-      tags,
-      image: image? URL.createObjectURL(image) : project.image_url,
-    };
+    let formDataToSend;
+    if (image) {
+      formDataToSend = new FormData();
+      formDataToSend.append('title', title);
+      formDataToSend.append('description', description);
+      formDataToSend.append('link', link);
+      formDataToSend.append('tags', tags);
+      formDataToSend.append('image', image);
+    } else {
+      formDataToSend = JSON.stringify({ title, description, link, tags });
+    }
   
     try {
-      let formDataToSend;
-      if (image) {
-        formDataToSend = new FormData();
-        formDataToSend.append('title', title);
-        formDataToSend.append('description', description);
-        formDataToSend.append('link', link);
-        formDataToSend.append('tags', tags);
-        formDataToSend.append('image', image);
-      } else {
-        formDataToSend = JSON.stringify(updatedProject);
-      }
-  
       const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${project.id}`, {
         method: 'PATCH',
         headers: {
-          'Authorization': `Bearer ${jwtToken}`,
-          ...(image ? {} : { 'Content-Type': 'application/json' }),
+          Authorization: `Bearer ${jwtToken}`,
+          ...(image ? {} : { 'Content-Type': 'application/json' })
         },
         body: formDataToSend,
       });
@@ -68,7 +59,7 @@ const EditProjectModal = ({ open, onClose, project, onSave }) => {
       console.error('Error:', error);
     }
   };
-
+  
   return (
     <Modal open={open} onClose={onClose}>
       <Box

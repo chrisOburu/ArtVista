@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ProjectCard from './ProjectCard';
-import Header from './header';
-import Footer from './footer';
+import Header from '/home/dorcas/Phase5/ArtVista/client/src/components/header.js'
+import Footer from '/home/dorcas/Phase5/ArtVista/client/src/components/footer.js'
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -28,6 +28,11 @@ const ProjectList = () => {
   useEffect(() => {
     let sortedProjects = [...projects];
 
+    // Debugging statements
+    console.log('Initial Projects:', projects);
+    console.log('Search Term:', searchTerm);
+    console.log('Sort Option:', sortOption);
+
     // Filter by search term
     if (searchTerm) {
       sortedProjects = sortedProjects.filter(project =>
@@ -35,12 +40,18 @@ const ProjectList = () => {
       );
     }
 
+    // Debugging statements
+    console.log('Filtered Projects:', sortedProjects);
+
     // Sort by selected option
     if (sortOption === 'rating') {
       sortedProjects.sort((a, b) => b.rating - a.rating);
     } else if (sortOption === 'title') {
       sortedProjects.sort((a, b) => a.title.localeCompare(b.title));
     }
+
+    // Debugging statements
+    console.log('Sorted Projects:', sortedProjects);
 
     setFilteredProjects(sortedProjects);
   }, [projects, sortOption, searchTerm]);
@@ -70,7 +81,7 @@ const ProjectList = () => {
             <option value="title">Title</option>
           </select>
         </div>
-        <ProjectCard projects={projects} />
+        <ProjectCard projects={filteredProjects} />
       </div>
       <Footer />
     </>

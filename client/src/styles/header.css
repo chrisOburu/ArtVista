@@ -7,13 +7,16 @@
     align-items: center;
     padding-top:5px;
     background-color:  #FFF7F5;
+    gap: 50px;
+    padding-left:10px
 
   }
   #navbar{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 10px;
+    min-width:1200px
 
   }
   #nav-logo{

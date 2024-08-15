@@ -7,19 +7,22 @@ const UserProfile = () => {
   const token = localStorage.getItem('jwtToken');
   const [profile, setProfile] = useState(null);
 
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await getUserProfile(token);
-        setProfile(response.data);
-      } catch (error) {
-        console.error('Failed to load profile', error);
-      }
-    };
-
-    fetchProfile();
-  }, [token]);
+  const current_user = async (projectData) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}projects`, projectData,
+        {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+          }
+        }
+      );
+      return response;
+    } catch (error) {
+      console.error('Error creating project:', error);
+      throw error;
+    }
+  };
 
 
   if (!profile) return <p>Loading...</p>;

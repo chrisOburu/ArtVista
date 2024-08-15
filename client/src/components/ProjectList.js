@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ProjectCard from './ProjectCard';
-import Header from './header'
-import Footer from './footer'
+import Header from './header.js'
+import Footer from "./footer.js"
+
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);

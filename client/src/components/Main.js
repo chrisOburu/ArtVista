@@ -99,11 +99,8 @@ function Main(){
                 <div id="project-info">
 
                     <div id="project-reviews">
-                        <h1 id="project-rating">Rating:{bestProject.average_rating}</h1>
-                        <p>{bestProject.reviews.length} | comments</p>
-                         
-                        
-                       
+                        <h2 id="project-rating">Rating:{Math.round(bestProject.average_rating * 100) / 100}</h2>
+                        <h3>{bestProject.reviews.length} | comments</h3>
                     </div>
                 </div>
                     <a href={bestProject.link} id="site-link" >

@@ -8,7 +8,8 @@ import User from './usernav';
 
 function Header({onLoginSuccess}) {
   const navigate = useNavigate()
-const [isLogged,setLogged] = useState(false)
+  const [isLogged,setLogged] = useState(false)
+  const token = localStorage.getItem('jwtToken');
 
 
   return (
@@ -16,7 +17,7 @@ const [isLogged,setLogged] = useState(false)
         <header id='header' >
             <div id='nav-logo'className='nav-item' onClick={()=>{navigate("/")}}><span></span></div>
             {
-             isLogged?<User />:<Nav />
+              isLogged?<User />:<Nav />
             }
 
         </header>

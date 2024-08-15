@@ -8,9 +8,7 @@ function Footer(){
                     <div id="footer-banner"></div>
                     <div id="socials">
                         <div id="footer-nav">
-                            <a href="" className="footer-nav">Home</a>
-                            <a href="" className="footer-nav">about us </a>
-                            <a href="" className="footer-nav">user experience</a>
+                            <a href="#header" className="footer-nav">Home</a>
                         </div>
                         <div id="socials-icon">
                             <i className="bi bi-instagram"></i>

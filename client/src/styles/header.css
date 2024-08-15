@@ -6,7 +6,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top:5px;
-    background-color: #FEFCFC;
+    background-color:  #FFF7F5;
 
   }
   #navbar{
@@ -76,7 +76,7 @@
     border-radius: 10px;
   }
   #nav-login{
-    background-color: white;
+    background-color: #FFF7F5;
     outline: #e2725b;
     border-style: solid;
     border-color: #e2725b;
@@ -96,7 +96,7 @@
     height: 58px;
   }
   #nav-register:hover{
-    background-color: white;
+    background-color:#FFF7F5;
     outline: #e2725b;
     border-style: solid;
     border-color: #e2725b;

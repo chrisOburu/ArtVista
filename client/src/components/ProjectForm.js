@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProject } from '../api';
 import Modal from 'react-modal';
-import Header from './header';
-import Footer from './footer';
+import Header from './header.js';
+import Footer from './footer.js';
 
 
 const ProjectForm = () => {

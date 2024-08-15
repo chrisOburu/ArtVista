@@ -260,26 +260,40 @@ class ProjectByID(Resource):
     def patch(self, id):
         current_user_id = get_jwt_identity()
         project = Project.query.filter_by(id=id).first()
-
-        if project:
-            if project.owner_id != current_user_id:
-                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
-                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
-
-            try:
-                for key, value in request.json.items():
-                    if hasattr(project, key):
-                        setattr(project, key, value)
-                db.session.commit()
-                logging.info(f"User {current_user_id} partially updated project with ID: {id}")
-                return make_response(jsonify(project.to_dict()), 200)
-            except Exception as e:
-                logging.error(f"Error partially updating project with ID {id}: {str(e)}")
-                return make_response(jsonify({"errors": [str(e)]}), 400)
-        else:
+        
+        if not project:
             logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
+        if project.owner_id != current_user_id:
+            logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+            return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+        
+        try:
+            if 'image' in request.files:
+                file = request.files['image']
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    project.image_url = filename
+
+            if request.form.get("title"):
+                project.title = request.form.get("title")
+            if request.form.get("description"):
+                project.description = request.form.get("description")
+            if request.form.get("link"):
+                project.link = request.form.get("link")
+            if request.form.get("tags"):
+                project.tags = request.form.get("tags")
+            
+            db.session.commit()
+            logging.info(f"User {current_user_id} partially updated project with ID: {id}")
+            return make_response(jsonify(project.to_dict()), 200)
+
+        except Exception as e:
+            logging.error(f"Error partially updating project with ID {id}: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class Reviews(Resource):
     def get(self):

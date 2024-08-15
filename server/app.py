@@ -41,6 +41,21 @@ logging.basicConfig(filename=os.path.join(BASE_DIR, 'logs/artvista.log'),
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+# Route to get the current user
+@app.route('/curent_user', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first()
+    if user:
+        logging.info(f"Fetched user with ID: {id}")
+        return make_response(jsonify(user.to_dict()), 200)
+    else:
+        logging.warning(f"User with ID {id} not found.")
+        return make_response(jsonify({"error": "User not found"}), 404)
+
+
 # Route to serve the image by file name
 @app.route('/images/<filename>')
 def get_image(filename):

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import ProjectCard from './ProjectCard';
-import Header from '/home/dorcas/Phase5/ArtVista/client/src/components/header.js'
-import Footer from '/home/dorcas/Phase5/ArtVista/client/src/components/footer.js'
+import Header from './header'
+import Footer from './footer'
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);

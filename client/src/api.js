@@ -54,7 +54,7 @@ export const loginUser = async (credentials) => {
 
 export const createProject = async (projectData) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/projects`, projectData,
+      const response = await axios.post(`${API_BASE_URL}projects`, projectData,
         {
           headers: {
               'Content-Type': 'multipart/form-data',

@@ -4,73 +4,73 @@ import  BannerCard from './bannerCard'
 
 function Main(){
     const userPicture = "https://c4.wallpaperflare.com/wallpaper/531/525/90/tv-show-peaky-blinders-wallpaper-preview.jpg"
-    let bestProject = {
-        "average_rating": "4.1",
-        "description": "General school contain yeah yes nice. There pick drop.",
-        "id": 1,
-        "image_url": "image1.jpg",
-        "link": "http://martin-sanchez.info/",
-        "owner_id": 3,
+    let bestProject =   {
+        "average_rating": "3.066666666666666666666666667",
+        "description": "Experience history history wrong send movement computer. Deal discuss indicate miss defense teacher. Agreement lot maybe parent.",
+        "id": 8,
+        "image_url": "image2.jpg",
+        "link": "https://vargas.biz/",
+        "owner_id": 1,
         "published_date": "2024-08-13 09:02:12",
         "ratings": [
           {
-            "design_rating": "4.8",
-            "functionality_rating": "2.8",
-            "id": 8,
-            "project_id": 1,
-            "usability_rating": "4.7",
+            "design_rating": "3.6",
+            "functionality_rating": "4.3",
+            "id": 10,
+            "project_id": 8,
+            "usability_rating": "1.3",
             "user": {
               "active": true,
-              "email": "johnstonmartin@example.com",
-              "id": 9,
-              "name": "Douglas Lopez",
+              "email": "jessica74@example.org",
+              "id": 3,
+              "name": "Michelle Robertson",
               "user_role": "user",
-              "username": "tammy18"
+              "username": "christopher65"
             },
-            "user_id": 9
+            "user_id": 3
           }
         ],
         "reviews": [
           {
-            "comment": "Stop write market government Mr learn.",
+            "comment": "Teach major age lawyer church.",
             "date": "2024-08-13 09:02:12",
-            "id": 11,
-            "project_id": 1,
+            "id": 16,
+            "project_id": 8,
             "user": {
               "active": true,
-              "email": "kevin43@example.net",
-              "id": 7,
-              "name": "Stephanie Trujillo",
+              "email": "chunt@example.net",
+              "id": 10,
+              "name": "Jeffery Simmons",
               "user_role": "user",
-              "username": "berryjason"
+              "username": "adamstamara"
             },
-            "user_id": 7
+            "user_id": 10
           },
           {
-            "comment": "Truth road have history whom season.",
+            "comment": "Paper material down.",
             "date": "2024-08-13 09:02:12",
-            "id": 15,
-            "project_id": 1,
+            "id": 20,
+            "project_id": 8,
             "user": {
               "active": true,
-              "email": "rlong@example.org",
-              "id": 8,
-              "name": "Tamara Romero",
+              "email": "leonardzachary@example.net",
+              "id": 2,
+              "name": "Todd Mccormick",
               "user_role": "user",
-              "username": "dyoung"
+              "username": "wilsonthomas"
             },
-            "user_id": 8
+            "user_id": 2
           }
         ],
-        "tags": "science, detail, candidate",
-        "title": "Hold particularly physical have.",
+        "tags": "on, race, best",
+        "title": "Kind government rock.",
         "user": {
           "active": true,
-          "email": "jessica74@example.org",
-          "id": 3,
-          "name": "Michelle Robertson",
+          "email": "idiaz@example.org",
+          "id": 1,
+          "name": "Julie Ryan",
           "user_role": "user",
-          "username": "christopher65"
+          "username": "vking"
         }
       }
 

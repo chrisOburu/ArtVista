@@ -2,6 +2,7 @@ from app import app, db
 from models import User, Project, Review, Rating
 from faker import Faker
 import random
+from decimal import Decimal
 
 # Initialize Faker
 faker = Faker()
@@ -60,7 +61,6 @@ with app.app_context():
     # Create fake ratings
     ratings = []
     for _ in range(12):
-    # Ensure there are users and projects available
         if not users or not projects:
             raise ValueError("No users or projects found in the database")
         

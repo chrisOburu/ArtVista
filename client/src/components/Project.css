@@ -232,12 +232,35 @@ margin-top: 20px;
   color: rgb(8, 8, 8);
 }
 
-.dialog-buttonCancel {
-  color: #E2725B;
-}
-.dialog-buttonDelete {
-  color:#E2725B;
-}
 .dialog-buttonDelete:hover {
   color:#a64e3b;
 }
+
+.defined-average-rating {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+.defined-average-rating h4 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0;
+  color: #4A4A4A;
+}
+
+.defined-rating-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E2725B; 
+  margin-left: 10px;
+  display: inline-block;
+  background-color: #FFF7F5;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

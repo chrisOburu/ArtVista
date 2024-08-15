@@ -77,13 +77,16 @@ const averageRating = user_ratings.length > 0
   ? (user_ratings.reduce((acc, rating) => acc + rating, 0) / user_ratings.length).toFixed(1)
   : 'Not Rated';
   
-  const handleDialogOpen = () => {
-    setConfirmDialogOpen(true);
-  };
-  
-  const handleDialogClose = () => {
-    setConfirmDialogOpen(false);
-  };  
+const handleDialogOpen = () => {
+  setConfirmDialogOpen(true);
+};
+
+const handleDialogClose = () => {
+  setConfirmDialogOpen(false);
+}; 
+const handleAddClick = () => {
+  navigate('/submit-project');
+};
 
 useEffect(() => {
 if (!projectFromState) {
@@ -283,10 +286,29 @@ return (<>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleDialogClose} color="primary">
+            <Button onClick={handleDialogClose} sx={{ 
+              backgroundColor: '#FFF7F5',
+              color: '#555',
+              padding: '12px 24px',
+              margin: '8px',
+              borderRadius: '8px',
+              '&:hover': {
+                backgroundColor: '#E19685'
+                }
+              }}>
               Cancel
             </Button>
-            <Button onClick={handleDelete} color="secondary" autoFocus>
+            <Button onClick={handleDelete} sx={{ 
+              backgroundColor: '#FFDAD1', 
+              color: '#555',
+              padding: '12px 24px',
+              margin: '6px',
+              borderRadius: '8px', 
+              '&:hover': {
+                backgroundColor: '#E19685', 
+                },
+              }}
+              autoFocus>
               Delete
             </Button>
           </DialogActions>
@@ -295,7 +317,7 @@ return (<>
         <div className='Stack-icons'>
           <Box sx={{ '& > :not(style)': { m: 1 } }}>
             <Fab className="addNew-icon" aria-label="addNew-icon">
-              <AddIcon />
+              <AddIcon onClick={handleAddClick}/>
             </Fab>
             <Fab className="editor-icon" aria-label="editor-icon">
               <EditIcon  onClick={handleOpen} />
@@ -313,11 +335,6 @@ return (<>
         </div>
 <div id="cardinfo-details">
   <h2>{currentProject.title}</h2>
-  {/* <img
-    src={`https://artvista-dl5j.onrender.com/images/${currentProject.image_url}`}
-    alt={currentProject.title}
-    onError={(e) => (e.target.src = 'default-image.jpg')}
-  /> */}
   <iframe id="card-livelink" title="card-livelink" src={currentProject.link} height="700" width="1300" allowFullScreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
   <h3>Project Description</h3>
   <p>{currentProject.description}</p>
@@ -395,9 +412,13 @@ return (<>
       </div>
     </div>
 
-  <div className="average-rating">
-    <h4>Your Average Rating: {averageRating} Stars </h4>
-  </div>
+    <div className="defined-average-rating">
+      <h4>Your Average Rating: 
+        <span className="defined-rating-value">
+          {averageRating > 0 ? `${averageRating} Stars` : 'Not Rated'}
+        </span>
+      </h4>
+    </div>
 
   <TextField
     id="outlined-controlled"
@@ -416,7 +437,7 @@ return (<>
   {reviews.map((projreview, index) => (
     <ListItemButton key={index}>
       <ListItemAvatar>
-        <Avatar alt="Profile Picture" src={projreview.avatar_url || 'default-avatar.jpg'} />
+        <Avatar alt={projreview.user?.username || 'Profile'} src={projreview.avatar_url || 'default-avatar.jpg'} />
       </ListItemAvatar>
       <ListItemText
         primary={

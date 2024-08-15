@@ -5,6 +5,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
+from decimal import Decimal
 
 metadata = MetaData(
     naming_convention={
@@ -142,9 +143,9 @@ class Rating(db.Model, SerializerMixin):
     __tablename__ = "ratings"
 
     id = db.Column(db.Integer, primary_key=True)
-    design_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
-    usability_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
-    functionality_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+    design_rating = db.Column(db.Float, nullable=False)
+    usability_rating = db.Column(db.Float, nullable=False)
+    functionality_rating = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
@@ -169,21 +170,102 @@ class Rating(db.Model, SerializerMixin):
 
     @validates('design_rating')
     def validate_design_rating(self, key, design_rating):
-        if design_rating < 1 or design_rating > 5:
+        if not isinstance(design_rating, (float, int)):
+            raise ValueError("Design rating must be a float")
+        if design_rating < 1.0 or design_rating > 5.0:
             raise ValueError("Design rating must be between 1 and 5")
         return design_rating
 
     @validates('usability_rating')
     def validate_usability_rating(self, key, usability_rating):
-        if usability_rating < 1 or usability_rating > 5:
+        if not isinstance(usability_rating, (float, int)):
+            raise ValueError("Usability rating must be a float")
+        if usability_rating < 1.0 or usability_rating > 5.0:
             raise ValueError("Usability rating must be between 1 and 5")
         return usability_rating
 
     @validates('functionality_rating')
     def validate_functionality_rating(self, key, functionality_rating):
-        if functionality_rating < 1 or functionality_rating > 5:
+        if not isinstance(functionality_rating, (float, int)):
+            raise ValueError("Functionality rating must be a float")
+        if functionality_rating < 1.0 or functionality_rating > 5.0:
             raise ValueError("Functionality rating must be between 1 and 5")
         return functionality_rating
 
-    def __repr__(self):
-        return f"<Rating {self.design_rating}>"
+    def to_dict(self):
+        return {
+            'design_rating': self.design_rating,
+            'usability_rating': self.usability_rating,
+            'functionality_rating': self.functionality_rating,
+            'user_id': self.user_id,
+            'project_id': self.project_id
+        }
+
+
+# class Rating(db.Model, SerializerMixin):
+#     __tablename__ = "ratings"
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     design_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+#     usability_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+#     functionality_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+#     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
+
+#     user = db.relationship('User', back_populates='ratings')
+#     project = db.relationship('Project', back_populates='ratings')
+
+#     serialize_rules = ('-user.ratings', '-project.ratings')
+
+#     @validates('user_id')
+#     def validate_user_id(self, key, user_id):
+#         user = db.session.query(User).get(user_id)
+#         if user is None:
+#             raise ValueError("User ID does not exist")
+#         return user_id
+
+#     @validates('project_id')
+#     def validate_project_id(self, key, project_id):
+#         project = db.session.query(Project).get(project_id)
+#         if project is None:
+#             raise ValueError("Project ID does not exist")
+#         return project_id
+
+    
+#     @validates('design_rating')
+#     def validate_design_rating(self, key, design_rating):
+#         if isinstance(design_rating, (Decimal, float)):
+#             if Decimal(design_rating) < Decimal(1.0) or Decimal(design_rating) > Decimal(5.0):
+#                 raise ValueError("Design rating must be between 1 and 5")
+#         else:
+#             raise TypeError("Design rating must be a Decimal or float")
+#         return design_rating
+    
+#     @validates('usability_rating')
+#     def validate_design_rating(self, key, usability_rating):
+#         if isinstance(usability_rating, (Decimal, float)):
+#             if Decimal(usability_rating) < Decimal(1.0) or Decimal(usability_rating) > Decimal(5.0):
+#                 raise ValueError("Design rating must be between 1 and 5")
+#         else:
+#             raise TypeError("Design rating must be a Decimal or float")
+#         return usability_rating
+    
+#     @validates('functionality_rating')
+#     def validate_design_rating(self, key, functionality_rating):
+#         if isinstance(functionality_rating, (Decimal, float)):
+#             if Decimal(functionality_rating) < Decimal(1.0) or Decimal(functionality_rating) > Decimal(5.0):
+#                 raise ValueError("Design rating must be between 1 and 5")
+#         else:
+#             raise TypeError("Design rating must be a Decimal or float")
+#         return functionality_rating
+
+#     def to_dict(self):
+#         return {
+#             'design_rating': float(self.design_rating),
+#             'usability_rating': float(self.usability_rating),
+#             'functionality_rating': float(self.functionality_rating),
+#             'user_id': self.user_id,
+#             'project_id': self.project_id
+#         }
+#     def __repr__(self):
+#         return f"<Rating {self.design_rating}>"

@@ -204,7 +204,6 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
         design_rating: designRating,
         usability_rating: usabilityRating,
         functionality_rating: functionalityRating
-        // project_id: id,
       }),
     });
 

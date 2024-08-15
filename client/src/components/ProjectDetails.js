@@ -52,14 +52,18 @@ const labels = {
 3.5: 'Good',
 4: 'Very Good',
 4.5: 'Excellent',
-5: 'Outstanding',
+5.0: 'Outstanding',
 };
 
 const getLabelText = (value) => {
 return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 };
-// Calculate the average rating
-const averageRating = ((designRating + usabilityRating + functionalityRating) / 3).toFixed(1);
+
+const user_ratings = [designRating, usabilityRating, functionalityRating].filter(rating => rating !== null && rating !== undefined);
+
+const averageRating = user_ratings.length > 0
+  ? (user_ratings.reduce((acc, rating) => acc + rating, 0) / user_ratings.length).toFixed(1)
+  : 'Not Rated';
 
 useEffect(() => {
 if (!projectFromState) {
@@ -220,6 +224,7 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
   }
 };
 
+
 return (<>
         <Header />
 <div id="cardinfo-details">
@@ -254,26 +259,26 @@ return (<>
         <div className="cardinfo-rating-item">
           <h5>Design</h5>
           <Rating
-            name="design-rating"
-            value={designRating}
-            precision={0.5}
-            getLabelText={getLabelText}
-            onChange={(event, newValue) => {
-              setDesignRating(newValue);
-              sendRatingToServer('design', newValue);
-            }}
-            onChangeActive={(event, newHover) => {
-              setDesignHover(newHover);
-            }}
-            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-          />
+          name="design-rating"
+          value={designRating}
+          precision={0.5}
+          getLabelText={getLabelText}
+          onChange={(event, newValue) => {
+            setDesignRating(newValue);
+            sendRatingToServer(newValue, usabilityRating, functionalityRating);
+          }}
+          onChangeActive={(event, newHover) => {
+            setDesignHover(newHover);
+          }}
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
           {designRating !== null && (
             <Box sx={{ ml: 2 }}>{labels[designHover !== -1 ? designHover : designRating]}</Box>
           )}
         </div>
 
         <div className="cardinfo-rating-item">
-          <h5>Usability</h5>
+          <h5>Usability</h5>  
           <Rating
             name="usability-rating"
             value={usabilityRating}
@@ -281,7 +286,7 @@ return (<>
             getLabelText={getLabelText}
             onChange={(event, newValue) => {
               setUsabilityRating(newValue);
-              sendRatingToServer('usability', newValue);
+              sendRatingToServer(designRating, newValue, functionalityRating);
             }}
             onChangeActive={(event, newHover) => {
               setUsabilityHover(newHover);
@@ -302,7 +307,7 @@ return (<>
             getLabelText={getLabelText}
             onChange={(event, newValue) => {
               setFunctionalityRating(newValue);
-              sendRatingToServer('functionality', newValue);
+              sendRatingToServer(designRating, usabilityRating, newValue);
             }}
             onChangeActive={(event, newHover) => {
               setFunctionalityHover(newHover);
@@ -333,27 +338,6 @@ return (<>
     variant="outlined"
   />
   <button className='comment-button' onClick={handleCommentSubmit}>Submit Comment</button>
-
-  {/* <List>
-    {currentProject.reviews.map((projreview, index) => (
-      <ListItemButton key={index}>
-        <ListItemAvatar>
-          <Avatar alt="Profile Picture" src={projreview.avatar_url || 'default-avatar.jpg'} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-
-            <>
-              <div>{projreview.comment}</div>
-              <div className="review-username">{projreview.user?.username || 'Anonymous'}</div>
-
-            </>
-          }
-          secondary={`${projreview.date}`}
-        />
-      </ListItemButton>
-    ))}
-  </List> */}
   <List>
   {reviews.map((projreview, index) => (
     <ListItemButton key={index}>

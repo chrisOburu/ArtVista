@@ -7,20 +7,17 @@ import User from './usernav';
 
 
 function Header({onLoginSuccess}) {
-  const [islogged, setlogged] = useState(false)
-  let navigate = useNavigate();
-  let loginStatus = ()=>{
-    setlogged(onLoginSuccess)
-  }
+  const navigate = useNavigate()
+  const token = localStorage.getItem('jwtToken');
+  console.log(Boolean(token))
 
 
   return (
     <>
-        <header id='header'  onLoad={loginStatus}>
+        <header id='header' >
             <div id='nav-logo'className='nav-item' onClick={()=>{navigate("/")}}><span></span></div>
             {
-              islogged?<User />:<Nav />
-
+              Boolean(token)?<User />:<Nav />
             }
 
         </header>

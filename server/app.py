@@ -1,3 +1,4 @@
+import uuid
 from models import db, User, Review, Project, Rating
 from flask_migrate import Migrate
 from flask import Flask, request, make_response, jsonify,send_from_directory
@@ -5,6 +6,7 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required,get_jwt_identity
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import logging
 
@@ -144,23 +146,29 @@ class UserByID(Resource):
             logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
 
+    
     @jwt_required()
     def patch(self, id):
         user = User.query.filter_by(id=id).first()
-        if user:
-            try:
-                for key, value in request.json.items():
-                    if hasattr(user, key):
-                        setattr(user, key, value)
-                db.session.commit()
-                logging.info(f"Partially updated user with ID: {id}")
-                return make_response(jsonify(user.to_dict()), 200)
-            except Exception as e:
-                logging.error(f"Error partially updating user with ID {id}: {str(e)}")
-                return make_response(jsonify({"errors": [str(e)]}), 400)
-        else:
+        
+        if not user:
             logging.warning(f"User with ID {id} not found.")
             return make_response(jsonify({"error": "User not found"}), 404)
+
+        try:
+            for key, value in request.json.items():
+                if hasattr(user, key):
+                    if key == 'password':
+                        value = generate_password_hash(value) #.decode('utf-8')
+                    setattr(user, key, value)
+            
+            db.session.commit()
+            logging.info(f"Partially updated user with ID: {id}")
+            return make_response(jsonify(user.to_dict()), 200)
+        
+        except Exception as e:
+            logging.error(f"Error partially updating user with ID {id}: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class Projects(Resource):
     def get(self):
@@ -255,42 +263,38 @@ class ProjectByID(Resource):
         else:
             logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
-
+    
     @jwt_required()
     def patch(self, id):
         current_user_id = get_jwt_identity()
         project = Project.query.filter_by(id=id).first()
-        
+
         if not project:
             logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
-        if project.owner_id != current_user_id:
+        if project.owner_id!= current_user_id:
             logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
             return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
-        
+
         try:
             if 'image' in request.files:
                 file = request.files['image']
+                
                 if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
+                    filename = secure_filename(f"{uuid.uuid4()}_{file.filename}")
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(file_path)
                     project.image_url = filename
 
-            if request.form.get("title"):
-                project.title = request.form.get("title")
-            if request.form.get("description"):
-                project.description = request.form.get("description")
-            if request.form.get("link"):
-                project.link = request.form.get("link")
-            if request.form.get("tags"):
-                project.tags = request.form.get("tags")
+            for key, value in request.json.items():
+                if hasattr(project, key):
+                    setattr(project, key, value)
             
             db.session.commit()
-            logging.info(f"User {current_user_id} partially updated project with ID: {id}")
+            logging.info(f"User {current_user_id} updated")
             return make_response(jsonify(project.to_dict()), 200)
-
+        
         except Exception as e:
             logging.error(f"Error partially updating project with ID {id}: {str(e)}")
             return make_response(jsonify({"errors": [str(e)]}), 400)

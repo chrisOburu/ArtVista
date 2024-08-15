@@ -6,6 +6,9 @@ import Footer from './footer';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+
+
 import {
 Rating,
 Box,
@@ -15,7 +18,15 @@ List,
 ListItemText,
 ListItemAvatar,
 ListItemButton,
-
+Fab, 
+Snackbar, 
+Alert,
+Dialog, 
+DialogActions, 
+DialogContent, 
+DialogContentText, 
+DialogTitle, 
+Button 
 } from '@mui/material';
 import EditProjectModal from './EditProjectModal';
 
@@ -38,8 +49,9 @@ const [reviews, setReviews] = useState(currentProject.reviews || []);
 const [loading, setLoading] = useState(!projectFromState);
 const [error, setError] = useState(null);
 const [isModalOpen, setIsModalOpen] = useState(false);
-
-
+const [alertOpen, setAlertOpen] = useState(false);
+const [alertMessage, setAlertMessage] = useState('');
+const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
 const labels = {
 0: 'Not Rated',
@@ -64,6 +76,14 @@ const user_ratings = [designRating, usabilityRating, functionalityRating].filter
 const averageRating = user_ratings.length > 0
   ? (user_ratings.reduce((acc, rating) => acc + rating, 0) / user_ratings.length).toFixed(1)
   : 'Not Rated';
+  
+  const handleDialogOpen = () => {
+    setConfirmDialogOpen(true);
+  };
+  
+  const handleDialogClose = () => {
+    setConfirmDialogOpen(false);
+  };  
 
 useEffect(() => {
 if (!projectFromState) {
@@ -160,28 +180,37 @@ if (comment.trim()) {
 };
 
 const handleDelete = async () => {
-if (window.confirm('Are you sure you want to delete this project?')) {
-  try {
-    const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    });
+  handleDialogOpen();
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to delete project');
+  const deleteProject = async () => {
+    try {
+      const response = await fetch(`https://artvista-dl5j.onrender.com/projects/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setAlertMessage(errorData.message || 'Failed to delete project');
+        setAlertOpen(true);
+        throw new Error(errorData.message || 'Failed to delete project');
+      }
+
+      alert('Project deleted successfully');
+      navigate('/projects');
+    } catch (err) {
+      console.error('Error deleting project:', err);
+      setAlertMessage('Error deleting project: ' + err.message);
+      setAlertOpen(true);
+    } finally {
+      handleDialogClose(); 
     }
+  };
 
-    alert('Project deleted successfully');
-    navigate('/projects');
-  } catch (err) {
-    console.error('Error deleting project:', err);
-    alert('Error deleting project: ' + err.message); 
-  }
-}
+  return deleteProject();
 };
 
 if (loading) {
@@ -227,6 +256,61 @@ const sendRatingToServer = async (designRating, usabilityRating, functionalityRa
 
 return (<>
         <Header />
+        <Snackbar
+            open={alertOpen}
+            autoHideDuration={6000}
+            onClose={() => setAlertOpen(false)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={() => setAlertOpen(false)}
+              severity="error"
+              sx={{ width: '100%' }}
+            >
+              {alertMessage}
+            </Alert>
+        </Snackbar>
+        <Dialog className='dialog-confirm-container'
+          open={confirmDialogOpen}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this project? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary" autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <div className='Stack-icons'>
+          <Box sx={{ '& > :not(style)': { m: 1 } }}>
+            <Fab className="addNew-icon" aria-label="addNew-icon">
+              <AddIcon />
+            </Fab>
+            <Fab className="editor-icon" aria-label="editor-icon">
+              <EditIcon  onClick={handleOpen} />
+                <EditProjectModal
+                  open={isModalOpen}
+                  onClose={handleClose}
+                  project={currentProject}
+                  onSave={handleSave}
+                />
+            </Fab>
+            <Fab className="delete-icon" aria-label="delete">
+              <DeleteIcon onClick={handleDialogOpen} />
+            </Fab>
+          </Box>
+        </div>
 <div id="cardinfo-details">
   <h2>{currentProject.title}</h2>
   {/* <img
@@ -241,17 +325,7 @@ return (<>
   <div className="card-author">
       By: {currentProject.user?.name || 'Unknown Author'}
   </div>
-
-  <div className="icon-actions">
-    <EditIcon className="editor-icon" onClick={handleOpen} />
-      <EditProjectModal
-          open={isModalOpen}
-          onClose={handleClose}
-          project={currentProject}
-          onSave={handleSave}
-      />
-    <DeleteIcon className="delete-icon" onClick={handleDelete} />
-  </div>
+  
     <div className="rating-section">
       <h4>Rate this project</h4>
 

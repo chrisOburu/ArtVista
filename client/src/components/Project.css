@@ -86,6 +86,12 @@ height: auto;
 border-radius: 8px;
 margin-bottom: 20px;
 }
+#cardinfo-details iframe {
+  width: 100%;
+  height: 610px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
 #cardinfo-details h3 {
 font-size: 1.5rem;

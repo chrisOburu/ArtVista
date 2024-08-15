@@ -260,26 +260,40 @@ class ProjectByID(Resource):
     def patch(self, id):
         current_user_id = get_jwt_identity()
         project = Project.query.filter_by(id=id).first()
-
-        if project:
-            if project.owner_id != current_user_id:
-                logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
-                return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
-
-            try:
-                for key, value in request.json.items():
-                    if hasattr(project, key):
-                        setattr(project, key, value)
-                db.session.commit()
-                logging.info(f"User {current_user_id} partially updated project with ID: {id}")
-                return make_response(jsonify(project.to_dict()), 200)
-            except Exception as e:
-                logging.error(f"Error partially updating project with ID {id}: {str(e)}")
-                return make_response(jsonify({"errors": [str(e)]}), 400)
-        else:
+        
+        if not project:
             logging.warning(f"Project with ID {id} not found.")
             return make_response(jsonify({"error": "Project not found"}), 404)
 
+        if project.owner_id != current_user_id:
+            logging.warning(f"User {current_user_id} attempted to modify project {id} without permission.")
+            return make_response(jsonify({"error": "You do not have permission to modify this project"}), 403)
+        
+        try:
+            if 'image' in request.files:
+                file = request.files['image']
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    project.image_url = filename
+
+            if request.form.get("title"):
+                project.title = request.form.get("title")
+            if request.form.get("description"):
+                project.description = request.form.get("description")
+            if request.form.get("link"):
+                project.link = request.form.get("link")
+            if request.form.get("tags"):
+                project.tags = request.form.get("tags")
+            
+            db.session.commit()
+            logging.info(f"User {current_user_id} partially updated project with ID: {id}")
+            return make_response(jsonify(project.to_dict()), 200)
+
+        except Exception as e:
+            logging.error(f"Error partially updating project with ID {id}: {str(e)}")
+            return make_response(jsonify({"errors": [str(e)]}), 400)
 
 class Reviews(Resource):
     def get(self):
@@ -375,6 +389,28 @@ class ReviewByID(Resource):
         else:
             logging.warning(f"Review with ID {id} not found.")
             return make_response(jsonify({"error": "Review not found"}), 404)
+    
+@app.route('/reviews/project/<project_id>', methods=['GET'])
+def get_project_reviews(project_id):
+    reviews = Review.query.filter_by(project_id=project_id).all()
+    return jsonify([r.to_dict() for r in reviews]), 200
+
+@app.route('/reviews/project/<project_id>', methods=['POST'])
+@jwt_required()
+def create_user_project_review(project_id):
+    current_user_id = get_jwt_identity()
+    try:
+        new_record = Review(
+            date=request.json.get("date", None),
+            comment=request.json["comment"],
+            user_id=current_user_id,
+            project_id=project_id
+        )
+        db.session.add(new_record)
+        db.session.commit()
+        return jsonify(new_record.to_dict()), 201
+    except Exception as e:
+        return jsonify({"errors": [str(e)]}), 400
 
 class Ratings(Resource):
     def get(self):
@@ -470,6 +506,46 @@ class RatingsByID(Resource):
             except Exception as e:
                 logging.error(f"Error partially updating rating with ID: {id})", e)
 
+@app.route('/ratings/project/<project_id>', methods=['GET'])
+@jwt_required()
+def get_user_project_ratings(project_id):
+    user_id = get_jwt_identity()
+    rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
+    if rating:
+        return jsonify(rating.to_dict()), 200
+    else:
+        return jsonify({"message": "No rating found"}), 404
+
+@app.route('/ratings/project/<project_id>', methods=['PUT'])
+@jwt_required()
+def update_user_project_rating(project_id):
+    user_id = get_jwt_identity()
+    rating = Rating.query.filter_by(user_id=user_id, project_id=project_id).first()
+
+    if rating:
+        try:
+            rating.design_rating = request.json.get("design_rating", rating.design_rating)
+            rating.usability_rating = request.json.get("usability_rating", rating.usability_rating)
+            rating.functionality_rating = request.json.get("functionality_rating", rating.functionality_rating)
+            db.session.commit()
+            return jsonify(rating.to_dict()), 200
+        except Exception as e:
+            return jsonify({"errors": [str(e)]}), 400
+    else:
+        try:
+            new_record = Rating(
+                design_rating=request.json["design_rating"],
+                usability_rating=request.json["usability_rating"],
+                functionality_rating=request.json["functionality_rating"],
+                user_id=user_id,
+                project_id=project_id
+            )
+            db.session.add(new_record)
+            db.session.commit()
+            return jsonify(new_record.to_dict()), 201
+        except Exception as e:
+            return jsonify({"errors": [str(e)]}), 400
+
 api.add_resource(Users, "/users")
 api.add_resource(UserByID, "/users/<int:id>")
 api.add_resource(Projects, "/projects")
@@ -478,7 +554,6 @@ api.add_resource(Reviews, "/reviews")
 api.add_resource(ReviewByID, "/reviews/<int:id>")
 api.add_resource(Ratings, "/ratings")
 api.add_resource(RatingsByID, "/ratings/<int:id>")
-
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

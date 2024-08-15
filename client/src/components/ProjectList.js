@@ -4,6 +4,7 @@ import ProjectCard from './ProjectCard';
 import Header from './header.js'
 import Footer from "./footer.js"
 
+
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);

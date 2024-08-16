@@ -8,6 +8,7 @@ const UserProfile = () => {
   const navigate = useNavigate()
   const token = localStorage.getItem('jwtToken');
   const [profile, setProfile] = useState(null);
+  const [userdata,setData] = useState(null)
 
   useEffect(() => {
     if(token){
@@ -17,7 +18,6 @@ const UserProfile = () => {
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${token}`
             }
-        
         })
         .then(res => res.json())
         .then(res => {
@@ -31,7 +31,24 @@ const UserProfile = () => {
     }
   }, [token])
   console.log(profile)
+
+
+console.log(userdata)
+
+
+
+
+
+
+
+
+
   if (!profile) return <p>Loading...</p>;
+
+
+
+
+
   const logout = ()=>{
     localStorage.removeItem('jwtToken')
     console.log(token)
@@ -72,12 +89,12 @@ const UserProfile = () => {
                         <tr className="table-row">
                             <td className="table-data"><i className="bi bi-cast"></i></td>
                             <td className="table-data"> Projects</td>
-                            <td className="table-data"> 120</td>
+                            <td className="table-data"> 0</td>
                         </tr>
                         <tr  className='table-row'>
                             <td className="table-data"><i className="bi bi-chat-square-text"></i></td>
                             <td className="table-data">Reviews</td>
-                            <td className="table-data">5000</td>
+                            <td className="table-data">0</td>
                         </tr>
                     </table>
             </div>

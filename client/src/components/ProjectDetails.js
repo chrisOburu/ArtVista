@@ -140,7 +140,7 @@ const handleOpen = () => setIsModalOpen(true);
 const handleClose = () => setIsModalOpen(false);
 ////////////////////////////////////////////////////////////////
 const handleSave = (updatedProject) => {
-    console.log('Updated Project:', updatedProject);
+    setCurrentProject(updatedProject);
 };
 
 const handleCommentSubmit = () => {

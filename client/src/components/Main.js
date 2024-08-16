@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles/main.css'
+import { Link } from "react-router-dom";
 import  BannerCard from './bannerCard'
 
 function Main(){
@@ -113,12 +114,12 @@ function Main(){
             <div id="project-banner">
                 <div id="project-details">
 
-                    <a href="/projects" id="site-link" target="new">
+                    <Link to="/projects"  id="site-link" >
                         <h1 id="site-url">
                            view more projects
                         </h1>
                         <i className="bi bi-arrow-right-circle-fill"></i>
-                    </a>
+                    </Link>
 
 
 
@@ -135,7 +136,7 @@ function Main(){
                         <h3>{bestProject.reviews.length} | comments</h3>
                     </div>
                 </div>
-                    <a href={bestProject.link} id="site-link" >
+                    <a href={bestProject.link} id="site-link" target="new" >
                             <h1 id="site-url">
                                visit the website
                             </h1>

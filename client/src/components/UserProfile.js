@@ -10,31 +10,37 @@ const UserProfile = () => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    if(token){
-        fetch('https://artvista-dl5j.onrender.com/curent_user', {
+    if (token) {
+        fetch('https://artvista-dl5j.onrender.com/current_user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
             }
-        
         })
-        .then(res => res.json())
         .then(res => {
-            setProfile(res)
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
         })
+        .then(data => {
+            setProfile(data);
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            setProfile(null);  // Reset profile in case of error
+        });
+    } else {
+        setProfile(null);
+    }
+}, [token]);
 
-        
-    }
-    else{
-        setProfile(null)
-    }
-  }, [token])
   console.log(profile)
   if (!profile) return <p>Loading...</p>;
   const logout = ()=>{
     localStorage.removeItem('jwtToken')
-    console.log(token)
+    //console.log(token)
     navigate("/")
   }
   return (

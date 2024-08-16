@@ -60,7 +60,7 @@ with app.app_context():
             title=faker.sentence(nb_words=4),
             description=faker.paragraph(nb_sentences=3),
             image_url=random.choice(image_urls),  # Randomly select from images/image0.jpg to images/image6.jpg
-            link=random.choice(live_link),
+            link= random.choice(live_link),
             owner_id=random.choice(users).id,
             tags=", ".join(faker.words(nb=3))
         )

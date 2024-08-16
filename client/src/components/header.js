@@ -12,30 +12,35 @@ function Header({onLoginSuccess}) {
   const token = localStorage.getItem('jwtToken');
 
 
-  
   useEffect(() => {
-    if(token){
-        fetch('https://artvista-dl5j.onrender.com/curent_user', {
+    if (token) {
+        fetch('https://artvista-dl5j.onrender.com/current_user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
             }
-        
         })
-        .then(res => res.json())
         .then(res => {
-            setLogged(res)
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
         })
-
-        
+        .then(res => {
+            setLogged(res);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            setLogged(null);
+        });
+    } else {
+        setLogged(null);
     }
-    else{
-        setLogged(null)
-    }
-  }, [token])
+    }, [token]);
 
-  console.log(token)
+
+  //console.log(token)
   return (
     <>
         <header id='header' >

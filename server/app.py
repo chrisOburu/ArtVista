@@ -232,6 +232,14 @@ class Projects(Resource):
 
 
 class ProjectByID(Resource):
+    def get(self, id):
+        project = Project.query.filter_by(id=id).first()
+        if project:
+            logging.info(f"Fetched project with ID: {id}")
+            return make_response(jsonify(project.to_dict()), 200)
+        else:
+            logging.warning(f"Project with ID {id} not found.")
+            return make_response(jsonify({"error": "Project not found"}), 404)
     @jwt_required()
     def put(self, id):
         current_user_id = get_jwt_identity()

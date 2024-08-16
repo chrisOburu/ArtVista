@@ -3,9 +3,13 @@ import '../App.css';
 import ProjectCard from './ProjectCard';
 import Header from './header.js'
 import Footer from "./footer.js"
+import AddIcon from '@mui/icons-material/Add';
+import {Fab} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProjectList = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [sortOption, setSortOption] = useState('');
@@ -56,12 +60,18 @@ const ProjectList = () => {
 
     setFilteredProjects(sortedProjects);
   }, [projects, sortOption, searchTerm]);
+  const handleAddClick = () => {
+    navigate('/submit-project');
+  };
 
   return (
     <>
       <Header />
       <div className="project-list-container">
         <h2>Projects</h2>
+        <Fab className="addNew-icon" aria-label="addNew-icon">
+          <AddIcon onClick={handleAddClick}/>
+        </Fab>
         <div className="controls">
           <input
             type="text"

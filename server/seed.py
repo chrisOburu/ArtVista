@@ -30,17 +30,12 @@ with app.app_context():
     image_urls = [f'image{i}.jpg' for i in range(7)]
 
     live_link =[
-        "https://www.thisiscolossal.com",
         "https://www.theinspirationgrid.com",
-        "https://www.behance.net",
-        "https://www.awwwards.com",
         "https://www.deviantart.com",
         "https://www.dribbble.com",
         "https://www.medium.com",
         "https://www.producthunt.com",
         "https://www.coursera.org",
-        "https://www.udemy.com",
-        "https://www.khanacademy.org",
         "https://www.squarespace.com",
         "https://www.artstation.com",
         "https://www.codecademy.com",

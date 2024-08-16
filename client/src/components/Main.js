@@ -4,78 +4,110 @@ import  BannerCard from './bannerCard'
 
 function Main(){
     const userPicture = "https://c4.wallpaperflare.com/wallpaper/531/525/90/tv-show-peaky-blinders-wallpaper-preview.jpg"
-    let bestProject =   {
-        "average_rating": "3.066666666666666666666666667",
-        "description": "Experience history history wrong send movement computer. Deal discuss indicate miss defense teacher. Agreement lot maybe parent.",
-        "id": 8,
-        "image_url": "image2.jpg",
-        "link": "https://vargas.biz/",
-        "owner_id": 1,
-        "published_date": "2024-08-13 09:02:12",
-        "ratings": [
-          {
-            "design_rating": "3.6",
-            "functionality_rating": "4.3",
-            "id": 10,
-            "project_id": 8,
-            "usability_rating": "1.3",
-            "user": {
-              "active": true,
-              "email": "jessica74@example.org",
-              "id": 3,
-              "name": "Michelle Robertson",
-              "user_role": "user",
-              "username": "christopher65"
-            },
-            "user_id": 3
-          }
-        ],
-        "reviews": [
-          {
-            "comment": "Teach major age lawyer church.",
-            "date": "2024-08-13 09:02:12",
-            "id": 16,
-            "project_id": 8,
-            "user": {
-              "active": true,
-              "email": "chunt@example.net",
-              "id": 10,
-              "name": "Jeffery Simmons",
-              "user_role": "user",
-              "username": "adamstamara"
-            },
-            "user_id": 10
+    let bestProject =     {
+      "average_rating": 2.8000000000000003,
+      "description": "In another realize everyone approach there magazine. Prevent administration approach either hit letter.",
+      "id": 4,
+      "image_url": "image6.jpg",
+      "link": "https://www.theinspirationgrid.com",
+      "owner_id": 6,
+      "published_date": "2024-08-16 04:57:02",
+      "ratings": [
+        {
+          "design_rating": 2.1,
+          "functionality_rating": 2.1,
+          "id": 4,
+          "project_id": 4,
+          "usability_rating": 3,
+          "user": {
+            "active": true,
+            "email": "smithsarah@example.org",
+            "id": 4,
+            "name": "Gregory Anderson",
+            "user_role": "user",
+            "username": "ellisjamie"
           },
-          {
-            "comment": "Paper material down.",
-            "date": "2024-08-13 09:02:12",
-            "id": 20,
-            "project_id": 8,
-            "user": {
-              "active": true,
-              "email": "leonardzachary@example.net",
-              "id": 2,
-              "name": "Todd Mccormick",
-              "user_role": "user",
-              "username": "wilsonthomas"
-            },
-            "user_id": 2
-          }
-        ],
-        "tags": "on, race, best",
-        "title": "Kind government rock.",
-        "user": {
-          "active": true,
-          "email": "idiaz@example.org",
-          "id": 1,
-          "name": "Julie Ryan",
-          "user_role": "user",
-          "username": "vking"
+          "user_id": 4
+        },
+        {
+          "design_rating": 3.9,
+          "functionality_rating": 2.1,
+          "id": 5,
+          "project_id": 4,
+          "usability_rating": 1.4,
+          "user": {
+            "active": true,
+            "email": "jasmineaguilar@example.com",
+            "id": 1,
+            "name": "Suzanne Ballard",
+            "user_role": "user",
+            "username": "reginamiller"
+          },
+          "user_id": 1
+        },
+        {
+          "design_rating": 3.3,
+          "functionality_rating": 3.2,
+          "id": 7,
+          "project_id": 4,
+          "usability_rating": 2.6,
+          "user": {
+            "active": true,
+            "email": "jeremyweeks@example.org",
+            "id": 9,
+            "name": "Meagan Woods",
+            "user_role": "user",
+            "username": "donnasmith"
+          },
+          "user_id": 9
+        },
+        {
+          "design_rating": 1.2,
+          "functionality_rating": 4.1,
+          "id": 9,
+          "project_id": 4,
+          "usability_rating": 4.6,
+          "user": {
+            "active": true,
+            "email": "kristen59@example.com",
+            "id": 7,
+            "name": "Natasha Dixon",
+            "user_role": "user",
+            "username": "dmiller"
+          },
+          "user_id": 7
         }
+      ],
+      "reviews": [
+        {
+          "comment": "Democratic modern really could trip away increase.",
+          "date": "2024-08-16 04:57:02",
+          "id": 15,
+          "project_id": 4,
+          "user": {
+            "active": true,
+            "email": "cartererin@example.org",
+            "id": 10,
+            "name": "Robert Morrow",
+            "user_role": "user",
+            "username": "barrettannette"
+          },
+          "user_id": 10
+        }
+      ],
+      "tags": "simple, far, heart",
+      "title": "Contain answer.",
+      "user": {
+        "active": true,
+        "email": "nsmith@example.com",
+        "id": 6,
+        "name": "Jesus Valdez",
+        "user_role": "user",
+        "username": "john72"
       }
+    }
 
-      console.log(bestProject.average_rating)
-      console.log(bestProject.reviews.length)
+
     return(
         <>
             <div id="project-banner">

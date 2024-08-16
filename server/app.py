@@ -43,7 +43,7 @@ def allowed_file(filename):
 
 
 # Route to get the current user
-@app.route('/curent_user', methods=['GET'])
+@app.route('/current_user', methods=['GET'])
 @jwt_required()
 def get_current_user():
     current_user_id = get_jwt_identity()

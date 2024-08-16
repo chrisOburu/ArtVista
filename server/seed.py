@@ -29,6 +29,30 @@ with app.app_context():
     # Define possible image URLs with folder path
     image_urls = [f'image{i}.jpg' for i in range(7)]
 
+    live_link =[
+        "https://www.thisiscolossal.com",
+        "https://www.theinspirationgrid.com",
+        "https://www.behance.net",
+        "https://www.awwwards.com",
+        "https://www.deviantart.com",
+        "https://www.dribbble.com",
+        "https://www.medium.com",
+        "https://www.producthunt.com",
+        "https://www.coursera.org",
+        "https://www.udemy.com",
+        "https://www.khanacademy.org",
+        "https://www.squarespace.com",
+        "https://www.artstation.com",
+        "https://www.codecademy.com",
+        "https://www.hackerrank.com",
+        "https://www.strava.com",
+        "https://www.spotify.com",
+        "https://www.soundcloud.com",
+        "https://www.notion.so",
+        "https://www.trello.com"
+    ]
+
+
     # Create fake projects
     projects = []
     for _ in range(10):
@@ -36,7 +60,7 @@ with app.app_context():
             title=faker.sentence(nb_words=4),
             description=faker.paragraph(nb_sentences=3),
             image_url=random.choice(image_urls),  # Randomly select from images/image0.jpg to images/image6.jpg
-            link=faker.url(),
+            link=random.choice(live_link),
             owner_id=random.choice(users).id,
             tags=", ".join(faker.words(nb=3))
         )

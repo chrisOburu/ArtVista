@@ -1,6 +1,5 @@
 import React from "react";
 import '../styles/usernav.css'
-import { getUserProfile } from "../api";
 import {useNavigate} from 'react-router-dom'
 
 

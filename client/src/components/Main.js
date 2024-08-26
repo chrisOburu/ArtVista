@@ -124,6 +124,7 @@ function Main(){
 
 
                 </div>
+                {/* eslint-disable-next-line */}
                 <iframe id="iframe-screen" src={bestProject.link}height="700" width="1300" allowFullScreen lazyload='true' frameBorder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
 
            </div>

@@ -63,7 +63,8 @@ const RegisterForm = ({ onLoginSuccess }) => {
     setMessageType('');
     try {
         const response = await registerUser(formData);
-        setPopupMessage('Registration successful!');
+
+        if (response) setPopupMessage('Registration successful!');
         setMessageType('success'); // Set message type to success
         setIsMessageModalOpen(true); // Show the message modal immediately
         setFormData({

@@ -1,108 +1,111 @@
 #header{
-    width:100%;
-    height:120px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding-top:5px;
-    background-color:  #FFF7F5;
-    gap: 50px;
-    padding-left:10px
+  width:100%; 
+  height:120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:5px;
+  background-color:  #FFF7F5;
+  gap: 50px;
+  padding-left:10px
 
-  }
-  #navbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
-    min-width:1500px
+}
 
-  }
-  #nav-logo{
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    height: 100px;
-    width:100px;
-    background-image: url('../assets/logo/logo7.png');
-    background-position: center;
-    background-size: cover;
-    border-radius: 70px;
-  }
-  #nav-search{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 58px;
-    gap: 5px;
-    background-color: #FFF7F5;;
-    border-radius: 15px;
-    padding-right: 10px;
-  }
-  #nav-search>input{
-    width:500px;
-    height: 35px;
-    border-radius: 10px;
-    background-color: #FFF7F5;
-    border-width: 0px;
-    outline: none;
-    caret-color: #e2725b;
-    font-size:20px;
-    opacity: 0.7;
-    color: #532F27;
-  }
-  #nav-search>input::placeholder{
-    padding-left: 10px;
-    font-size:20px;
-    opacity: 0.7;
-    color: #532F27;
-  }
-  .bi-search{
-    color: #532F27;
-    font-size:25px;
-    font-weight: bolder;
-  }
-  .bi-search:hover{
-    color: #532F27;
-    font-size:25px;
-    font-weight: bolder;
-  }
-  .nav-item{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 58px;
-    width:150px;
-    border-radius: 10px;
-  }
-  #nav-login{
-    background-color: #FFF7F5;
-    outline: #e2725b;
-    border-style: solid;
-    border-color: #e2725b;
-    border-width: 2px;
-    color: #532F27;
-    height:58px;
-  }
-  #nav-login:hover{
-    color: #532F27;
-    background-color: #e2725b;
-    height: 58px;
+#navbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 90%;
+  /* min-width:1500px */
 
-  }
-  #nav-register{
-    color: #532F27;
-    background-color: #e2725b;
-    height: 58px;
-  }
-  #nav-register:hover{
-    background-color:#FFF7F5;
-    outline: #e2725b;
-    border-style: solid;
-    border-color: #e2725b;
-    border-width: 2px;
-    color: #532F27;
-  }
+}
+
+#nav-logo{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  height: 100px;
+  width:100px;
+  background-image: url('../assets/logo/logo7.png');
+  background-position: center;
+  background-size: cover;
+  border-radius: 70px;
+}
+#nav-search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 58px;
+  gap: 5px;
+  background-color: #FFF7F5;;
+  border-radius: 15px;
+  padding-right: 10px;
+}
+#nav-search>input{
+  width:500px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: #FFF7F5;
+  border-width: 0px;
+  outline: none;
+  caret-color: #e2725b;
+  font-size:20px;
+  opacity: 0.7;
+  color: #532F27;
+}
+#nav-search>input::placeholder{
+  padding-left: 10px;
+  font-size:20px;
+  opacity: 0.7;
+  color: #532F27;
+}
+.bi-search{
+  color: #532F27;
+  font-size:25px;
+  font-weight: bolder;
+}
+.bi-search:hover{
+  color: #532F27;
+  font-size:25px;
+  font-weight: bolder;
+}
+.nav-item{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 58px;
+  width:150px;
+  border-radius: 10px;
+}
+#nav-login{
+  background-color: #FFF7F5;
+  outline: #e2725b;
+  border-style: solid;
+  border-color: #e2725b;
+  border-width: 2px;
+  color: #532F27;
+  height:58px;
+}
+#nav-login:hover{
+  color: #532F27;
+  background-color: #e2725b;
+  height: 58px;
+
+}
+#nav-register{
+  color: #532F27;
+  background-color: #e2725b;
+  height: 58px;
+}
+#nav-register:hover{
+  background-color:#FFF7F5;
+  outline: #e2725b;
+  border-style: solid;
+  border-color: #e2725b;
+  border-width: 2px;
+  color: #532F27;
+}

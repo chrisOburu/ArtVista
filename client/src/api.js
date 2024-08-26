@@ -69,10 +69,10 @@ export const createProject = async (projectData) => {
     }
   };
 
-export default {
-   getProjects,
-   getUserProfile,
-   registerUser,
-   loginUser,
-   createProject,
-};
+// export default {
+//    getProjects,
+//    getUserProfile,
+//    registerUser,
+//    loginUser,
+//    createProject,
+// };

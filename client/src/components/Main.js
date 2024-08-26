@@ -1,10 +1,10 @@
 import React from "react";
 import '../styles/main.css'
 import { Link } from "react-router-dom";
-import  BannerCard from './bannerCard'
+
 
 function Main(){
-    const userPicture = "https://c4.wallpaperflare.com/wallpaper/531/525/90/tv-show-peaky-blinders-wallpaper-preview.jpg"
+    //const userPicture = "https://c4.wallpaperflare.com/wallpaper/531/525/90/tv-show-peaky-blinders-wallpaper-preview.jpg"
     let bestProject =     {
       "average_rating": 2.8000000000000003,
       "description": "In another realize everyone approach there magazine. Prevent administration approach either hit letter.",

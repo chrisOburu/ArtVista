@@ -1,0 +1,22 @@
+#user{
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-left: 15px;
+    color:#532F27;
+}
+#user-add{
+    display:flex;
+    margin-top: 0px;
+    gap:5px;
+}
+#user-add>i{
+    font-size: 40px;
+    color:#532F27;
+}
+
+#user-add:hover{
+    color:#532F27;
+    font-size: 20px;
+}

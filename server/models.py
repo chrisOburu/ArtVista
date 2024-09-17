@@ -26,26 +26,20 @@ class User(db.Model, SerializerMixin):
     active = db.Column(db.Boolean, default=True, nullable=False)
 
     reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
-    projects = association_proxy('reviews', 'project')
-    owned_projects = db.relationship('Project', back_populates='owner')
+    projects = db.relationship('Project', back_populates='user', cascade='all, delete-orphan')
+    ratings = db.relationship('Rating', back_populates='user', cascade='all, delete-orphan')
 
     serialize_rules = (
         '-password', 
-        '-reviews.user', 
-        '-projects.users', 
-        '-owned_projects.owner',
-        '-owned_projects.reviews',
+        '-reviews',
+        '-projects',
+        '-ratings',
     )
-
-
 
     @validates('email')
     def validate_email(self, key, email):
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             raise ValueError("Invalid email address")
-        existing_user = db.session.query(User).filter_by(email=email).first()
-        if existing_user:
-            raise ValueError("Email already exists")
         return email
 
     @validates('username')
@@ -54,9 +48,6 @@ class User(db.Model, SerializerMixin):
             raise ValueError("Username must be between 3 and 20 characters")
         if not re.match(r"^\w+$", username):
             raise ValueError("Username must contain only letters, numbers, and underscores")
-        existing_user = db.session.query(User).filter_by(username=username).first()
-        if existing_user:
-            raise ValueError("Username already exists")
         return username
 
     def set_password(self, password):
@@ -81,23 +72,23 @@ class Project(db.Model, SerializerMixin):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     reviews = db.relationship('Review', back_populates='project', cascade='all, delete-orphan')
-    users = association_proxy('reviews', 'user')
-    owner = db.relationship('User', back_populates='owned_projects')
+    user = db.relationship('User', back_populates='projects')
+    ratings = db.relationship('Rating', back_populates='project', cascade='all, delete-orphan')
+
+    serialize_rules = (
+        '-reviews.project',
+        '-user.projects',
+        '-ratings.project',
+        'average_rating',
+    )
 
     @property
-    def ratings(self):
-        if self.reviews:
-            return sum([review.rating for review in self.reviews]) / len(self.reviews)
+    def average_rating(self):
+        if self.ratings:
+            total_rating = sum([rating.design_rating + rating.usability_rating + rating.functionality_rating for rating in self.ratings])
+            count = len(self.ratings) * 3
+            return total_rating / count
         return None
-    
-    serialize_rules = (
-        '-reviews.project', 
-        '-users.projects', 
-        '-owner.owned_projects',
-        '-owner.reviews',
-        '-users.reviews',
-        'ratings',
-    )
 
     @validates('owner_id')
     def validate_owner_id(self, key, owner_id):
@@ -109,13 +100,14 @@ class Project(db.Model, SerializerMixin):
     def __repr__(self):
         return f"<Project {self.title}>"
 
+    def __str__(self):
+        return self.title
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = "reviews"
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
-    rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(120), nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -124,7 +116,7 @@ class Review(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='reviews')
     project = db.relationship('Project', back_populates='reviews')
 
-    serialize_rules = ('-user.reviews', '-project.reviews')
+    serialize_rules = ('-user.reviews', '-project.reviews',)
 
     @validates('user_id')
     def validate_user_id(self, key, user_id):
@@ -140,11 +132,58 @@ class Review(db.Model, SerializerMixin):
             raise ValueError("Project ID does not exist")
         return project_id
 
-    @validates('rating')
-    def validate_rating(self, key, rating):
-        if rating < 1 or rating > 5:
-            raise ValueError("Rating must be between 1 and 5")
-        return rating
+    def __repr__(self):
+        return f"<Review {self.id}>"
+
+    def __str__(self):
+        return f"Review by User {self.user_id} on Project {self.project_id}"
+
+class Rating(db.Model, SerializerMixin):
+    __tablename__ = "ratings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    design_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+    usability_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+    functionality_rating = db.Column(db.Numeric(precision=2, scale=1), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
+
+    user = db.relationship('User', back_populates='ratings')
+    project = db.relationship('Project', back_populates='ratings')
+
+    serialize_rules = ('-user.ratings', '-project.ratings')
+
+    @validates('user_id')
+    def validate_user_id(self, key, user_id):
+        user = db.session.query(User).get(user_id)
+        if user is None:
+            raise ValueError("User ID does not exist")
+        return user_id
+
+    @validates('project_id')
+    def validate_project_id(self, key, project_id):
+        project = db.session.query(Project).get(project_id)
+        if project is None:
+            raise ValueError("Project ID does not exist")
+        return project_id
+
+    @validates('design_rating')
+    def validate_design_rating(self, key, design_rating):
+        if design_rating < 1 or design_rating > 5:
+            raise ValueError("Design rating must be between 1 and 5")
+        return design_rating
+
+    @validates('usability_rating')
+    def validate_usability_rating(self, key, usability_rating):
+        if usability_rating < 1 or usability_rating > 5:
+            raise ValueError("Usability rating must be between 1 and 5")
+        return usability_rating
+
+    @validates('functionality_rating')
+    def validate_functionality_rating(self, key, functionality_rating):
+        if functionality_rating < 1 or functionality_rating > 5:
+            raise ValueError("Functionality rating must be between 1 and 5")
+        return functionality_rating
 
     def __repr__(self):
-        return f"<Review {self.rating}>"
+        return f"<Rating {self.design_rating}>"

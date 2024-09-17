@@ -34,17 +34,21 @@ function ProjectCard({ projects }) {
         <div key={project.id} className="card">
           <Link to={`/projects/${project.id}`} state={{ project }}>
             <div className="card-image">
-              <img src={project.image_url} alt={project.title} />
+                  <img
+                    src={`https://artvista-dl5j.onrender.com/images/${project.image_url}`}
+                    alt={project.title}
+                    onError={(e) => (e.target.src = 'default-image.jpg')}
+                  />
             </div>
             <div className="card-content">
               <h3 className="card-title">{project.title}</h3>
               <p className="card-description">{project.description}</p>
-              <p className="card-author">By: {project.owner.name}</p>
+              <p className="card-author">By: {project.user.name}</p>
             </div>
           </Link>
-          <div className="caption">
-            <div className="stars">
-              {renderStars(project.ratings || 0)}
+          <div className="card-commentRating">
+            <div className="card-stars">
+              {renderStars(project.average_rating || 0)}
             </div>
             <p>
               <span>
